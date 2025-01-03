@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>HuangJY's Notes</title><link>https://hermit200.github.io</link><description>你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。</description><copyright>HuangJY's Notes</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp</url><title>avatar</title><link>https://hermit200.github.io</link></image><lastBuildDate>Fri, 03 Jan 2025 13:16:07 +0000</lastBuildDate><managingEditor>HuangJY's Notes</managingEditor><ttl>60</ttl><webMaster>HuangJY's Notes</webMaster><item><title>About me</title><link>https://hermit200.github.io/about.html</link><description>&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>HuangJY's Notes</title><link>https://hermit200.github.io</link><description>你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。</description><copyright>HuangJY's Notes</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp</url><title>avatar</title><link>https://hermit200.github.io</link></image><lastBuildDate>Fri, 03 Jan 2025 14:24:08 +0000</lastBuildDate><managingEditor>HuangJY's Notes</managingEditor><ttl>60</ttl><webMaster>HuangJY's Notes</webMaster><item><title>Anaconda</title><link>https://hermit200.github.io/post/Anaconda.html</link><description># 使用说明&#13;
+&#13;
+此文参考 Anaconda 官方文档，会记录下**常用命令**方便快速配置，以及我在使用时遇到的**问题和解决方案**方便查阅&#13;
+&#13;
+## 1. 安装 &#13;
+- **下载地址**: [Anaconda 官方下载](https://www.anaconda.com/products/distribution)&#13;
+- **安装tips**:&#13;
+ 勾选 “Add Anaconda to my PATH environment variable” 以便命令行使用。</description><guid isPermaLink="true">https://hermit200.github.io/post/Anaconda.html</guid><pubDate>Fri, 03 Jan 2025 14:20:01 +0000</pubDate></item><item><title>About me</title><link>https://hermit200.github.io/about.html</link><description>&#13;
 &#13;
 你好，欢迎来到 **HuangJY's Notes**！✨&#13;
 &#13;
