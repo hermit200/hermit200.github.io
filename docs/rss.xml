@@ -1,2 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>HuangJY's Notes</title><link>https://hermit200.github.io</link><description>你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。</description><copyright>HuangJY's Notes</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp</url><title>avatar</title><link>https://hermit200.github.io</link></image><lastBuildDate>Fri, 03 Jan 2025 09:08:54 +0000</lastBuildDate><managingEditor>HuangJY's Notes</managingEditor><ttl>60</ttl><webMaster>HuangJY's Notes</webMaster><item><title>test</title><link>https://hermit200.github.io/post/test.html</link><description>This is a test。</description><guid isPermaLink="true">https://hermit200.github.io/post/test.html</guid><pubDate>Fri, 03 Jan 2025 08:05:48 +0000</pubDate></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>HuangJY's Notes</title><link>https://hermit200.github.io</link><description>你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。</description><copyright>HuangJY's Notes</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp</url><title>avatar</title><link>https://hermit200.github.io</link></image><lastBuildDate>Fri, 03 Jan 2025 10:19:46 +0000</lastBuildDate><managingEditor>HuangJY's Notes</managingEditor><ttl>60</ttl><webMaster>HuangJY's Notes</webMaster><item><title>test</title><link>https://hermit200.github.io/post/test.html</link><description>This is a test。</description><guid isPermaLink="true">https://hermit200.github.io/post/test.html</guid><pubDate>Fri, 03 Jan 2025 08:05:48 +0000</pubDate></item><item><title>About me</title><link>https://hermit200.github.io/about.html</link><description># ABOUT ME&#13;
+&#13;
+你好，欢迎来到 **HuangJY's Notes**！✨&#13;
+&#13;
+目前，我是一名生命科学专业的本科生，同时对生物信息学及计算机领域充满热情！&#13;
+&#13;
+&#13;
+&#13;
+## 关于博客&#13;
+&#13;
+在这个博客中，我将记录自己的学习旅程，主要包括：&#13;
+&#13;
+1. **论文阅读** 📚  &#13;
+   针对课堂作业和课外阅读，我会上传精读后整理的成果，包括 PPT、Word 文档、思维导图等多种形式。</description><guid isPermaLink="true">https://hermit200.github.io/about.html</guid><pubDate>Fri, 03 Jan 2025 10:19:15 +0000</pubDate></item></channel></rss>
