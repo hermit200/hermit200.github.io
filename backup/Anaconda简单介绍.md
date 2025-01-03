@@ -1,4 +1,4 @@
-# 文档使用说明
+ **文档使用说明**
 
 此文参考 Anaconda 官方文档，会记录一些**常用命令**方便快速配置，和我遇到过的**问题及解决方法**以供查阅
 
@@ -11,44 +11,44 @@
 
 ## 2. 常用命令
 
-### **环境管理**
-- **创建环境**：
-
-`conda create -n 环境名 python=版本号`
-
-
-- **激活环境**
-
-`conda activate 环境名`
-
-- **退出环境**
-
-`conda deactivate`
-
-- **删除环境**
-
-`conda remove -n 环境名 --all`
-
-- **查看已创建环境**
-
-`conda env list`
-
-### **包管理**
-- **安装包**
-
-下载缓慢时可以用conda forge
-
-```bash
-conda install 包名
-conda install 包名 = 版本号
-conda install -c conda-forge 包名
-```
-
-- **更新/卸载/查看已安装包**
-```bash
-conda update 包名
-conda remove 包名
-conda list
+  ### 2.1 **环境管理**
+  - **创建环境**：
+  
+  `conda create -n 环境名 python=版本号`
+  
+  
+  - **激活环境**
+  
+  `conda activate 环境名`
+  
+  - **退出环境**
+  
+  `conda deactivate`
+  
+  - **删除环境**
+  
+  `conda remove -n 环境名 --all`
+  
+  - **查看已创建环境**
+  
+  `conda env list`
+  
+  ### 2.2 **包管理**
+  - **安装包**
+  
+  下载缓慢时可以用conda forge
+  
+  ```bash
+  conda install 包名
+  conda install 包名 = 版本号
+  conda install -c conda-forge 包名
+  ```
+  
+  - **更新/卸载/查看已安装包**
+  ```bash
+  conda update 包名
+  conda remove 包名
+  conda list
 ```
 
 ## 3.在vscode里使用Anaconda
