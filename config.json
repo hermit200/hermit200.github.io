@@ -1,6 +1,7 @@
 {
     "title":"HuangJY's Notes",
-    "subTitle":"你好，欢迎来到我的博客！\\n这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。",
-    "avatarUrl":"https://ibb.co/qrPYVSC",
+    "subTitle":"你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。",
+    "avatarUrl":"https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp",
+    "singlePage": ["about"],
     "GMEEK_VERSION":"last"
 }
