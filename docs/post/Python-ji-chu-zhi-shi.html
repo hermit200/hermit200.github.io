@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 文档使用说明
+
+本文档主要是我个人在学习python基础时的学习笔记，主要涉及Python 的核心概念与常用功能，并提供一定的简单实例，不涉及过于复杂的高级用法。">
+<meta property="og:title" content="Python基础知识">
+<meta property="og:description" content="# 文档使用说明
+
+本文档主要是我个人在学习python基础时的学习笔记，主要涉及Python 的核心概念与常用功能，并提供一定的简单实例，不涉及过于复杂的高级用法。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/Python-ji-chu-zhi-shi.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>Python基础知识</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">Python基础知识</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/5" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>文档使用说明</h1>
+<p>本文档主要是我个人在学习python基础时的学习笔记，主要涉及Python 的核心概念与常用功能，并提供一定的简单实例，不涉及过于复杂的高级用法。</p>
+<h2>一、数据类型概述</h2>
+<p>在 Python 中，数据类型用于定义变量存储的数据种类。Python 是一种动态类型语言，变量的数据类型会根据赋值自动推断。以下是 Python 常见的数据类型：</p>
+<h3>1. 数字类型</h3>
+<p>数字类型用于存储数值，主要包括以下三种类型：</p>
+<ul>
+<li><strong>整数（int）</strong>: 表示没有小数部分的数字。</li>
+<li><strong>浮点数（float）</strong>: 表示有小数部分的数字。</li>
+<li><strong>复数（complex）</strong>: 包含实部和虚部的数字。</li>
+</ul>
+<p><strong>示例代码</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 整数</span>
+<span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">x</span>))  <span class="pl-c"># 输出: &lt;class 'int'&gt;</span>
+
+<span class="pl-c"># 浮点数</span>
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-c1">3.14</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">y</span>))  <span class="pl-c"># 输出: &lt;class 'float'&gt;</span>
+
+<span class="pl-c"># 复数</span>
+<span class="pl-s1">z</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span> <span class="pl-c1">+</span> <span class="pl-c1">3j</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">z</span>))  <span class="pl-c"># 输出: &lt;class 'complex'&gt;</span></pre></div>
+<h3>2. 字符串（str）</h3>
+<p>字符串用于表示一系列字符。字符串可以用单引号、双引号或三引号定义。</p>
+<p><strong>示例代码</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 单引号</span>
+<span class="pl-s1">name</span> <span class="pl-c1">=</span> <span class="pl-s">'Alice'</span>
+
+<span class="pl-c"># 双引号</span>
+<span class="pl-s1">greeting</span> <span class="pl-c1">=</span> <span class="pl-s">"Hello, World!"</span>
+
+<span class="pl-c"># 三引号（可用于多行字符串）</span>
+<span class="pl-s1">message</span> <span class="pl-c1">=</span> <span class="pl-s">'''This is</span>
+<span class="pl-s">a multiline</span>
+<span class="pl-s">string.'''</span>
+
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">name</span>))  <span class="pl-c"># 输出: &lt;class 'str'&gt;</span></pre></div>
+<h3>3. 布尔值（bool）</h3>
+<p>布尔值表示逻辑值，只有两个可能的取值：<code class="notranslate">True</code> 和 <code class="notranslate">False</code>。</p>
+<p><strong>示例代码</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">is_active</span> <span class="pl-c1">=</span> <span class="pl-c1">True</span>
+<span class="pl-s1">is_logged_in</span> <span class="pl-c1">=</span> <span class="pl-c1">False</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">is_active</span>))  <span class="pl-c"># 输出: &lt;class 'bool'&gt;</span></pre></div>
+<h3>4. 容器类型</h3>
+<p>容器类型用于存储多个值。常见的容器类型包括：</p>
+<ul>
+<li><strong>列表（list）</strong>: 有序且可变。</li>
+<li><strong>元组（tuple）</strong>: 有序但不可变。</li>
+<li><strong>字典（dict）</strong>: 键值对形式存储。</li>
+<li><strong>集合（set）</strong>: 无序且唯一。</li>
+</ul>
+<p><strong>示例代码</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 列表</span>
+<span class="pl-s1">fruits</span> <span class="pl-c1">=</span> [<span class="pl-s">'apple'</span>, <span class="pl-s">'banana'</span>, <span class="pl-s">'cherry'</span>]
+
+<span class="pl-c"># 元组</span>
+<span class="pl-s1">coordinates</span> <span class="pl-c1">=</span> (<span class="pl-c1">10</span>, <span class="pl-c1">20</span>)
+
+<span class="pl-c"># 字典</span>
+<span class="pl-s1">person</span> <span class="pl-c1">=</span> {<span class="pl-s">'name'</span>: <span class="pl-s">'Alice'</span>, <span class="pl-s">'age'</span>: <span class="pl-c1">25</span>}
+
+<span class="pl-c"># 集合</span>
+<span class="pl-s1">unique_numbers</span> <span class="pl-c1">=</span> {<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">3</span>}  <span class="pl-c"># 重复值会被去除</span>
+
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">fruits</span>))  <span class="pl-c"># 输出: &lt;class 'list'&gt;</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">coordinates</span>))  <span class="pl-c"># 输出: &lt;class 'tuple'&gt;</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">person</span>))  <span class="pl-c"># 输出: &lt;class 'dict'&gt;</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">unique_numbers</span>))  <span class="pl-c"># 输出: &lt;class 'set'&gt;</span></pre></div>
+<hr>
+<h2>二、输入与输出</h2>
+<p>在 Python 中，动态输入和格式化输出是编写交互式程序的基础。<code class="notranslate">input</code> 函数用于获取用户输入，而 <code class="notranslate">f-string</code> 是一种高效的字符串格式化方法。</p>
+<h3>1. 使用 <code class="notranslate">input</code> 获取用户输入</h3>
+<p><code class="notranslate">input</code> 是一个内置函数，用于接收用户从键盘输入的数据。输入的内容总是以字符串类型返回。常见用法如下：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 获取用户输入</span>
+<span class="pl-s1">name</span> <span class="pl-c1">=</span> <span class="pl-en">input</span>(<span class="pl-s">"请输入你的名字："</span>)
+<span class="pl-s1">age</span> <span class="pl-c1">=</span> <span class="pl-en">input</span>(<span class="pl-s">"请输入你的年龄："</span>)
+
+<span class="pl-c"># 注意：所有输入都以字符串形式返回</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"你的名字是 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span><span class="pl-kos">}</span></span>，你的年龄是 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">age</span><span class="pl-kos">}</span></span>。"</span>)</pre></div>
+<p><strong>转换输入类型</strong><br>
+如果需要将输入转换为其他数据类型（如整数或浮点数），可以使用相应的类型转换函数，例如 <code class="notranslate">int()</code> 或 <code class="notranslate">float()</code>。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 获取并转换年龄为整数</span>
+<span class="pl-s1">age</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"请输入你的年龄："</span>))
+
+<span class="pl-c"># 进行简单的逻辑判断</span>
+<span class="pl-k">if</span> <span class="pl-s1">age</span> <span class="pl-c1">&gt;=</span> <span class="pl-c1">18</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"你已经成年了！"</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"你还是未成年人！"</span>)</pre></div>
+<h3>2. 使用 <code class="notranslate">f-string</code> 格式化输出</h3>
+<p><code class="notranslate">f-string</code> 是一种快速简洁的字符串格式化方法，从 Python 3.6 开始支持。通过在字符串前加上 <code class="notranslate">f</code>，可以在字符串中嵌入变量或表达式。</p>
+<p><strong>基本语法</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">name</span> <span class="pl-c1">=</span> <span class="pl-s">"Alice"</span>
+<span class="pl-s1">age</span> <span class="pl-c1">=</span> <span class="pl-c1">25</span>
+
+<span class="pl-c"># 使用 f-string</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"我的名字是 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span><span class="pl-kos">}</span></span>，我今年 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">age</span><span class="pl-kos">}</span></span> 岁。"</span>)</pre></div>
+<p><strong>嵌入表达式</strong><br>
+<code class="notranslate">f-string</code> 支持在大括号 <code class="notranslate">{}</code> 中嵌入任意表达式，例如计算、方法调用等。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 嵌入表达式</span>
+<span class="pl-s1">number</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"5 的平方是 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">number</span> <span class="pl-c1">**</span> <span class="pl-c1">2</span><span class="pl-kos">}</span></span>。"</span>)</pre></div>
+<p><strong>控制输出格式</strong><br>
+<code class="notranslate">f-string</code> 支持控制浮点数的精度、对齐方式等：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 浮点数保留两位小数</span>
+<span class="pl-s1">pi</span> <span class="pl-c1">=</span> <span class="pl-c1">3.14159</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"圆周率是 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">pi</span>:.2f<span class="pl-kos">}</span></span>"</span>)  <span class="pl-c"># 输出: 圆周率是 3.14</span>
+
+<span class="pl-c"># 对齐和宽度设置</span>
+<span class="pl-s1">name</span> <span class="pl-c1">=</span> <span class="pl-s">"Alice"</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"|<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span>:&lt;10<span class="pl-kos">}</span></span>|"</span>)  <span class="pl-c"># 左对齐，宽度为10</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"|<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span>:&gt;10<span class="pl-kos">}</span></span>|"</span>)  <span class="pl-c"># 右对齐，宽度为10</span></pre></div>
+<hr>
+<h2>三、列表：Python 中的万能容器</h2>
+<p>列表是 Python 中最常用的数据结构之一，它是一种有序、可变的容器，可以存储任意类型的元素。</p>
+<h3>1. 创建列表</h3>
+<p>列表使用方括号 <code class="notranslate">[]</code> 定义，元素之间用逗号 <code class="notranslate">,</code> 分隔。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 空列表</span>
+<span class="pl-s1">empty_list</span> <span class="pl-c1">=</span> []
+
+<span class="pl-c"># 包含整数的列表</span>
+<span class="pl-s1">numbers</span> <span class="pl-c1">=</span> [<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>]
+
+<span class="pl-c"># 包含不同数据类型的列表</span>
+<span class="pl-s1">mixed_list</span> <span class="pl-c1">=</span> [<span class="pl-c1">1</span>, <span class="pl-s">"apple"</span>, <span class="pl-c1">3.14</span>, <span class="pl-c1">True</span>]
+
+<span class="pl-c"># 嵌套列表</span>
+<span class="pl-s1">nested_list</span> <span class="pl-c1">=</span> [[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [<span class="pl-c1">3</span>, <span class="pl-c1">4</span>]]</pre></div>
+<h3>2. 访问列表元素</h3>
+<p>可以通过索引访问列表元素，索引从 <code class="notranslate">0</code> 开始，也可以使用负数索引从末尾开始。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> [<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>]
+
+<span class="pl-c"># 访问第一个元素</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>[<span class="pl-c1">0</span>])  <span class="pl-c"># 输出: apple</span>
+
+<span class="pl-c"># 访问最后一个元素</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>[<span class="pl-c1">-</span><span class="pl-c1">1</span>])  <span class="pl-c"># 输出: cherry</span></pre></div>
+<h3>3.  修改列表元素</h3>
+<p>列表是可变的，因此可以直接通过索引修改元素的值。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> [<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>]
+<span class="pl-s1">fruits</span>[<span class="pl-c1">1</span>] <span class="pl-c1">=</span> <span class="pl-s">"blueberry"</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ['apple', 'blueberry', 'cherry']</span></pre></div>
+<h3>4. 添加元素</h3>
+<p><strong>使用 <code class="notranslate">append()</code></strong></p>
+<p>在列表末尾添加一个元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span>.<span class="pl-c1">append</span>(<span class="pl-s">"date"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ['apple', 'banana', 'cherry', 'date']</span></pre></div>
+<p><strong>使用 <code class="notranslate">insert()</code></strong></p>
+<p>在指定位置插入一个元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span>.<span class="pl-c1">insert</span>(<span class="pl-c1">1</span>, <span class="pl-s">"orange"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ['apple', 'orange', 'banana', 'cherry']</span></pre></div>
+<h3>5. 删除元素</h3>
+<p><strong>使用 <code class="notranslate">remove()</code></strong></p>
+<p>根据值删除第一个匹配的元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span>.<span class="pl-c1">remove</span>(<span class="pl-s">"banana"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ['apple', 'cherry']</span></pre></div>
+<p><strong>使用 <code class="notranslate">pop()</code></strong></p>
+<p>根据索引删除元素，默认删除最后一个。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span>.<span class="pl-c1">pop</span>()  <span class="pl-c"># 删除最后一个元素</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ['apple', 'banana']</span></pre></div>
+<p><strong>使用 <code class="notranslate">del</code></strong></p>
+<p>使用索引或切片删除元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">del</span> <span class="pl-s1">fruits</span>[<span class="pl-c1">0</span>]  <span class="pl-c"># 删除第一个元素</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ['banana', 'cherry']</span></pre></div>
+<h3>6. 列表切片</h3>
+<p>列表支持切片操作，用于获取子列表。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">numbers</span> <span class="pl-c1">=</span> [<span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>]
+
+<span class="pl-c"># 获取索引 1 到 4 的子列表（不包括 5）</span>
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>[<span class="pl-c1">1</span>:<span class="pl-c1">5</span>])  <span class="pl-c"># 输出: [1, 2, 3, 4]</span>
+
+<span class="pl-c"># 从头到索引 3</span>
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>[:<span class="pl-c1">4</span>])  <span class="pl-c"># 输出: [0, 1, 2, 3]</span>
+
+<span class="pl-c"># 从索引 2 到末尾</span>
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>[<span class="pl-c1">2</span>:])  <span class="pl-c"># 输出: [2, 3, 4, 5, 6]</span>
+
+<span class="pl-c"># 步长切片</span>
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>[::<span class="pl-c1">2</span>])  <span class="pl-c"># 输出: [0, 2, 4, 6]</span></pre></div>
+<h3>7. 遍历列表</h3>
+<p><strong>使用 <code class="notranslate">for</code> 循环</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> [<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>]
+<span class="pl-k">for</span> <span class="pl-s1">fruit</span> <span class="pl-c1">in</span> <span class="pl-s1">fruits</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">f"I like <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">fruit</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<p><strong>使用 <code class="notranslate">enumerate()</code></strong></p>
+<p>获取索引和值。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">index</span>, <span class="pl-s1">fruit</span> <span class="pl-c1">in</span> <span class="pl-en">enumerate</span>(<span class="pl-s1">fruits</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">f"Index <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">index</span><span class="pl-kos">}</span></span>: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">fruit</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<h3>8. 常用列表方法总结</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="notranslate">append()</code></td>
+<td>在列表末尾添加元素</td>
+</tr>
+<tr>
+<td><code class="notranslate">insert()</code></td>
+<td>在指定位置插入元素</td>
+</tr>
+<tr>
+<td><code class="notranslate">remove()</code></td>
+<td>删除第一个匹配的值</td>
+</tr>
+<tr>
+<td><code class="notranslate">pop()</code></td>
+<td>删除并返回指定位置的元素（默认最后）</td>
+</tr>
+<tr>
+<td><code class="notranslate">index()</code></td>
+<td>返回指定值的索引</td>
+</tr>
+<tr>
+<td><code class="notranslate">count()</code></td>
+<td>返回指定值在列表中的出现次数</td>
+</tr>
+<tr>
+<td><code class="notranslate">sort()</code></td>
+<td>对列表进行排序</td>
+</tr>
+<tr>
+<td><code class="notranslate">reverse()</code></td>
+<td>反转列表</td>
+</tr>
+<tr>
+<td><code class="notranslate">clear()</code></td>
+<td>清空列表</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h3>9. 列表推导式</h3>
+<p>列表推导式是一种简洁创建列表的方式。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个平方列表</span>
+<span class="pl-s1">squares</span> <span class="pl-c1">=</span> [<span class="pl-s1">x</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-k">for</span> <span class="pl-s1">x</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>)]
+<span class="pl-en">print</span>(<span class="pl-s1">squares</span>)  <span class="pl-c"># 输出: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+
+<span class="pl-c"># 筛选偶数</span>
+<span class="pl-s1">evens</span> <span class="pl-c1">=</span> [<span class="pl-s1">x</span> <span class="pl-k">for</span> <span class="pl-s1">x</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>) <span class="pl-k">if</span> <span class="pl-s1">x</span> <span class="pl-c1">%</span> <span class="pl-c1">2</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>]
+<span class="pl-en">print</span>(<span class="pl-s1">evens</span>)  <span class="pl-c"># 输出: [0, 2, 4, 6, 8]</span></pre></div>
+<hr>
+<h2>四、元组：不可变的有序集合</h2>
+<p>元组是 Python 中的另一种序列类型，与列表类似，但最大的区别是 <strong>元组是不可变的</strong>，一旦创建，元素不能被修改。元组通常用于表示不需要更改的数据。</p>
+<h3>1. 创建元组</h3>
+<p>元组使用小括号 <code class="notranslate">()</code> 定义，元素之间用逗号 <code class="notranslate">,</code> 分隔。如果只有一个元素，需要在末尾加一个逗号以区别单独的值。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 空元组</span>
+<span class="pl-s1">empty_tuple</span> <span class="pl-c1">=</span> ()
+
+<span class="pl-c"># 含有多个元素的元组</span>
+<span class="pl-s1">numbers</span> <span class="pl-c1">=</span> (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>)
+
+<span class="pl-c"># 含有一个元素的元组</span>
+<span class="pl-s1">single_element</span> <span class="pl-c1">=</span> (<span class="pl-c1">42</span>,)  <span class="pl-c"># 注意逗号</span>
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">single_element</span>))  <span class="pl-c"># 输出: &lt;class 'tuple'&gt;</span>
+
+<span class="pl-c"># 不加逗号，会被视为一个普通值</span>
+<span class="pl-s1">not_a_tuple</span> <span class="pl-c1">=</span> (<span class="pl-c1">42</span>)
+<span class="pl-en">print</span>(<span class="pl-en">type</span>(<span class="pl-s1">not_a_tuple</span>))  <span class="pl-c"># 输出: &lt;class 'int'&gt;</span></pre></div>
+<h3>2. 访问元组元素</h3>
+<p>元组的元素可以通过索引访问，索引规则与列表相同，从 <code class="notranslate">0</code> 开始，也支持负数索引。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> (<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>)
+
+<span class="pl-c"># 访问第一个元素</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>[<span class="pl-c1">0</span>])  <span class="pl-c"># 输出: apple</span>
+
+<span class="pl-c"># 访问最后一个元素</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>[<span class="pl-c1">-</span><span class="pl-c1">1</span>])  <span class="pl-c"># 输出: cherry</span></pre></div>
+<h3>3. 元组的不可变性</h3>
+<p>元组的不可变性意味着我们不能修改、添加或删除元组中的元素，但可以通过重新赋值来替换整个元组。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> (<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>)
+
+<span class="pl-c"># 尝试修改元组中的元素会报错</span>
+<span class="pl-c"># fruits[1] = "orange"  # 会抛出 TypeError</span>
+
+<span class="pl-c"># 重新赋值</span>
+<span class="pl-s1">fruits</span> <span class="pl-c1">=</span> (<span class="pl-s">"orange"</span>, <span class="pl-s">"grape"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: ('orange', 'grape')</span></pre></div>
+<h3>4. 元组的常用操作</h3>
+<p>元组支持一些常见的操作，如拼接、重复和解包。</p>
+<p><strong>元组拼接</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">tuple1</span> <span class="pl-c1">=</span> (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>)
+<span class="pl-s1">tuple2</span> <span class="pl-c1">=</span> (<span class="pl-c1">4</span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>)
+
+<span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">tuple1</span> <span class="pl-c1">+</span> <span class="pl-s1">tuple2</span>
+<span class="pl-en">print</span>(<span class="pl-s1">result</span>)  <span class="pl-c"># 输出: (1, 2, 3, 4, 5, 6)</span></pre></div>
+<p><strong>元组重复</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">numbers</span> <span class="pl-c1">=</span> (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>)
+<span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-s1">numbers</span> <span class="pl-c1">*</span> <span class="pl-c1">2</span>
+<span class="pl-en">print</span>(<span class="pl-s1">result</span>)  <span class="pl-c"># 输出: (1, 2, 3, 1, 2, 3)</span></pre></div>
+<p><strong>元组解包</strong></p>
+<p>元组支持解包，将元组中的元素赋值给多个变量。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">coordinates</span> <span class="pl-c1">=</span> (<span class="pl-c1">10</span>, <span class="pl-c1">20</span>, <span class="pl-c1">30</span>)
+<span class="pl-s1">x</span>, <span class="pl-s1">y</span>, <span class="pl-s1">z</span> <span class="pl-c1">=</span> <span class="pl-s1">coordinates</span>
+<span class="pl-en">print</span>(<span class="pl-s1">x</span>, <span class="pl-s1">y</span>, <span class="pl-s1">z</span>)  <span class="pl-c"># 输出: 10 20 30</span></pre></div>
+<p><strong>嵌套元组解包</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">nested_tuple</span> <span class="pl-c1">=</span> (<span class="pl-c1">1</span>, (<span class="pl-c1">2</span>, <span class="pl-c1">3</span>))
+<span class="pl-s1">a</span>, (<span class="pl-s1">b</span>, <span class="pl-s1">c</span>) <span class="pl-c1">=</span> <span class="pl-s1">nested_tuple</span>
+<span class="pl-en">print</span>(<span class="pl-s1">a</span>, <span class="pl-s1">b</span>, <span class="pl-s1">c</span>)  <span class="pl-c"># 输出: 1 2 3</span></pre></div>
+<h3>5. 元组的方法</h3>
+<p>由于元组是不可变的，其方法非常有限，只有两个常用方法：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="notranslate">count(x)</code></td>
+<td>返回元组中指定值 <code class="notranslate">x</code> 的出现次数</td>
+</tr>
+<tr>
+<td><code class="notranslate">index(x)</code></td>
+<td>返回元组中首次出现指定值 <code class="notranslate">x</code> 的索引位置</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>示例</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">numbers</span> <span class="pl-c1">=</span> (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">2</span>, <span class="pl-c1">2</span>, <span class="pl-c1">4</span>)
+
+<span class="pl-c"># 统计值为 2 的出现次数</span>
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>.<span class="pl-c1">count</span>(<span class="pl-c1">2</span>))  <span class="pl-c"># 输出: 3</span>
+
+<span class="pl-c"># 查找值为 3 的索引</span>
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>.<span class="pl-c1">index</span>(<span class="pl-c1">3</span>))  <span class="pl-c"># 输出: 2</span></pre></div>
+<h3>6. 元组与列表的转换</h3>
+<p>尽管元组是不可变的，但可以通过类型转换在元组和列表之间切换。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 元组转列表</span>
+<span class="pl-s1">numbers</span> <span class="pl-c1">=</span> (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>)
+<span class="pl-s1">numbers_list</span> <span class="pl-c1">=</span> <span class="pl-en">list</span>(<span class="pl-s1">numbers</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">numbers_list</span>)  <span class="pl-c"># 输出: [1, 2, 3]</span>
+
+<span class="pl-c"># 列表转元组</span>
+<span class="pl-s1">numbers_list</span> <span class="pl-c1">=</span> [<span class="pl-c1">4</span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>]
+<span class="pl-s1">numbers_tuple</span> <span class="pl-c1">=</span> <span class="pl-en">tuple</span>(<span class="pl-s1">numbers_list</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">numbers_tuple</span>)  <span class="pl-c"># 输出: (4, 5, 6)</span></pre></div>
+<h3>7. 元组的应用场景</h3>
+<ul>
+<li><strong>数据不可变的场景</strong>: 如配置文件中的常量。</li>
+<li><strong>作为字典的键</strong>: 元组是不可变的，因此可以作为字典的键，而列表不可以。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 元组作为字典的键</span>
+<span class="pl-s1">locations</span> <span class="pl-c1">=</span> {
+    (<span class="pl-c1">40.7128</span>, <span class="pl-c1">-</span><span class="pl-c1">74.0060</span>): <span class="pl-s">"New York"</span>,
+    (<span class="pl-c1">34.0522</span>, <span class="pl-c1">-</span><span class="pl-c1">118.2437</span>): <span class="pl-s">"Los Angeles"</span>
+}
+<span class="pl-en">print</span>(<span class="pl-s1">locations</span>[(<span class="pl-c1">40.7128</span>, <span class="pl-c1">-</span><span class="pl-c1">74.0060</span>)])  <span class="pl-c"># 输出: New York</span></pre></div>
+<hr>
+<h2>五、字典：键值对的灵活存储</h2>
+<p>字典是 Python 中的一种 <strong>键值对（key-value pair）</strong> 数据结构，它是无序的（Python 3.7 之后的实现是有序的）且可变的。字典非常适合存储和快速查找数据。</p>
+<hr>
+<h3>1. 创建字典</h3>
+<p>字典使用大括号 <code class="notranslate">{}</code> 定义，键和值通过冒号 <code class="notranslate">:</code> 分隔，键值对之间用逗号 <code class="notranslate">,</code> 分隔。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 空字典</span>
+<span class="pl-s1">empty_dict</span> <span class="pl-c1">=</span> {}
+
+<span class="pl-c"># 含有多个键值对的字典</span>
+<span class="pl-s1">person</span> <span class="pl-c1">=</span> {
+    <span class="pl-s">"name"</span>: <span class="pl-s">"Alice"</span>,
+    <span class="pl-s">"age"</span>: <span class="pl-c1">25</span>,
+    <span class="pl-s">"city"</span>: <span class="pl-s">"New York"</span>
+}</pre></div>
+<p>字典中的键必须是不可变类型（如字符串、数字、元组），值可以是任意类型。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 有效键：数字、字符串、元组</span>
+<span class="pl-s1">valid_dict</span> <span class="pl-c1">=</span> {
+    <span class="pl-c1">1</span>: <span class="pl-s">"one"</span>,
+    <span class="pl-s">"two"</span>: <span class="pl-c1">2</span>,
+    (<span class="pl-c1">3</span>, <span class="pl-c1">4</span>): <span class="pl-s">"tuple_key"</span>
+}</pre></div>
+<hr>
+<h3>2. 访问字典元素</h3>
+<p>通过键访问对应的值。如果键不存在，会抛出 <code class="notranslate">KeyError</code>。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">person</span> <span class="pl-c1">=</span> {<span class="pl-s">"name"</span>: <span class="pl-s">"Alice"</span>, <span class="pl-s">"age"</span>: <span class="pl-c1">25</span>}
+
+<span class="pl-c"># 访问键对应的值</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>[<span class="pl-s">"name"</span>])  <span class="pl-c"># 输出: Alice</span>
+
+<span class="pl-c"># 使用 `get()` 方法访问</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>.<span class="pl-c1">get</span>(<span class="pl-s">"age"</span>))  <span class="pl-c"># 输出: 25</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>.<span class="pl-c1">get</span>(<span class="pl-s">"city"</span>, <span class="pl-s">"Not Found"</span>))  <span class="pl-c"># 如果键不存在，返回默认值: Not Found</span></pre></div>
+<hr>
+<h3>3. 修改字典</h3>
+<p><strong>添加或更新键值对</strong></p>
+<p>直接使用键赋值即可。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">person</span> <span class="pl-c1">=</span> {<span class="pl-s">"name"</span>: <span class="pl-s">"Alice"</span>, <span class="pl-s">"age"</span>: <span class="pl-c1">25</span>}
+
+<span class="pl-c"># 添加新键值对</span>
+<span class="pl-s1">person</span>[<span class="pl-s">"city"</span>] <span class="pl-c1">=</span> <span class="pl-s">"New York"</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>)  <span class="pl-c"># 输出: {'name': 'Alice', 'age': 25, 'city': 'New York'}</span>
+
+<span class="pl-c"># 更新已有键值对</span>
+<span class="pl-s1">person</span>[<span class="pl-s">"age"</span>] <span class="pl-c1">=</span> <span class="pl-c1">30</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>)  <span class="pl-c"># 输出: {'name': 'Alice', 'age': 30, 'city': 'New York'}</span></pre></div>
+<p><strong>删除键值对</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 使用 `pop()` 删除并返回指定键的值</span>
+<span class="pl-s1">removed_value</span> <span class="pl-c1">=</span> <span class="pl-s1">person</span>.<span class="pl-c1">pop</span>(<span class="pl-s">"age"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">removed_value</span>)  <span class="pl-c"># 输出: 30</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>)  <span class="pl-c"># 输出: {'name': 'Alice', 'city': 'New York'}</span>
+
+<span class="pl-c"># 使用 `del` 删除指定键</span>
+<span class="pl-k">del</span> <span class="pl-s1">person</span>[<span class="pl-s">"city"</span>]
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>)  <span class="pl-c"># 输出: {'name': 'Alice'}</span>
+
+<span class="pl-c"># 清空字典</span>
+<span class="pl-s1">person</span>.<span class="pl-c1">clear</span>()
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>)  <span class="pl-c"># 输出: {}</span></pre></div>
+<hr>
+<h3>4. 遍历字典</h3>
+<p><strong>遍历键</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">person</span> <span class="pl-c1">=</span> {<span class="pl-s">"name"</span>: <span class="pl-s">"Alice"</span>, <span class="pl-s">"age"</span>: <span class="pl-c1">25</span>, <span class="pl-s">"city"</span>: <span class="pl-s">"New York"</span>}
+
+<span class="pl-k">for</span> <span class="pl-s1">key</span> <span class="pl-c1">in</span> <span class="pl-s1">person</span>:
+    <span class="pl-en">print</span>(<span class="pl-s1">key</span>)  <span class="pl-c"># 输出: name, age, city</span></pre></div>
+<p><strong>遍历值</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">value</span> <span class="pl-c1">in</span> <span class="pl-s1">person</span>.<span class="pl-c1">values</span>():
+    <span class="pl-en">print</span>(<span class="pl-s1">value</span>)  <span class="pl-c"># 输出: Alice, 25, New York</span></pre></div>
+<p><strong>遍历键值对</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">key</span>, <span class="pl-s1">value</span> <span class="pl-c1">in</span> <span class="pl-s1">person</span>.<span class="pl-c1">items</span>():
+    <span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">key</span><span class="pl-kos">}</span></span>: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">value</span><span class="pl-kos">}</span></span>"</span>)
+<span class="pl-c"># 输出:</span>
+<span class="pl-c"># name: Alice</span>
+<span class="pl-c"># age: 25</span>
+<span class="pl-c"># city: New York</span></pre></div>
+<hr>
+<h3>5. 字典的常用方法</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="notranslate">get(key)</code></td>
+<td>返回指定键的值，如果键不存在则返回 <code class="notranslate">None</code> 或默认值</td>
+</tr>
+<tr>
+<td><code class="notranslate">keys()</code></td>
+<td>返回所有键的视图对象</td>
+</tr>
+<tr>
+<td><code class="notranslate">values()</code></td>
+<td>返回所有值的视图对象</td>
+</tr>
+<tr>
+<td><code class="notranslate">items()</code></td>
+<td>返回所有键值对的视图对象</td>
+</tr>
+<tr>
+<td><code class="notranslate">update(dict2)</code></td>
+<td>用另一个字典的键值对更新当前字典</td>
+</tr>
+<tr>
+<td><code class="notranslate">pop(key)</code></td>
+<td>删除指定键，并返回对应的值</td>
+</tr>
+<tr>
+<td><code class="notranslate">clear()</code></td>
+<td>清空字典</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>示例</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">person</span> <span class="pl-c1">=</span> {<span class="pl-s">"name"</span>: <span class="pl-s">"Alice"</span>, <span class="pl-s">"age"</span>: <span class="pl-c1">25</span>}
+
+<span class="pl-c"># 获取所有键</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>.<span class="pl-c1">keys</span>())  <span class="pl-c"># 输出: dict_keys(['name', 'age'])</span>
+
+<span class="pl-c"># 获取所有值</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>.<span class="pl-c1">values</span>())  <span class="pl-c"># 输出: dict_values(['Alice', 25])</span>
+
+<span class="pl-c"># 获取所有键值对</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>.<span class="pl-c1">items</span>())  <span class="pl-c"># 输出: dict_items([('name', 'Alice'), ('age', 25)])</span>
+
+<span class="pl-c"># 更新字典</span>
+<span class="pl-s1">person</span>.<span class="pl-c1">update</span>({<span class="pl-s">"city"</span>: <span class="pl-s">"New York"</span>, <span class="pl-s">"age"</span>: <span class="pl-c1">30</span>})
+<span class="pl-en">print</span>(<span class="pl-s1">person</span>)  <span class="pl-c"># 输出: {'name': 'Alice', 'age': 30, 'city': 'New York'}</span></pre></div>
+<hr>
+<h3>6. 字典推导式</h3>
+<p>字典推导式用于快速生成字典，语法与列表推导式类似。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建键值对为数字及其平方的字典</span>
+<span class="pl-s1">squares</span> <span class="pl-c1">=</span> {<span class="pl-s1">x</span>: <span class="pl-s1">x</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-k">for</span> <span class="pl-s1">x</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">5</span>)}
+<span class="pl-en">print</span>(<span class="pl-s1">squares</span>)  <span class="pl-c"># 输出: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}</span>
+
+<span class="pl-c"># 筛选字典</span>
+<span class="pl-s1">original</span> <span class="pl-c1">=</span> {<span class="pl-s">"a"</span>: <span class="pl-c1">1</span>, <span class="pl-s">"b"</span>: <span class="pl-c1">2</span>, <span class="pl-s">"c"</span>: <span class="pl-c1">3</span>}
+<span class="pl-s1">filtered</span> <span class="pl-c1">=</span> {<span class="pl-s1">k</span>: <span class="pl-s1">v</span> <span class="pl-k">for</span> <span class="pl-s1">k</span>, <span class="pl-s1">v</span> <span class="pl-c1">in</span> <span class="pl-s1">original</span>.<span class="pl-c1">items</span>() <span class="pl-k">if</span> <span class="pl-s1">v</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">1</span>}
+<span class="pl-en">print</span>(<span class="pl-s1">filtered</span>)  <span class="pl-c"># 输出: {'b': 2, 'c': 3}</span></pre></div>
+<hr>
+<h3>7. 字典的应用场景</h3>
+<ul>
+<li><strong>存储结构化数据</strong>：如用户信息、配置文件等。</li>
+<li><strong>实现简单映射</strong>：如从键到值的快速查找。</li>
+<li><strong>计数和统计</strong>：结合 <code class="notranslate">collections.Counter</code>。</li>
+</ul>
+<p><strong>示例：统计字符出现的次数</strong>：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">text</span> <span class="pl-c1">=</span> <span class="pl-s">"hello world"</span>
+<span class="pl-s1">char_count</span> <span class="pl-c1">=</span> {}
+
+<span class="pl-k">for</span> <span class="pl-s1">char</span> <span class="pl-c1">in</span> <span class="pl-s1">text</span>:
+    <span class="pl-s1">char_count</span>[<span class="pl-s1">char</span>] <span class="pl-c1">=</span> <span class="pl-s1">char_count</span>.<span class="pl-c1">get</span>(<span class="pl-s1">char</span>, <span class="pl-c1">0</span>) <span class="pl-c1">+</span> <span class="pl-c1">1</span>
+
+<span class="pl-en">print</span>(<span class="pl-s1">char_count</span>)
+<span class="pl-c"># 输出: {'h': 1, 'e': 1, 'l': 3, 'o': 2, ' ': 1, 'w': 1, 'r': 1, 'd': 1}</span></pre></div>
+<hr>
+<h2>六、集合：处理无序且唯一的数据</h2>
+<p>集合（<code class="notranslate">set</code>）是 Python 中的一种数据结构，用于存储无序且不重复的元素。它特别适合用于去重、集合运算（交集、并集等）以及快速查找。</p>
+<hr>
+<h3>1. 创建集合</h3>
+<p>集合使用大括号 <code class="notranslate">{}</code> 或 <code class="notranslate">set()</code> 函数创建。需要注意，空集合只能用 <code class="notranslate">set()</code> 创建，否则会被认为是一个空字典。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 空集合</span>
+<span class="pl-s1">empty_set</span> <span class="pl-c1">=</span> <span class="pl-en">set</span>()
+
+<span class="pl-c"># 包含多个元素的集合</span>
+<span class="pl-s1">fruits</span> <span class="pl-c1">=</span> {<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>}
+
+<span class="pl-c"># 自动去重</span>
+<span class="pl-s1">numbers</span> <span class="pl-c1">=</span> {<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>}
+<span class="pl-en">print</span>(<span class="pl-s1">numbers</span>)  <span class="pl-c"># 输出: {1, 2, 3, 4}</span></pre></div>
+<p>集合中的元素必须是不可变的（如数字、字符串、元组），但集合本身是可变的。</p>
+<hr>
+<h3>2. 访问集合元素</h3>
+<p>集合是无序的，因此不支持索引访问或切片操作。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> {<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>}
+
+<span class="pl-c"># 检查元素是否存在</span>
+<span class="pl-en">print</span>(<span class="pl-s">"apple"</span> <span class="pl-c1">in</span> <span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: True</span>
+<span class="pl-en">print</span>(<span class="pl-s">"orange"</span> <span class="pl-c1">in</span> <span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: False</span></pre></div>
+<hr>
+<h3>3. 修改集合</h3>
+<p><strong>添加元素</strong></p>
+<p>使用 <code class="notranslate">add()</code> 方法向集合中添加一个元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> {<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>}
+<span class="pl-s1">fruits</span>.<span class="pl-c1">add</span>(<span class="pl-s">"cherry"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: {'apple', 'banana', 'cherry'}</span></pre></div>
+<p><strong>删除元素</strong></p>
+<ul>
+<li>使用 <code class="notranslate">remove()</code> 删除指定元素，如果元素不存在，会抛出 <code class="notranslate">KeyError</code>。</li>
+<li>使用 <code class="notranslate">discard()</code> 删除指定元素，如果元素不存在，不会报错。</li>
+<li>使用 <code class="notranslate">pop()</code> 删除并返回集合中的一个随机元素。</li>
+<li>使用 <code class="notranslate">clear()</code> 清空集合。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">fruits</span> <span class="pl-c1">=</span> {<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>}
+
+<span class="pl-c"># 删除指定元素</span>
+<span class="pl-s1">fruits</span>.<span class="pl-c1">remove</span>(<span class="pl-s">"banana"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: {'apple', 'cherry'}</span>
+
+<span class="pl-c"># 删除不存在的元素（不会报错）</span>
+<span class="pl-s1">fruits</span>.<span class="pl-c1">discard</span>(<span class="pl-s">"orange"</span>)
+
+<span class="pl-c"># 删除随机元素</span>
+<span class="pl-s1">random_element</span> <span class="pl-c1">=</span> <span class="pl-s1">fruits</span>.<span class="pl-c1">pop</span>()
+<span class="pl-en">print</span>(<span class="pl-s1">random_element</span>)  <span class="pl-c"># 输出: cherry（具体值随机）</span>
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: {'apple'}</span>
+
+<span class="pl-c"># 清空集合</span>
+<span class="pl-s1">fruits</span>.<span class="pl-c1">clear</span>()
+<span class="pl-en">print</span>(<span class="pl-s1">fruits</span>)  <span class="pl-c"># 输出: set()</span></pre></div>
+<hr>
+<h3>4. 集合运算</h3>
+<p>集合支持数学意义上的集合运算，如交集、并集、差集等。</p>
+<p><strong>并集（<code class="notranslate">|</code> 或 <code class="notranslate">union()</code>)</strong></p>
+<p>返回两个集合的所有元素（去重）。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">set1</span> <span class="pl-c1">=</span> {<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>}
+<span class="pl-s1">set2</span> <span class="pl-c1">=</span> {<span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>}
+<span class="pl-en">print</span>(<span class="pl-s1">set1</span> <span class="pl-c1">|</span> <span class="pl-s1">set2</span>)  <span class="pl-c"># 输出: {1, 2, 3, 4, 5}</span>
+<span class="pl-en">print</span>(<span class="pl-s1">set1</span>.<span class="pl-c1">union</span>(<span class="pl-s1">set2</span>))  <span class="pl-c"># 输出: {1, 2, 3, 4, 5}</span></pre></div>
+<p><strong>交集（<code class="notranslate">&amp;</code> 或 <code class="notranslate">intersection()</code>）</strong></p>
+<p>返回两个集合的公共元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">print</span>(<span class="pl-s1">set1</span> <span class="pl-c1">&amp;</span> <span class="pl-s1">set2</span>)  <span class="pl-c"># 输出: {3}</span>
+<span class="pl-en">print</span>(<span class="pl-s1">set1</span>.<span class="pl-c1">intersection</span>(<span class="pl-s1">set2</span>))  <span class="pl-c"># 输出: {3}</span></pre></div>
+<p><strong>差集（<code class="notranslate">-</code> 或 <code class="notranslate">difference()</code>）</strong></p>
+<p>返回只在第一个集合中存在的元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">print</span>(<span class="pl-s1">set1</span> <span class="pl-c1">-</span> <span class="pl-s1">set2</span>)  <span class="pl-c"># 输出: {1, 2}</span>
+<span class="pl-en">print</span>(<span class="pl-s1">set1</span>.<span class="pl-c1">difference</span>(<span class="pl-s1">set2</span>))  <span class="pl-c"># 输出: {1, 2}</span></pre></div>
+<p><strong>对称差集（<code class="notranslate">^</code> 或 <code class="notranslate">symmetric_difference()</code>）</strong></p>
+<p>返回只在一个集合中存在的元素。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">print</span>(<span class="pl-s1">set1</span> <span class="pl-c1">^</span> <span class="pl-s1">set2</span>)  <span class="pl-c"># 输出: {1, 2, 4, 5}</span>
+<span class="pl-en">print</span>(<span class="pl-s1">set1</span>.<span class="pl-c1">symmetric_difference</span>(<span class="pl-s1">set2</span>))  <span class="pl-c"># 输出: {1, 2, 4, 5}</span></pre></div>
+<hr>
+<h3>5. 集合的常用方法</h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="notranslate">add(x)</code></td>
+<td>向集合中添加元素</td>
+</tr>
+<tr>
+<td><code class="notranslate">remove(x)</code></td>
+<td>删除集合中的指定元素，不存在则报错</td>
+</tr>
+<tr>
+<td><code class="notranslate">discard(x)</code></td>
+<td>删除集合中的指定元素，不存在也不报错</td>
+</tr>
+<tr>
+<td><code class="notranslate">pop()</code></td>
+<td>删除并返回集合中的一个随机元素</td>
+</tr>
+<tr>
+<td><code class="notranslate">clear()</code></td>
+<td>清空集合</td>
+</tr>
+<tr>
+<td><code class="notranslate">union(other_set)</code></td>
+<td>返回两个集合的并集</td>
+</tr>
+<tr>
+<td><code class="notranslate">intersection(other_set)</code></td>
+<td>返回两个集合的交集</td>
+</tr>
+<tr>
+<td><code class="notranslate">difference(other_set)</code></td>
+<td>返回两个集合的差集</td>
+</tr>
+<tr>
+<td><code class="notranslate">symmetric_difference(other_set)</code></td>
+<td>返回两个集合的对称差集</td>
+</tr>
+<tr>
+<td><code class="notranslate">update(other_set)</code></td>
+<td>将其他集合的元素添加到当前集合</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>6. 集合推导式</h3>
+<p>与列表推导式类似，集合推导式用于快速生成集合。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建一个平方集合</span>
+<span class="pl-s1">squares</span> <span class="pl-c1">=</span> {<span class="pl-s1">x</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-k">for</span> <span class="pl-s1">x</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>)}
+<span class="pl-en">print</span>(<span class="pl-s1">squares</span>)  <span class="pl-c"># 输出: {0, 1, 4, 9, 16, 25, 36, 49, 64, 81}</span>
+
+<span class="pl-c"># 筛选元素</span>
+<span class="pl-s1">filtered</span> <span class="pl-c1">=</span> {<span class="pl-s1">x</span> <span class="pl-k">for</span> <span class="pl-s1">x</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>) <span class="pl-k">if</span> <span class="pl-s1">x</span> <span class="pl-c1">%</span> <span class="pl-c1">2</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>}
+<span class="pl-en">print</span>(<span class="pl-s1">filtered</span>)  <span class="pl-c"># 输出: {0, 2, 4, 6, 8}</span></pre></div>
+<hr>
+<h3>7. 集合的应用场景</h3>
+<ul>
+<li><strong>数据去重</strong>：集合自动去重功能非常方便。</li>
+<li><strong>快速查找</strong>：集合的查找复杂度为 O(1)。</li>
+<li><strong>集合运算</strong>：适用于需要处理交集、并集等数学运算的场景。</li>
+</ul>
+<p><strong>示例：数据去重</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">numbers</span> <span class="pl-c1">=</span> [<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>]
+<span class="pl-s1">unique_numbers</span> <span class="pl-c1">=</span> <span class="pl-en">set</span>(<span class="pl-s1">numbers</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">unique_numbers</span>)  <span class="pl-c"># 输出: {1, 2, 3, 4, 5}</span></pre></div>
+<hr>
+<h2>七、流程控制</h2>
+<p>流程控制是 Python 中的重要组成部分，用于控制代码的执行顺序。主要包括条件语句、循环语句，以及控制循环的特殊语句。</p>
+<hr>
+<h3>1. 条件语句</h3>
+<p>条件语句用于根据条件的真假执行不同的代码块，主要包括 <code class="notranslate">if</code>、<code class="notranslate">elif</code> 和 <code class="notranslate">else</code>。</p>
+<p><strong>基本语法</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">age</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"请输入你的年龄："</span>))
+
+<span class="pl-k">if</span> <span class="pl-s1">age</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">18</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"你是未成年人。"</span>)
+<span class="pl-k">elif</span> <span class="pl-s1">age</span> <span class="pl-c1">==</span> <span class="pl-c1">18</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"恭喜你刚刚成年！"</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"你是成年人。"</span>)</pre></div>
+<p><strong>嵌套条件语句</strong></p>
+<p>条件语句可以嵌套，但建议尽量避免过深的嵌套以保持代码清晰。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">score</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"请输入你的考试成绩："</span>))
+
+<span class="pl-k">if</span> <span class="pl-s1">score</span> <span class="pl-c1">&gt;=</span> <span class="pl-c1">60</span>:
+    <span class="pl-k">if</span> <span class="pl-s1">score</span> <span class="pl-c1">&gt;=</span> <span class="pl-c1">90</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"优秀！"</span>)
+    <span class="pl-k">else</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"及格，但还有提升空间。"</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"不及格，请继续努力！"</span>)</pre></div>
+<p><strong>单行条件语句</strong></p>
+<p>当条件和操作都很简单时，可以使用单行语法。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">is_adult</span> <span class="pl-c1">=</span> <span class="pl-c1">True</span> <span class="pl-k">if</span> <span class="pl-s1">age</span> <span class="pl-c1">&gt;=</span> <span class="pl-c1">18</span> <span class="pl-k">else</span> <span class="pl-c1">False</span>
+<span class="pl-en">print</span>(<span class="pl-s">f"是否成年: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">is_adult</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<hr>
+<h3>2. 循环语句</h3>
+<p>Python 提供了两种主要的循环：<code class="notranslate">for</code> 和 <code class="notranslate">while</code>。</p>
+<h4>2.1 <code class="notranslate">for</code> 循环</h4>
+<p><code class="notranslate">for</code> 循环通常用于遍历序列（如列表、字符串等）或迭代器。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 遍历列表</span>
+<span class="pl-s1">fruits</span> <span class="pl-c1">=</span> [<span class="pl-s">"apple"</span>, <span class="pl-s">"banana"</span>, <span class="pl-s">"cherry"</span>]
+<span class="pl-k">for</span> <span class="pl-s1">fruit</span> <span class="pl-c1">in</span> <span class="pl-s1">fruits</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">f"I like <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">fruit</span><span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-c"># 遍历字符串</span>
+<span class="pl-s1">word</span> <span class="pl-c1">=</span> <span class="pl-s">"Python"</span>
+<span class="pl-k">for</span> <span class="pl-s1">char</span> <span class="pl-c1">in</span> <span class="pl-s1">word</span>:
+    <span class="pl-en">print</span>(<span class="pl-s1">char</span>)
+
+<span class="pl-c"># 使用 range()</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">5</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">f"第 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">i</span><span class="pl-kos">}</span></span> 次循环"</span>)</pre></div>
+<h4>2.2 <code class="notranslate">while</code> 循环</h4>
+<p><code class="notranslate">while</code> 循环会一直执行代码块，直到条件为假。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">count</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span>
+<span class="pl-k">while</span> <span class="pl-s1">count</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">f"倒计时：<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">count</span><span class="pl-kos">}</span></span>"</span>)
+    <span class="pl-s1">count</span> <span class="pl-c1">-=</span> <span class="pl-c1">1</span></pre></div>
+<p><strong>无限循环</strong></p>
+<p>可以通过 <code class="notranslate">while True</code> 实现无限循环，但需确保循环内有退出条件。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">while</span> <span class="pl-c1">True</span>:
+    <span class="pl-s1">command</span> <span class="pl-c1">=</span> <span class="pl-en">input</span>(<span class="pl-s">"输入 'exit' 退出："</span>)
+    <span class="pl-k">if</span> <span class="pl-s1">command</span> <span class="pl-c1">==</span> <span class="pl-s">"exit"</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"程序结束。"</span>)
+        <span class="pl-k">break</span></pre></div>
+<hr>
+<h3>3. 控制循环的特殊语句</h3>
+<p><strong><code class="notranslate">break</code>：退出当前循环</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">i</span> <span class="pl-c1">==</span> <span class="pl-c1">5</span>:
+        <span class="pl-k">break</span>
+    <span class="pl-en">print</span>(<span class="pl-s1">i</span>)
+<span class="pl-c"># 输出: 0 1 2 3 4</span></pre></div>
+<p><strong><code class="notranslate">continue</code>：跳过当前循环的剩余部分</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">i</span> <span class="pl-c1">%</span> <span class="pl-c1">2</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
+        <span class="pl-k">continue</span>
+    <span class="pl-en">print</span>(<span class="pl-s1">i</span>)
+<span class="pl-c"># 输出: 1 3 5 7 9</span></pre></div>
+<p><strong><code class="notranslate">pass</code>：占位符，不执行任何操作</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">5</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">i</span> <span class="pl-c1">==</span> <span class="pl-c1">3</span>:
+        <span class="pl-k">pass</span>  <span class="pl-c"># 占位符</span>
+    <span class="pl-en">print</span>(<span class="pl-s1">i</span>)</pre></div>
+<p><strong><code class="notranslate">else</code> 和循环搭配使用</strong></p>
+<p>循环的 <code class="notranslate">else</code> 块会在循环正常结束时执行（未被 <code class="notranslate">break</code> 打断）。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">5</span>):
+    <span class="pl-en">print</span>(<span class="pl-s1">i</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"循环正常结束。"</span>)
+
+<span class="pl-c"># 如果有 break，则 else 不执行</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">5</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">i</span> <span class="pl-c1">==</span> <span class="pl-c1">3</span>:
+        <span class="pl-k">break</span>
+    <span class="pl-en">print</span>(<span class="pl-s1">i</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"这行不会被打印。"</span>)</pre></div>
+<hr>
+<h3>4. 流程控制的综合实例</h3>
+<p><strong>猜数字游戏</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">random</span>
+
+<span class="pl-c"># 随机生成一个 1 到 100 的数字</span>
+<span class="pl-s1">secret_number</span> <span class="pl-c1">=</span> <span class="pl-s1">random</span>.<span class="pl-c1">randint</span>(<span class="pl-c1">1</span>, <span class="pl-c1">100</span>)
+
+<span class="pl-k">while</span> <span class="pl-c1">True</span>:
+    <span class="pl-s1">guess</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"猜一个数字（1-100）："</span>))
+    <span class="pl-k">if</span> <span class="pl-s1">guess</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">secret_number</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"太小了！"</span>)
+    <span class="pl-k">elif</span> <span class="pl-s1">guess</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">secret_number</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"太大了！"</span>)
+    <span class="pl-k">else</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"恭喜你，猜对了！"</span>)
+        <span class="pl-k">break</span></pre></div>
+<p><strong>打印乘法表</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 打印 1 到 9 的乘法表</span>
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">1</span>, <span class="pl-c1">10</span>):
+    <span class="pl-k">for</span> <span class="pl-s1">j</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">1</span>, <span class="pl-s1">i</span> <span class="pl-c1">+</span> <span class="pl-c1">1</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">i</span><span class="pl-kos">}</span></span> * <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">j</span><span class="pl-kos">}</span></span> = <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">i</span> <span class="pl-c1">*</span> <span class="pl-s1">j</span><span class="pl-kos">}</span></span>"</span>, <span class="pl-s1">end</span><span class="pl-c1">=</span><span class="pl-s">"<span class="pl-cce">\t</span>"</span>)
+    <span class="pl-en">print</span>()</pre></div>
+<hr>
+<h3>5. 提高代码清晰度的建议</h3>
+<ul>
+<li>避免过深的嵌套，通过提前返回或使用逻辑运算符优化代码。</li>
+<li>使用 <code class="notranslate">else</code> 和循环结合可以实现特定条件后的操作，但需要谨慎使用。</li>
+<li>对于需要退出多层循环的情况，可以使用标志变量或函数封装。</li>
+</ul>
+<hr>
+<h2>八、函数：模块化的基础</h2>
+<p>函数是 Python 中用于将代码逻辑封装为可复用的模块化单元。通过定义函数，可以提高代码的可读性、复用性和维护性。</p>
+<hr>
+<h3>1. 定义和调用函数</h3>
+<p><strong>基本语法</strong></p>
+<p>使用关键字 <code class="notranslate">def</code> 定义函数，函数名应遵循命名规范（小写字母，单词间用下划线分隔）。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 定义一个简单的函数</span>
+<span class="pl-k">def</span> <span class="pl-en">greet</span>():
+    <span class="pl-en">print</span>(<span class="pl-s">"Hello, world!"</span>)
+
+<span class="pl-c"># 调用函数</span>
+<span class="pl-en">greet</span>()</pre></div>
+<p><strong>带参数的函数</strong></p>
+<p>参数用于将值传递给函数。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">greet</span>(<span class="pl-s1">name</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">f"Hello, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span><span class="pl-kos">}</span></span>!"</span>)
+
+<span class="pl-en">greet</span>(<span class="pl-s">"Alice"</span>)  <span class="pl-c"># 输出: Hello, Alice!</span></pre></div>
+<p><strong>返回值</strong></p>
+<p>使用 <code class="notranslate">return</code> 返回函数的结果。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">add</span>(<span class="pl-s1">a</span>, <span class="pl-s1">b</span>):
+    <span class="pl-k">return</span> <span class="pl-s1">a</span> <span class="pl-c1">+</span> <span class="pl-s1">b</span>
+
+<span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-en">add</span>(<span class="pl-c1">5</span>, <span class="pl-c1">3</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">result</span>)  <span class="pl-c"># 输出: 8</span></pre></div>
+<hr>
+<h3>2. 参数详解</h3>
+<p><strong>默认参数</strong></p>
+<p>为参数设置默认值，当调用函数时未提供该参数时会使用默认值。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">greet</span>(<span class="pl-s1">name</span><span class="pl-c1">=</span><span class="pl-s">"world"</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">f"Hello, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span><span class="pl-kos">}</span></span>!"</span>)
+
+<span class="pl-en">greet</span>()          <span class="pl-c"># 输出: Hello, world!</span>
+<span class="pl-en">greet</span>(<span class="pl-s">"Alice"</span>)   <span class="pl-c"># 输出: Hello, Alice!</span></pre></div>
+<p><strong>位置参数</strong></p>
+<p>按照定义顺序传递值。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">multiply</span>(<span class="pl-s1">a</span>, <span class="pl-s1">b</span>):
+    <span class="pl-k">return</span> <span class="pl-s1">a</span> <span class="pl-c1">*</span> <span class="pl-s1">b</span>
+
+<span class="pl-en">print</span>(<span class="pl-en">multiply</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>))  <span class="pl-c"># 输出: 12</span></pre></div>
+<p><strong>关键字参数</strong></p>
+<p>通过参数名传递值，无需遵循顺序。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">describe_pet</span>(<span class="pl-s1">animal_type</span>, <span class="pl-s1">pet_name</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">f"I have a <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">animal_type</span><span class="pl-kos">}</span></span> named <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">pet_name</span><span class="pl-kos">}</span></span>."</span>)
+
+<span class="pl-en">describe_pet</span>(<span class="pl-s1">pet_name</span><span class="pl-c1">=</span><span class="pl-s">"Buddy"</span>, <span class="pl-s1">animal_type</span><span class="pl-c1">=</span><span class="pl-s">"dog"</span>)
+<span class="pl-c"># 输出: I have a dog named Buddy.</span></pre></div>
+<p><strong>可变参数</strong></p>
+<p>使用 <code class="notranslate">*args</code> 和 <code class="notranslate">**kwargs</code> 处理可变数量的参数。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 接受任意多个位置参数</span>
+<span class="pl-k">def</span> <span class="pl-en">sum_numbers</span>(<span class="pl-c1">*</span><span class="pl-s1">args</span>):
+    <span class="pl-k">return</span> <span class="pl-en">sum</span>(<span class="pl-s1">args</span>)
+
+<span class="pl-en">print</span>(<span class="pl-en">sum_numbers</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>))  <span class="pl-c"># 输出: 10</span>
+
+<span class="pl-c"># 接受任意多个关键字参数</span>
+<span class="pl-k">def</span> <span class="pl-en">print_details</span>(<span class="pl-c1">**</span><span class="pl-s1">kwargs</span>):
+    <span class="pl-k">for</span> <span class="pl-s1">key</span>, <span class="pl-s1">value</span> <span class="pl-c1">in</span> <span class="pl-s1">kwargs</span>.<span class="pl-c1">items</span>():
+        <span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">key</span><span class="pl-kos">}</span></span>: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">value</span><span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-en">print_details</span>(<span class="pl-s1">name</span><span class="pl-c1">=</span><span class="pl-s">"Alice"</span>, <span class="pl-s1">age</span><span class="pl-c1">=</span><span class="pl-c1">25</span>)
+<span class="pl-c"># 输出:</span>
+<span class="pl-c"># name: Alice</span>
+<span class="pl-c"># age: 25</span></pre></div>
+<hr>
+<h3>3. 作用域与嵌套函数</h3>
+<p><strong>局部变量和全局变量</strong></p>
+<p>变量的作用范围由其定义的位置决定。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>  <span class="pl-c"># 全局变量</span>
+
+<span class="pl-k">def</span> <span class="pl-en">func</span>():
+    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span>  <span class="pl-c"># 局部变量</span>
+    <span class="pl-en">print</span>(<span class="pl-s1">x</span>)  <span class="pl-c"># 输出: 5</span>
+
+<span class="pl-en">func</span>()
+<span class="pl-en">print</span>(<span class="pl-s1">x</span>)  <span class="pl-c"># 输出: 10</span></pre></div>
+<p><strong>使用 <code class="notranslate">global</code> 修改全局变量</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+
+<span class="pl-k">def</span> <span class="pl-en">update_global</span>():
+    <span class="pl-k">global</span> <span class="pl-s1">x</span>
+    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">20</span>
+
+<span class="pl-en">update_global</span>()
+<span class="pl-en">print</span>(<span class="pl-s1">x</span>)  <span class="pl-c"># 输出: 20</span></pre></div>
+<p><strong>嵌套函数与 <code class="notranslate">nonlocal</code></strong></p>
+<p>嵌套函数可以访问外部函数的变量，使用 <code class="notranslate">nonlocal</code> 修改外层函数变量。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">outer</span>():
+    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">inner</span>():
+        <span class="pl-k">nonlocal</span> <span class="pl-s1">x</span>
+        <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">20</span>
+        <span class="pl-en">print</span>(<span class="pl-s">f"Inner x: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span><span class="pl-kos">}</span></span>"</span>)
+
+    <span class="pl-en">inner</span>()
+    <span class="pl-en">print</span>(<span class="pl-s">f"Outer x: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">x</span><span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-en">outer</span>()
+<span class="pl-c"># 输出:</span>
+<span class="pl-c"># Inner x: 20</span>
+<span class="pl-c"># Outer x: 20</span></pre></div>
+<hr>
+<h3>4. Lambda 表达式</h3>
+<p>Lambda 表达式是一种简洁的匿名函数，用于定义简单的函数。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 普通函数</span>
+<span class="pl-k">def</span> <span class="pl-en">square</span>(<span class="pl-s1">x</span>):
+    <span class="pl-k">return</span> <span class="pl-s1">x</span> <span class="pl-c1">**</span> <span class="pl-c1">2</span>
+
+<span class="pl-c"># Lambda 表达式</span>
+<span class="pl-s1">square_lambda</span> <span class="pl-c1">=</span> <span class="pl-k">lambda</span> <span class="pl-s1">x</span>: <span class="pl-s1">x</span> <span class="pl-c1">**</span> <span class="pl-c1">2</span>
+
+<span class="pl-en">print</span>(<span class="pl-en">square</span>(<span class="pl-c1">4</span>))         <span class="pl-c"># 输出: 16</span>
+<span class="pl-en">print</span>(<span class="pl-en">square_lambda</span>(<span class="pl-c1">4</span>))  <span class="pl-c"># 输出: 16</span></pre></div>
+<p>Lambda 表达式常与内置函数如 <code class="notranslate">map</code>、<code class="notranslate">filter</code>、<code class="notranslate">sorted</code> 等结合使用。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">numbers</span> <span class="pl-c1">=</span> [<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>]
+
+<span class="pl-c"># 使用 map 应用函数</span>
+<span class="pl-s1">squared</span> <span class="pl-c1">=</span> <span class="pl-en">map</span>(<span class="pl-k">lambda</span> <span class="pl-s1">x</span>: <span class="pl-s1">x</span> <span class="pl-c1">**</span> <span class="pl-c1">2</span>, <span class="pl-s1">numbers</span>)
+<span class="pl-en">print</span>(<span class="pl-en">list</span>(<span class="pl-s1">squared</span>))  <span class="pl-c"># 输出: [1, 4, 9, 16, 25]</span>
+
+<span class="pl-c"># 使用 filter 过滤数据</span>
+<span class="pl-s1">evens</span> <span class="pl-c1">=</span> <span class="pl-en">filter</span>(<span class="pl-k">lambda</span> <span class="pl-s1">x</span>: <span class="pl-s1">x</span> <span class="pl-c1">%</span> <span class="pl-c1">2</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>, <span class="pl-s1">numbers</span>)
+<span class="pl-en">print</span>(<span class="pl-en">list</span>(<span class="pl-s1">evens</span>))  <span class="pl-c"># 输出: [2, 4]</span></pre></div>
+<hr>
+<h3>5. 函数的高级特性</h3>
+<p><strong>函数作为参数</strong></p>
+<p>函数也可以作为参数传递。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">apply_function</span>(<span class="pl-s1">func</span>, <span class="pl-s1">value</span>):
+    <span class="pl-k">return</span> <span class="pl-en">func</span>(<span class="pl-s1">value</span>)
+
+<span class="pl-en">print</span>(<span class="pl-en">apply_function</span>(<span class="pl-k">lambda</span> <span class="pl-s1">x</span>: <span class="pl-s1">x</span> <span class="pl-c1">**</span> <span class="pl-c1">2</span>, <span class="pl-c1">5</span>))  <span class="pl-c"># 输出: 25</span></pre></div>
+<p><strong>函数作为返回值</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">make_multiplier</span>(<span class="pl-s1">factor</span>):
+    <span class="pl-k">def</span> <span class="pl-en">multiplier</span>(<span class="pl-s1">x</span>):
+        <span class="pl-k">return</span> <span class="pl-s1">x</span> <span class="pl-c1">*</span> <span class="pl-s1">factor</span>
+    <span class="pl-k">return</span> <span class="pl-s1">multiplier</span>
+
+<span class="pl-s1">double</span> <span class="pl-c1">=</span> <span class="pl-en">make_multiplier</span>(<span class="pl-c1">2</span>)
+<span class="pl-en">print</span>(<span class="pl-en">double</span>(<span class="pl-c1">5</span>))  <span class="pl-c"># 输出: 10</span></pre></div>
+<p><strong>装饰器</strong></p>
+<p>装饰器是一种高级函数，用于动态地修改其他函数的行为。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">decorator</span>(<span class="pl-s1">func</span>):
+    <span class="pl-k">def</span> <span class="pl-en">wrapper</span>():
+        <span class="pl-en">print</span>(<span class="pl-s">"Before the function call"</span>)
+        <span class="pl-en">func</span>()
+        <span class="pl-en">print</span>(<span class="pl-s">"After the function call"</span>)
+    <span class="pl-k">return</span> <span class="pl-s1">wrapper</span>
+
+<span class="pl-en">@<span class="pl-s1">decorator</span></span>
+<span class="pl-k">def</span> <span class="pl-en">say_hello</span>():
+    <span class="pl-en">print</span>(<span class="pl-s">"Hello!"</span>)
+
+<span class="pl-en">say_hello</span>()
+<span class="pl-c"># 输出:</span>
+<span class="pl-c"># Before the function call</span>
+<span class="pl-c"># Hello!</span>
+<span class="pl-c"># After the function call</span></pre></div>
+<hr>
+<h3>6. 函数的应用实例</h3>
+<p><strong>计算阶乘</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">factorial</span>(<span class="pl-s1">n</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">n</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
+        <span class="pl-k">return</span> <span class="pl-c1">1</span>
+    <span class="pl-k">return</span> <span class="pl-s1">n</span> <span class="pl-c1">*</span> <span class="pl-en">factorial</span>(<span class="pl-s1">n</span> <span class="pl-c1">-</span> <span class="pl-c1">1</span>)
+
+<span class="pl-en">print</span>(<span class="pl-en">factorial</span>(<span class="pl-c1">5</span>))  <span class="pl-c"># 输出: 120</span></pre></div>
+<p><strong>斐波那契数列</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">fibonacci</span>(<span class="pl-s1">n</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">n</span> <span class="pl-c1">&lt;=</span> <span class="pl-c1">1</span>:
+        <span class="pl-k">return</span> <span class="pl-s1">n</span>
+    <span class="pl-k">return</span> <span class="pl-en">fibonacci</span>(<span class="pl-s1">n</span> <span class="pl-c1">-</span> <span class="pl-c1">1</span>) <span class="pl-c1">+</span> <span class="pl-en">fibonacci</span>(<span class="pl-s1">n</span> <span class="pl-c1">-</span> <span class="pl-c1">2</span>)
+
+<span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>):
+    <span class="pl-en">print</span>(<span class="pl-en">fibonacci</span>(<span class="pl-s1">i</span>), <span class="pl-s1">end</span><span class="pl-c1">=</span><span class="pl-s">" "</span>)  <span class="pl-c"># 输出: 0 1 1 2 3 5 8 13 21 34</span></pre></div>
+<hr>
+<h2>九、文件操作：与外部数据交互的桥梁</h2>
+<p>文件操作是 Python 中用于读写外部数据的重要功能。通过内置的文件操作方法，程序可以方便地与文件系统交互。</p>
+<hr>
+<h3>1. 打开和关闭文件</h3>
+<p><strong>基本语法</strong></p>
+<p>使用 <code class="notranslate">open()</code> 函数打开文件，完成操作后使用 <code class="notranslate">close()</code> 关闭文件以释放资源。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 打开文件</span>
+<span class="pl-s1">file</span> <span class="pl-c1">=</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"w"</span>)
+
+<span class="pl-c"># 写入内容</span>
+<span class="pl-s1">file</span>.<span class="pl-c1">write</span>(<span class="pl-s">"Hello, World!"</span>)
+
+<span class="pl-c"># 关闭文件</span>
+<span class="pl-s1">file</span>.<span class="pl-c1">close</span>()</pre></div>
+<p><strong><code class="notranslate">with</code> 语句自动管理资源</strong></p>
+<p>推荐使用 <code class="notranslate">with</code> 语句代替手动关闭文件，避免忘记 <code class="notranslate">close()</code>。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"w"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">file</span>.<span class="pl-c1">write</span>(<span class="pl-s">"Hello, Python!"</span>)
+<span class="pl-c"># 文件会在 with 块结束时自动关闭</span></pre></div>
+<hr>
+<h3>2. 文件模式</h3>
+<p>在 <code class="notranslate">open()</code> 函数中，通过模式指定文件的操作方式：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="notranslate">"r"</code></td>
+<td>以只读模式打开（默认）。文件不存在时抛出异常。</td>
+</tr>
+<tr>
+<td><code class="notranslate">"w"</code></td>
+<td>以写入模式打开。文件存在会清空内容，不存在则创建。</td>
+</tr>
+<tr>
+<td><code class="notranslate">"a"</code></td>
+<td>以追加模式打开。文件不存在则创建。</td>
+</tr>
+<tr>
+<td><code class="notranslate">"x"</code></td>
+<td>以创建模式打开。文件已存在则抛出异常。</td>
+</tr>
+<tr>
+<td><code class="notranslate">"b"</code></td>
+<td>以二进制模式打开。可与其他模式组合，如 <code class="notranslate">"rb"</code>。</td>
+</tr>
+<tr>
+<td><code class="notranslate">"t"</code></td>
+<td>以文本模式打开（默认）。可与其他模式组合，如 <code class="notranslate">"rt"</code>。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>3. 读取文件内容</h3>
+<p><strong>使用 <code class="notranslate">read()</code></strong></p>
+<p>读取文件的全部内容。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">content</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">read</span>()
+    <span class="pl-en">print</span>(<span class="pl-s1">content</span>)</pre></div>
+<p><strong>使用 <code class="notranslate">readline()</code></strong></p>
+<p>逐行读取文件，每次读取一行。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">line</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">readline</span>()
+    <span class="pl-k">while</span> <span class="pl-s1">line</span>:
+        <span class="pl-en">print</span>(<span class="pl-s1">line</span>.<span class="pl-c1">strip</span>())  <span class="pl-c"># 去掉换行符</span>
+        <span class="pl-s1">line</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">readline</span>()</pre></div>
+<p><strong>使用 <code class="notranslate">readlines()</code></strong></p>
+<p>将文件的所有行作为一个列表返回。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">lines</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">readlines</span>()
+    <span class="pl-k">for</span> <span class="pl-s1">line</span> <span class="pl-c1">in</span> <span class="pl-s1">lines</span>:
+        <span class="pl-en">print</span>(<span class="pl-s1">line</span>.<span class="pl-c1">strip</span>())</pre></div>
+<hr>
+<h3>4. 写入文件内容</h3>
+<p><strong>使用 <code class="notranslate">write()</code></strong></p>
+<p>写入字符串到文件。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"w"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">file</span>.<span class="pl-c1">write</span>(<span class="pl-s">"This is a new line.<span class="pl-cce">\n</span>"</span>)
+    <span class="pl-s1">file</span>.<span class="pl-c1">write</span>(<span class="pl-s">"Another line."</span>)</pre></div>
+<p><strong>使用 <code class="notranslate">writelines()</code></strong></p>
+<p>写入多个字符串（列表形式）。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">lines</span> <span class="pl-c1">=</span> [<span class="pl-s">"First line<span class="pl-cce">\n</span>"</span>, <span class="pl-s">"Second line<span class="pl-cce">\n</span>"</span>, <span class="pl-s">"Third line<span class="pl-cce">\n</span>"</span>]
+<span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"w"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">file</span>.<span class="pl-c1">writelines</span>(<span class="pl-s1">lines</span>)</pre></div>
+<hr>
+<h3>5. 文件指针操作</h3>
+<p>文件指针表示文件的当前操作位置。</p>
+<p><strong>使用 <code class="notranslate">seek()</code></strong></p>
+<p>移动文件指针到指定位置。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">file</span>.<span class="pl-c1">seek</span>(<span class="pl-c1">5</span>)  <span class="pl-c"># 移动到第 5 个字节</span>
+    <span class="pl-en">print</span>(<span class="pl-s1">file</span>.<span class="pl-c1">read</span>())  <span class="pl-c"># 读取剩余内容</span></pre></div>
+<p><strong>使用 <code class="notranslate">tell()</code></strong></p>
+<p>获取当前文件指针位置。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-en">print</span>(<span class="pl-s1">file</span>.<span class="pl-c1">tell</span>())  <span class="pl-c"># 输出: 0</span>
+    <span class="pl-s1">file</span>.<span class="pl-c1">read</span>(<span class="pl-c1">5</span>)
+    <span class="pl-en">print</span>(<span class="pl-s1">file</span>.<span class="pl-c1">tell</span>())  <span class="pl-c"># 输出: 5</span></pre></div>
+<hr>
+<h3>6. 文件的其他操作</h3>
+<p><strong>检查文件是否存在</strong></p>
+<p>使用 <code class="notranslate">os</code> 或 <code class="notranslate">pathlib</code> 模块检查文件是否存在。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">os</span>
+
+<span class="pl-k">if</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-c1">exists</span>(<span class="pl-s">"example.txt"</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"文件存在"</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"文件不存在"</span>)</pre></div>
+<p><strong>删除文件</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">os</span>.<span class="pl-c1">remove</span>(<span class="pl-s">"example.txt"</span>)</pre></div>
+<p><strong>创建目录</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">os</span>.<span class="pl-c1">mkdir</span>(<span class="pl-s">"new_folder"</span>)</pre></div>
+<p><strong>删除目录</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">os</span>.<span class="pl-c1">rmdir</span>(<span class="pl-s">"new_folder"</span>)</pre></div>
+<hr>
+<h3>7. 二进制文件操作</h3>
+<p>用于处理图片、视频等非文本文件。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 读取二进制文件</span>
+<span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.png"</span>, <span class="pl-s">"rb"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">read</span>()
+    <span class="pl-en">print</span>(<span class="pl-s1">data</span>)
+
+<span class="pl-c"># 写入二进制文件</span>
+<span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example_copy.png"</span>, <span class="pl-s">"wb"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">file</span>.<span class="pl-c1">write</span>(<span class="pl-s1">data</span>)</pre></div>
+<hr>
+<h3>8. 综合实例</h3>
+<p><strong>统计文件中的单词数</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">content</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">read</span>()
+    <span class="pl-s1">words</span> <span class="pl-c1">=</span> <span class="pl-s1">content</span>.<span class="pl-c1">split</span>()
+    <span class="pl-en">print</span>(<span class="pl-s">f"单词数量: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-en">len</span>(<span class="pl-s1">words</span>)<span class="pl-kos">}</span></span>"</span>)</pre></div>
+<p><strong>合并多个文件的内容</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">files</span> <span class="pl-c1">=</span> [<span class="pl-s">"file1.txt"</span>, <span class="pl-s">"file2.txt"</span>, <span class="pl-s">"file3.txt"</span>]
+
+<span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">"merged.txt"</span>, <span class="pl-s">"w"</span>) <span class="pl-k">as</span> <span class="pl-s1">outfile</span>:
+    <span class="pl-k">for</span> <span class="pl-s1">fname</span> <span class="pl-c1">in</span> <span class="pl-s1">files</span>:
+        <span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s1">fname</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">infile</span>:
+            <span class="pl-s1">outfile</span>.<span class="pl-c1">write</span>(<span class="pl-s1">infile</span>.<span class="pl-c1">read</span>())</pre></div>
+<p><strong>备份文件</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">shutil</span>
+
+<span class="pl-s1">shutil</span>.<span class="pl-c1">copy</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"example_backup.txt"</span>)</pre></div>
+<hr>
+<h2>十一、异常处理</h2>
+<p>异常处理是 Python 提供的一种机制，用于捕获程序运行时的错误并进行适当的处理，从而防止程序因错误而崩溃。</p>
+<hr>
+<h3>1. 什么是异常？</h3>
+<p>异常是程序运行时出现的错误。常见的异常类型包括：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>异常类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="notranslate">ValueError</code></td>
+<td>当传递无效的参数时发生，例如将字符串转为整数时。</td>
+</tr>
+<tr>
+<td><code class="notranslate">TypeError</code></td>
+<td>操作或函数应用于不支持的类型时。</td>
+</tr>
+<tr>
+<td><code class="notranslate">KeyError</code></td>
+<td>字典中不存在指定键时。</td>
+</tr>
+<tr>
+<td><code class="notranslate">IndexError</code></td>
+<td>列表索引超出范围时。</td>
+</tr>
+<tr>
+<td><code class="notranslate">ZeroDivisionError</code></td>
+<td>尝试除以零时。</td>
+</tr>
+<tr>
+<td><code class="notranslate">FileNotFoundError</code></td>
+<td>文件不存在时。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>2. 捕获异常</h3>
+<p>通过 <code class="notranslate">try-except</code> 块捕获异常，防止程序崩溃。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">try</span>:
+    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"请输入一个数字："</span>))
+    <span class="pl-en">print</span>(<span class="pl-c1">10</span> <span class="pl-c1">/</span> <span class="pl-s1">x</span>)
+<span class="pl-k">except</span> <span class="pl-v">ZeroDivisionError</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"除数不能为零！"</span>)
+<span class="pl-k">except</span> <span class="pl-v">ValueError</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"请输入一个有效的数字！"</span>)</pre></div>
+<hr>
+<h3>3. 多个异常处理</h3>
+<p>可以在一个 <code class="notranslate">try</code> 块中捕获多种异常，并分别处理。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">try</span>:
+    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"请输入一个数字："</span>))
+    <span class="pl-en">print</span>(<span class="pl-c1">10</span> <span class="pl-c1">/</span> <span class="pl-s1">x</span>)
+<span class="pl-k">except</span> <span class="pl-v">ZeroDivisionError</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"除数不能为零！"</span>)
+<span class="pl-k">except</span> (<span class="pl-v">ValueError</span>, <span class="pl-v">TypeError</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"输入错误，请检查输入！"</span>)</pre></div>
+<hr>
+<h3>4. 捕获所有异常</h3>
+<p>使用通配符 <code class="notranslate">Exception</code> 捕获所有异常，但建议具体异常优先。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">try</span>:
+    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-en">int</span>(<span class="pl-en">input</span>(<span class="pl-s">"请输入一个数字："</span>))
+    <span class="pl-en">print</span>(<span class="pl-c1">10</span> <span class="pl-c1">/</span> <span class="pl-s1">x</span>)
+<span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">f"发生异常：<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<hr>
+<h3>5. <code class="notranslate">else</code> 和 <code class="notranslate">finally</code></h3>
+<ul>
+<li><strong><code class="notranslate">else</code></strong>: 当没有发生异常时执行。</li>
+<li><strong><code class="notranslate">finally</code></strong>: 无论是否发生异常都会执行，常用于释放资源。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">try</span>:
+    <span class="pl-s1">file</span> <span class="pl-c1">=</span> <span class="pl-en">open</span>(<span class="pl-s">"example.txt"</span>, <span class="pl-s">"r"</span>)
+    <span class="pl-s1">content</span> <span class="pl-c1">=</span> <span class="pl-s1">file</span>.<span class="pl-c1">read</span>()
+<span class="pl-k">except</span> <span class="pl-v">FileNotFoundError</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">"文件不存在！"</span>)
+<span class="pl-k">else</span>:
+    <span class="pl-en">print</span>(<span class="pl-s1">content</span>)
+<span class="pl-k">finally</span>:
+    <span class="pl-k">if</span> <span class="pl-s">'file'</span> <span class="pl-c1">in</span> <span class="pl-en">locals</span>() <span class="pl-c1">and</span> <span class="pl-c1">not</span> <span class="pl-s1">file</span>.<span class="pl-c1">closed</span>:
+        <span class="pl-s1">file</span>.<span class="pl-c1">close</span>()
+    <span class="pl-en">print</span>(<span class="pl-s">"文件操作结束。"</span>)</pre></div>
+<hr>
+<h3>6. 自定义异常</h3>
+<p>通过继承 <code class="notranslate">Exception</code> 类，可以定义自己的异常类型。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">CustomError</span>(<span class="pl-v">Exception</span>):
+    <span class="pl-k">pass</span>
+
+<span class="pl-k">def</span> <span class="pl-en">check_number</span>(<span class="pl-s1">num</span>):
+    <span class="pl-k">if</span> <span class="pl-s1">num</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">0</span>:
+        <span class="pl-k">raise</span> <span class="pl-en">CustomError</span>(<span class="pl-s">"数字不能为负数！"</span>)
+
+<span class="pl-k">try</span>:
+    <span class="pl-en">check_number</span>(<span class="pl-c1">-</span><span class="pl-c1">1</span>)
+<span class="pl-k">except</span> <span class="pl-v">CustomError</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+    <span class="pl-en">print</span>(<span class="pl-s">f"自定义异常捕获：<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<hr>
+<h3>7. 使用 <code class="notranslate">assert</code> 进行断言</h3>
+<p><code class="notranslate">assert</code> 用于检查条件是否满足，如果条件为 <code class="notranslate">False</code>，抛出 <code class="notranslate">AssertionError</code>。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span>
+<span class="pl-k">assert</span> <span class="pl-s1">x</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>, <span class="pl-s">"x 必须大于 0"</span>
+<span class="pl-k">assert</span> <span class="pl-s1">x</span> <span class="pl-c1">&lt;</span> <span class="pl-c1">5</span>, <span class="pl-s">"x 必须小于 5"</span>  <span class="pl-c"># 这行会抛出 AssertionError</span></pre></div>
+<hr>
+<h3>8. 异常处理的小建议</h3>
+<ol>
+<li><strong>优先捕获具体异常</strong>：尽量避免直接捕获 <code class="notranslate">Exception</code>。</li>
+<li><strong>处理必要的异常</strong>：仅捕获需要处理的异常，其他异常应允许程序抛出。</li>
+<li><strong>使用 <code class="notranslate">finally</code></strong>：在涉及资源操作（如文件、数据库连接）时，确保资源被正确释放。</li>
+<li><strong>记录日志</strong>：通过 <code class="notranslate">logging</code> 模块记录异常信息，便于后续分析。</li>
+</ol>
+<hr>
+<h3>9. 实例</h3>
+<ul>
+<li>文件读取的异常处理</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">read_file</span>(<span class="pl-s1">filename</span>):
+    <span class="pl-k">try</span>:
+        <span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s1">filename</span>, <span class="pl-s">"r"</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+            <span class="pl-k">return</span> <span class="pl-s1">file</span>.<span class="pl-c1">read</span>()
+    <span class="pl-k">except</span> <span class="pl-v">FileNotFoundError</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">f"文件 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">filename</span><span class="pl-kos">}</span></span> 不存在！"</span>)
+    <span class="pl-k">except</span> <span class="pl-v">PermissionError</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">f"没有权限读取文件 <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">filename</span><span class="pl-kos">}</span></span>！"</span>)
+    <span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">f"发生未知错误：<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-s1">content</span> <span class="pl-c1">=</span> <span class="pl-en">read_file</span>(<span class="pl-s">"example.txt"</span>)</pre></div>
+<ul>
+<li>网络请求的异常处理</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">requests</span>
+
+<span class="pl-k">def</span> <span class="pl-en">fetch_data</span>(<span class="pl-s1">url</span>):
+    <span class="pl-k">try</span>:
+        <span class="pl-s1">response</span> <span class="pl-c1">=</span> <span class="pl-s1">requests</span>.<span class="pl-c1">get</span>(<span class="pl-s1">url</span>)
+        <span class="pl-s1">response</span>.<span class="pl-c1">raise_for_status</span>()  <span class="pl-c"># 检查 HTTP 状态码</span>
+        <span class="pl-k">return</span> <span class="pl-s1">response</span>.<span class="pl-c1">json</span>()
+    <span class="pl-k">except</span> <span class="pl-s1">requests</span>.<span class="pl-c1">exceptions</span>.<span class="pl-c1">HTTPError</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">f"HTTP 错误: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
+    <span class="pl-k">except</span> <span class="pl-s1">requests</span>.<span class="pl-c1">exceptions</span>.<span class="pl-c1">ConnectionError</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">"网络连接错误！"</span>)
+    <span class="pl-k">except</span> <span class="pl-v">Exception</span> <span class="pl-k">as</span> <span class="pl-s1">e</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">f"发生未知错误: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">e</span><span class="pl-kos">}</span></span>"</span>)
+
+<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-en">fetch_data</span>(<span class="pl-s">"https://jsonplaceholder.typicode.com/posts"</span>)</pre></div>
+<hr>
+<h2>十二、模块与包</h2>
+<p>模块和包是 Python 中用于组织代码的重要工具。通过模块和包，开发者可以将代码划分为多个文件和目录，从而提高代码的可维护性和复用性。</p>
+<hr>
+<h3>1. 什么是模块？</h3>
+<p>模块是一个 Python 文件，包含函数、类和变量的定义，也可以包括可执行的代码。模块的作用是将代码逻辑分块，便于复用和组织。</p>
+<p><strong>导入模块</strong></p>
+<p>使用 <code class="notranslate">import</code> 语句导入模块。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 导入内置模块</span>
+<span class="pl-k">import</span> <span class="pl-s1">math</span>
+
+<span class="pl-c"># 使用模块中的函数</span>
+<span class="pl-en">print</span>(<span class="pl-s1">math</span>.<span class="pl-c1">sqrt</span>(<span class="pl-c1">16</span>))  <span class="pl-c"># 输出: 4.0</span></pre></div>
+<p><strong>自定义模块</strong></p>
+<p>创建一个 <code class="notranslate">mymodule.py</code> 文件，定义一个函数：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 文件: mymodule.py</span>
+<span class="pl-k">def</span> <span class="pl-en">greet</span>(<span class="pl-s1">name</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">f"Hello, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">name</span><span class="pl-kos">}</span></span>!"</span>)</pre></div>
+<p>在另一个文件中导入并使用：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">mymodule</span>
+
+<span class="pl-s1">mymodule</span>.<span class="pl-c1">greet</span>(<span class="pl-s">"Alice"</span>)  <span class="pl-c"># 输出: Hello, Alice!</span></pre></div>
+<p><strong>模块的多种导入方式</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 导入整个模块</span>
+<span class="pl-k">import</span> <span class="pl-s1">math</span>
+
+<span class="pl-c"># 导入模块中的特定函数或变量</span>
+<span class="pl-k">from</span> <span class="pl-s1">math</span> <span class="pl-k">import</span> <span class="pl-s1">sqrt</span>, <span class="pl-s1">pi</span>
+
+<span class="pl-c"># 导入并重命名模块</span>
+<span class="pl-k">import</span> <span class="pl-s1">math</span> <span class="pl-k">as</span> <span class="pl-s1">m</span>
+
+<span class="pl-c"># 使用通配符导入（不推荐）</span>
+<span class="pl-k">from</span> <span class="pl-s1">math</span> <span class="pl-k">import</span> <span class="pl-c1">*</span></pre></div>
+<hr>
+<h3>2. 什么是包？</h3>
+<p>包是一个包含多个模块的目录。通过使用包，可以组织和管理大量的模块。包的目录中必须包含一个特殊的 <code class="notranslate">__init__.py</code> 文件（Python 3.3 之后可选，但建议保留）。</p>
+<p><strong>创建包</strong></p>
+<p>假设目录结构如下：</p>
+<pre class="notranslate"><code class="notranslate">mypackage/
+    __init__.py
+    module1.py
+    module2.py
+</code></pre>
+<ul>
+<li><code class="notranslate">__init__.py</code> 用于标识目录是一个包，可以为空。</li>
+<li><code class="notranslate">module1.py</code> 和 <code class="notranslate">module2.py</code> 是包内的模块。</li>
+</ul>
+<p><strong>使用包</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 导入包中的模块</span>
+<span class="pl-k">from</span> <span class="pl-s1">mypackage</span> <span class="pl-k">import</span> <span class="pl-s1">module1</span>
+
+<span class="pl-s1">module1</span>.<span class="pl-c1">some_function</span>()
+
+<span class="pl-c"># 导入包中的特定函数</span>
+<span class="pl-k">from</span> <span class="pl-s1">mypackage</span>.<span class="pl-s1">module2</span> <span class="pl-k">import</span> <span class="pl-s1">another_function</span></pre></div>
+<hr>
+<h3>3. 搜索模块的路径</h3>
+<p>Python 在导入模块时，会按顺序搜索以下路径：</p>
+<ol>
+<li>当前脚本所在目录</li>
+<li><code class="notranslate">PYTHONPATH</code> 环境变量指定的目录</li>
+<li>Python 的标准库目录</li>
+<li>第三方包的安装目录（如 <code class="notranslate">site-packages</code>）</li>
+</ol>
+<p>可以通过 <code class="notranslate">sys.path</code> 查看所有搜索路径：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">sys</span>
+<span class="pl-en">print</span>(<span class="pl-s1">sys</span>.<span class="pl-c1">path</span>)</pre></div>
+<hr>
+<h3>4. 常用内置模块</h3>
+<p>Python 提供了许多内置模块，以下是几个常用模块的示例：</p>
+<ul>
+<li><strong><code class="notranslate">os</code></strong>：文件和目录操作</li>
+<li><strong><code class="notranslate">sys</code></strong>：与 Python 解释器交互</li>
+<li><strong><code class="notranslate">math</code></strong>：数学运算</li>
+<li><strong><code class="notranslate">random</code></strong>：随机数生成</li>
+<li><strong><code class="notranslate">datetime</code></strong>：日期和时间处理</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 使用 os 模块列出当前目录的文件</span>
+<span class="pl-k">import</span> <span class="pl-s1">os</span>
+<span class="pl-en">print</span>(<span class="pl-s1">os</span>.<span class="pl-c1">listdir</span>(<span class="pl-s">"."</span>))
+
+<span class="pl-c"># 使用 random 模块生成随机数</span>
+<span class="pl-k">import</span> <span class="pl-s1">random</span>
+<span class="pl-en">print</span>(<span class="pl-s1">random</span>.<span class="pl-c1">randint</span>(<span class="pl-c1">1</span>, <span class="pl-c1">10</span>))</pre></div>
+<hr>
+<h2>十三、面向对象编程：组织与封装的艺术</h2>
+<p>面向对象编程（OOP）是 Python 中的重要编程范式，通过类和对象来组织代码，使其更具模块化和复用性。</p>
+<hr>
+<h3>1. 什么是面向对象？</h3>
+<ul>
+<li><strong>类（Class）</strong>：定义对象的蓝图，描述对象的属性和行为。</li>
+<li><strong>对象（Object）</strong>：类的实例，是具体的数据和功能的结合体。</li>
+<li><strong>主要特性</strong>：</li>
+</ul>
+<ol>
+<li><strong>封装</strong>：将数据和方法打包在对象中。</li>
+<li><strong>继承</strong>：子类继承父类的属性和方法。</li>
+<li><strong>多态</strong>：对象可以根据实际类型表现出不同的行为。</li>
+</ol>
+<hr>
+<h3>2. 定义类和对象</h3>
+<p><strong>创建类</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Person</span>:
+    <span class="pl-c"># 初始化方法</span>
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">name</span>, <span class="pl-s1">age</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">name</span> <span class="pl-c1">=</span> <span class="pl-s1">name</span>  <span class="pl-c"># 实例属性</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">age</span> <span class="pl-c1">=</span> <span class="pl-s1">age</span>
+
+    <span class="pl-c"># 实例方法</span>
+    <span class="pl-k">def</span> <span class="pl-en">greet</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">f"Hello, my name is <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">name</span><span class="pl-kos">}</span></span> and I am <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">age</span><span class="pl-kos">}</span></span> years old."</span>)</pre></div>
+<p><strong>创建对象</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 创建对象</span>
+<span class="pl-s1">person1</span> <span class="pl-c1">=</span> <span class="pl-en">Person</span>(<span class="pl-s">"Alice"</span>, <span class="pl-c1">25</span>)
+
+<span class="pl-c"># 访问属性</span>
+<span class="pl-en">print</span>(<span class="pl-s1">person1</span>.<span class="pl-c1">name</span>)  <span class="pl-c"># 输出: Alice</span>
+
+<span class="pl-c"># 调用方法</span>
+<span class="pl-s1">person1</span>.<span class="pl-c1">greet</span>()  <span class="pl-c"># 输出: Hello, my name is Alice and I am 25 years old.</span></pre></div>
+<hr>
+<h3>3. 类的基本组成</h3>
+<p><strong>属性</strong></p>
+<ul>
+<li><strong>实例属性</strong>：在 <code class="notranslate">__init__</code> 方法中定义，属于具体对象。</li>
+<li><strong>类属性</strong>：直接在类中定义，属于整个类共享。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Person</span>:
+    <span class="pl-s1">species</span> <span class="pl-c1">=</span> <span class="pl-s">"Human"</span>  <span class="pl-c"># 类属性</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">name</span>, <span class="pl-s1">age</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">name</span> <span class="pl-c1">=</span> <span class="pl-s1">name</span>  <span class="pl-c"># 实例属性</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">age</span> <span class="pl-c1">=</span> <span class="pl-s1">age</span>
+
+<span class="pl-c"># 类属性访问</span>
+<span class="pl-en">print</span>(<span class="pl-v">Person</span>.<span class="pl-c1">species</span>)  <span class="pl-c"># 输出: Human</span>
+
+<span class="pl-c"># 实例属性访问</span>
+<span class="pl-s1">person1</span> <span class="pl-c1">=</span> <span class="pl-en">Person</span>(<span class="pl-s">"Alice"</span>, <span class="pl-c1">25</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">person1</span>.<span class="pl-c1">name</span>)  <span class="pl-c"># 输出: Alice</span></pre></div>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>实例方法</strong>：操作实例属性，需传递 <code class="notranslate">self</code>。</li>
+<li><strong>类方法</strong>：操作类属性，需传递 <code class="notranslate">cls</code>，用 <code class="notranslate">@classmethod</code> 装饰。</li>
+<li><strong>静态方法</strong>：与类或实例无关，用 <code class="notranslate">@staticmethod</code> 装饰。</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Example</span>:
+    <span class="pl-s1">class_attribute</span> <span class="pl-c1">=</span> <span class="pl-s">"Class Level"</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">instance_method</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">"This is an instance method."</span>)
+
+    <span class="pl-en">@<span class="pl-s1">classmethod</span></span>
+    <span class="pl-k">def</span> <span class="pl-en">class_method</span>(<span class="pl-s1">cls</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">f"This is a class method. Class attribute: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">cls</span>.<span class="pl-c1">class_attribute</span><span class="pl-kos">}</span></span>"</span>)
+
+    <span class="pl-en">@<span class="pl-s1">staticmethod</span></span>
+    <span class="pl-k">def</span> <span class="pl-en">static_method</span>():
+        <span class="pl-en">print</span>(<span class="pl-s">"This is a static method."</span>)
+
+<span class="pl-c"># 调用方法</span>
+<span class="pl-s1">example</span> <span class="pl-c1">=</span> <span class="pl-en">Example</span>()
+<span class="pl-s1">example</span>.<span class="pl-c1">instance_method</span>()
+<span class="pl-v">Example</span>.<span class="pl-c1">class_method</span>()
+<span class="pl-v">Example</span>.<span class="pl-c1">static_method</span>()</pre></div>
+<hr>
+<h3>4. 继承与多态</h3>
+<p><strong>继承</strong></p>
+<p>子类可以继承父类的属性和方法。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Animal</span>:
+    <span class="pl-k">def</span> <span class="pl-en">speak</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">"I am an animal."</span>)
+
+<span class="pl-k">class</span> <span class="pl-v">Dog</span>(<span class="pl-v">Animal</span>):
+    <span class="pl-k">def</span> <span class="pl-en">speak</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">"Woof! Woof!"</span>)
+
+<span class="pl-c"># 创建对象</span>
+<span class="pl-s1">dog</span> <span class="pl-c1">=</span> <span class="pl-en">Dog</span>()
+<span class="pl-s1">dog</span>.<span class="pl-c1">speak</span>()  <span class="pl-c"># 输出: Woof! Woof!</span></pre></div>
+<p><strong>使用 <code class="notranslate">super()</code> 调用父类方法</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Animal</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">name</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">name</span> <span class="pl-c1">=</span> <span class="pl-s1">name</span>
+
+<span class="pl-k">class</span> <span class="pl-v">Dog</span>(<span class="pl-v">Animal</span>):
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">name</span>, <span class="pl-s1">breed</span>):
+        <span class="pl-en">super</span>().<span class="pl-c1">__init__</span>(<span class="pl-s1">name</span>)  <span class="pl-c"># 调用父类构造函数</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">breed</span> <span class="pl-c1">=</span> <span class="pl-s1">breed</span>
+
+<span class="pl-s1">dog</span> <span class="pl-c1">=</span> <span class="pl-en">Dog</span>(<span class="pl-s">"Buddy"</span>, <span class="pl-s">"Golden Retriever"</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">dog</span>.<span class="pl-c1">name</span>, <span class="pl-s1">dog</span>.<span class="pl-c1">breed</span>)  <span class="pl-c"># 输出: Buddy Golden Retriever</span></pre></div>
+<p><strong>多态</strong></p>
+<p>多态允许不同类的对象以统一的方式调用相同的方法。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Cat</span>(<span class="pl-v">Animal</span>):
+    <span class="pl-k">def</span> <span class="pl-en">speak</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">print</span>(<span class="pl-s">"Meow!"</span>)
+
+<span class="pl-s1">animals</span> <span class="pl-c1">=</span> [<span class="pl-en">Dog</span>(), <span class="pl-en">Cat</span>()]
+
+<span class="pl-k">for</span> <span class="pl-s1">animal</span> <span class="pl-c1">in</span> <span class="pl-s1">animals</span>:
+    <span class="pl-s1">animal</span>.<span class="pl-c1">speak</span>()
+<span class="pl-c"># 输出:</span>
+<span class="pl-c"># Woof! Woof!</span>
+<span class="pl-c"># Meow!</span></pre></div>
+<hr>
+<h3>5. 封装与私有属性</h3>
+<p>通过双下划线 <code class="notranslate">__</code> 定义私有属性，仅限类内部访问。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">BankAccount</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">balance</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">__balance</span> <span class="pl-c1">=</span> <span class="pl-s1">balance</span>  <span class="pl-c"># 私有属性</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">deposit</span>(<span class="pl-s1">self</span>, <span class="pl-s1">amount</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">__balance</span> <span class="pl-c1">+=</span> <span class="pl-s1">amount</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">get_balance</span>(<span class="pl-s1">self</span>):
+        <span class="pl-k">return</span> <span class="pl-s1">self</span>.<span class="pl-c1">__balance</span>
+
+<span class="pl-s1">account</span> <span class="pl-c1">=</span> <span class="pl-en">BankAccount</span>(<span class="pl-c1">1000</span>)
+<span class="pl-s1">account</span>.<span class="pl-c1">deposit</span>(<span class="pl-c1">500</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">account</span>.<span class="pl-c1">get_balance</span>())  <span class="pl-c"># 输出: 1500</span>
+<span class="pl-c"># print(account.__balance)  # AttributeError: 'BankAccount' object has no attribute '__balance'</span></pre></div>
+<hr>
+<h3>6. 属性和方法的高级用法</h3>
+<p><strong>属性装饰器</strong></p>
+<p>使用 <code class="notranslate">@property</code> 将方法变为可访问的属性。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Circle</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">radius</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">radius</span> <span class="pl-c1">=</span> <span class="pl-s1">radius</span>
+
+    <span class="pl-en">@<span class="pl-s1">property</span></span>
+    <span class="pl-k">def</span> <span class="pl-en">area</span>(<span class="pl-s1">self</span>):
+        <span class="pl-k">return</span> <span class="pl-c1">3.14</span> <span class="pl-c1">*</span> <span class="pl-s1">self</span>.<span class="pl-c1">radius</span> <span class="pl-c1">**</span> <span class="pl-c1">2</span>
+
+<span class="pl-s1">circle</span> <span class="pl-c1">=</span> <span class="pl-en">Circle</span>(<span class="pl-c1">5</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">circle</span>.<span class="pl-c1">area</span>)  <span class="pl-c"># 输出: 78.5</span></pre></div>
+<p><strong>魔术方法</strong></p>
+<p>魔术方法用于实现对象的特殊行为，如加法、字符串表示等。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Vector</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">x</span>, <span class="pl-s1">y</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">x</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">y</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">__add__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">other</span>):
+        <span class="pl-k">return</span> <span class="pl-en">Vector</span>(<span class="pl-s1">self</span>.<span class="pl-c1">x</span> <span class="pl-c1">+</span> <span class="pl-s1">other</span>.<span class="pl-c1">x</span>, <span class="pl-s1">self</span>.<span class="pl-c1">y</span> <span class="pl-c1">+</span> <span class="pl-s1">other</span>.<span class="pl-c1">y</span>)
+
+    <span class="pl-k">def</span> <span class="pl-en">__str__</span>(<span class="pl-s1">self</span>):
+        <span class="pl-k">return</span> <span class="pl-s">f"Vector(<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">x</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">y</span><span class="pl-kos">}</span></span>)"</span>
+
+<span class="pl-s1">v1</span> <span class="pl-c1">=</span> <span class="pl-en">Vector</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>)
+<span class="pl-s1">v2</span> <span class="pl-c1">=</span> <span class="pl-en">Vector</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">v1</span> <span class="pl-c1">+</span> <span class="pl-s1">v2</span>)  <span class="pl-c"># 输出: Vector(4, 6)</span></pre></div>
+<hr>
+<h3>7. 综合实例</h3>
+<p><strong>简单的学生管理系统</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-v">Student</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">name</span>, <span class="pl-s1">age</span>, <span class="pl-s1">grade</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">name</span> <span class="pl-c1">=</span> <span class="pl-s1">name</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">age</span> <span class="pl-c1">=</span> <span class="pl-s1">age</span>
+        <span class="pl-s1">self</span>.<span class="pl-c1">grade</span> <span class="pl-c1">=</span> <span class="pl-s1">grade</span>
+
+    <span class="pl-k">def</span> <span class="pl-en">get_details</span>(<span class="pl-s1">self</span>):
+        <span class="pl-k">return</span> <span class="pl-s">f"Name: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">name</span><span class="pl-kos">}</span></span>, Age: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">age</span><span class="pl-kos">}</span></span>, Grade: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-c1">grade</span><span class="pl-kos">}</span></span>"</span>
+
+<span class="pl-k">class</span> <span class="pl-v">Classroom</span>:
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">students</span> <span class="pl-c1">=</span> []
+
+    <span class="pl-k">def</span> <span class="pl-en">add_student</span>(<span class="pl-s1">self</span>, <span class="pl-s1">student</span>):
+        <span class="pl-s1">self</span>.<span class="pl-c1">students</span>.<span class="pl-c1">append</span>(<span class="pl-s1">student</span>)
+
+    <span class="pl-k">def</span> <span class="pl-en">show_students</span>(<span class="pl-s1">self</span>):
+        <span class="pl-k">for</span> <span class="pl-s1">student</span> <span class="pl-c1">in</span> <span class="pl-s1">self</span>.<span class="pl-c1">students</span>:
+            <span class="pl-en">print</span>(<span class="pl-s1">student</span>.<span class="pl-c1">get_details</span>())
+
+<span class="pl-c"># 使用示例</span>
+<span class="pl-s1">s1</span> <span class="pl-c1">=</span> <span class="pl-en">Student</span>(<span class="pl-s">"Alice"</span>, <span class="pl-c1">20</span>, <span class="pl-s">"A"</span>)
+<span class="pl-s1">s2</span> <span class="pl-c1">=</span> <span class="pl-en">Student</span>(<span class="pl-s">"Bob"</span>, <span class="pl-c1">21</span>, <span class="pl-s">"B"</span>)
+<span class="pl-s1">classroom</span> <span class="pl-c1">=</span> <span class="pl-en">Classroom</span>()
+<span class="pl-s1">classroom</span>.<span class="pl-c1">add_student</span>(<span class="pl-s1">s1</span>)
+<span class="pl-s1">classroom</span>.<span class="pl-c1">add_student</span>(<span class="pl-s1">s2</span>)
+<span class="pl-s1">classroom</span>.<span class="pl-c1">show_students</span>()
+<span class="pl-c"># 输出:</span>
+<span class="pl-c"># Name: Alice, Age: 20, Grade: A</span>
+<span class="pl-c"># Name: Bob, Age: 21, Grade: B</span></pre></div>
+<hr>
+<h2>本文参考：</h2>
+<ul>
+<li>菜鸟教程：<a href="https://www.runoob.com/python3/python3-tutorial.html" rel="nofollow">https://www.runoob.com/python3/python3-tutorial.html</a></li>
+<li>GitHub项目：<a href="https://github.com/AccumulateMore/Python">https://github.com/AccumulateMore/Python</a> 及 <a href="https://github.com/jackfrued/Python-100-Days">https://github.com/jackfrued/Python-100-Days</a></li>
+<li>B站视频：<a href="https://www.bilibili.com/video/BV1wD4y1o7AS/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=0b1d223da4db87ea07b59e8ae8ca4f45" rel="nofollow">https://www.bilibili.com/video/BV1wD4y1o7AS/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=0b1d223da4db87ea07b59e8ae8ca4f45</a></li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>
+
+</html>
