@@ -11,11 +11,9 @@
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
 <meta name="description" content="
-
 本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
 <meta property="og:title" content="线性回归笔记">
 <meta property="og:description" content="
-
 本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hermit200.github.io/post/xian-xing-hui-gui-bi-ji.html">
@@ -150,119 +148,104 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <hr>
 <h3>四、<strong>结果分析</strong></h3>
 <ol>
-<li><strong>输出</strong>：
-<pre class="notranslate"><code class="notranslate"></code></pre>
+<li><strong>输出</strong>：</li>
+</ol>
+<pre class="notranslate"><code class="notranslate"> 真实权重: [3], 预测权重: [2.77011339]
+真实偏置: 5, 预测偏置: [5.21509616]
+</code></pre>
+<ol start="3">
+<li>
+<p><strong>图像解释</strong>：<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/17d8eeee8bac5584d5f60855529de6c326b2381b2733a55a770e0aabc3dc7643/68747470733a2f2f692e6962622e636f2f6362516773765a2f312e706e67"><img src="https://camo.githubusercontent.com/17d8eeee8bac5584d5f60855529de6c326b2381b2733a55a770e0aabc3dc7643/68747470733a2f2f692e6962622e636f2f6362516773765a2f312e706e67" alt="线性回归python图" data-canonical-src="https://i.ibb.co/cbQgsvZ/1.png" style="max-width: 100%;"></a></p>
+<ul>
+<li>蓝点表示真实数据（包含噪声）。</li>
+<li>红线表示我们用解析解拟合出的线性回归模型。</li>
+</ul>
 </li>
 </ol>
-<p>真实权重: [3], 预测权重: [2.77011339]<br>
-真实偏置: 5, 预测偏置: [5.21509616]</p>
-<pre class="notranslate"><code class="notranslate">
-2. **图像解释**：
-![线性回归python图](https://i.ibb.co/cbQgsvZ/1.png)
+<hr>
+<h3>五、头脑风暴</h3>
+<h4>1.手写版公式推导过程</h4>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/4a0446fb3ae61bd4ac697e01f7af9df6d5f93182895b9d0f5fe2744282fbb67d/68747470733a2f2f692e6962622e636f2f367434357267322f696d6167652e706e67"><img src="https://camo.githubusercontent.com/4a0446fb3ae61bd4ac697e01f7af9df6d5f93182895b9d0f5fe2744282fbb67d/68747470733a2f2f692e6962622e636f2f367434357267322f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/6t45rg2/image.png" style="max-width: 100%;"></a></p>
+<h4>2.可以加入梯度下降来优化线性回归</h4>
+<p><strong>简单解释</strong><br>
+梯度下降是一种迭代优化算法，用于通过不断调整参数)来最小化损失函数。相比解析解（直接计算），梯度下降更加适合大规模数据集，因为它避免了矩阵求逆的高计算成本。</p>
+<p><strong>主要过程</strong>：<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/6cfaffa4ce14acfa82d3b478488a50815bf0326841522ebd3dc18f729c59a821/68747470733a2f2f692e6962622e636f2f58385433786e582f696d6167652e706e67"><img src="https://camo.githubusercontent.com/6cfaffa4ce14acfa82d3b478488a50815bf0326841522ebd3dc18f729c59a821/68747470733a2f2f692e6962622e636f2f58385433786e582f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/X8T3xnX/image.png" style="max-width: 100%;"></a></p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>适用于大规模数据。</li>
+<li>可以逐步逼近全局最优解。</li>
+</ul>
+<hr>
+<h4>3.正则化（L1/L2）处理过拟合</h4>
+<h4><strong>简单解释</strong></h4>
+<p>正则化通过在损失函数中增加一个惩罚项，限制模型参数的大小，从而防止过拟合。主要有两种形式：</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/fa839be25b6d1df0f54d335d23cfdb16f4f08e198cf5845c0debe26ea2c48867/68747470733a2f2f692e6962622e636f2f7772744466485a2f696d6167652e706e67"><img src="https://camo.githubusercontent.com/fa839be25b6d1df0f54d335d23cfdb16f4f08e198cf5845c0debe26ea2c48867/68747470733a2f2f692e6962622e636f2f7772744466485a2f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/wrtDfHZ/image.png" style="max-width: 100%;"></a></p>
+<p><strong>正则化的意义</strong>：</p>
+<ul>
+<li>防止模型过度拟合训练数据。</li>
+<li>提高模型对新数据的泛化能力。</li>
+</ul>
+<hr>
+<h4>4.更简单的代码显示</h4>
+<p><strong>4.1. 使用 PyTorch 实现线性回归</strong></p>
+<p><strong>代码实现</strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">torch</span>
+<span class="pl-k">import</span> <span class="pl-s1">torch</span>.<span class="pl-s1">nn</span> <span class="pl-k">as</span> <span class="pl-s1">nn</span>
+<span class="pl-k">import</span> <span class="pl-s1">matplotlib</span>.<span class="pl-s1">pyplot</span> <span class="pl-k">as</span> <span class="pl-s1">plt</span>
+<span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
 
-- 蓝点表示真实数据（包含噪声）。
-- 红线表示我们用解析解拟合出的线性回归模型。
+<span class="pl-c"># 1. 生成数据</span>
+<span class="pl-s1">np</span>.<span class="pl-c1">random</span>.<span class="pl-c1">seed</span>(<span class="pl-c1">42</span>)
+<span class="pl-c1">X</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-s1">np</span>.<span class="pl-c1">random</span>.<span class="pl-c1">rand</span>(<span class="pl-c1">100</span>, <span class="pl-c1">1</span>).<span class="pl-c1">astype</span>(<span class="pl-s1">np</span>.<span class="pl-c1">float32</span>)
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-c1">3</span> <span class="pl-c1">*</span> <span class="pl-c1">X</span> <span class="pl-c1">+</span> <span class="pl-c1">5</span> <span class="pl-c1">+</span> <span class="pl-s1">np</span>.<span class="pl-c1">random</span>.<span class="pl-c1">randn</span>(<span class="pl-c1">100</span>, <span class="pl-c1">1</span>).<span class="pl-c1">astype</span>(<span class="pl-s1">np</span>.<span class="pl-c1">float32</span>)  <span class="pl-c"># y = 3X + 5 + 噪声</span>
 
----
+<span class="pl-c"># 转换为 PyTorch 张量</span>
+<span class="pl-v">X_tensor</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">from_numpy</span>(<span class="pl-c1">X</span>)
+<span class="pl-s1">y_tensor</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">from_numpy</span>(<span class="pl-s1">y</span>)
 
-### 五、头脑风暴
+<span class="pl-c"># 2. 定义模型</span>
+<span class="pl-k">class</span> <span class="pl-v">LinearRegressionModel</span>(<span class="pl-s1">nn</span>.<span class="pl-c1">Module</span>):
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>):
+        <span class="pl-en">super</span>(<span class="pl-v">LinearRegressionModel</span>, <span class="pl-s1">self</span>).<span class="pl-c1">__init__</span>()
+        <span class="pl-s1">self</span>.<span class="pl-c1">linear</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Linear</span>(<span class="pl-c1">1</span>, <span class="pl-c1">1</span>)  <span class="pl-c"># 输入维度 1，输出维度 1</span>
 
-#### 1.手写版公式推导过程
+    <span class="pl-k">def</span> <span class="pl-en">forward</span>(<span class="pl-s1">self</span>, <span class="pl-s1">x</span>):
+        <span class="pl-k">return</span> <span class="pl-s1">self</span>.<span class="pl-c1">linear</span>(<span class="pl-s1">x</span>)
 
-![](https://i.ibb.co/6t45rg2/image.png)
+<span class="pl-c"># 创建模型实例</span>
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">LinearRegressionModel</span>()
 
-#### 2.可以加入梯度下降来优化线性回归
+<span class="pl-c"># 3. 定义损失函数和优化器</span>
+<span class="pl-s1">criterion</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">MSELoss</span>()  <span class="pl-c"># 均方误差损失</span>
+<span class="pl-s1">optimizer</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">optim</span>.<span class="pl-c1">SGD</span>(<span class="pl-s1">model</span>.<span class="pl-c1">parameters</span>(), <span class="pl-s1">lr</span><span class="pl-c1">=</span><span class="pl-c1">0.01</span>)  <span class="pl-c"># 随机梯度下降</span>
 
-**简单解释**
-梯度下降是一种迭代优化算法，用于通过不断调整参数)来最小化损失函数。相比解析解（直接计算），梯度下降更加适合大规模数据集，因为它避免了矩阵求逆的高计算成本。
+<span class="pl-c"># 4. 训练模型</span>
+<span class="pl-s1">epochs</span> <span class="pl-c1">=</span> <span class="pl-c1">1000</span>
+<span class="pl-s1">losses</span> <span class="pl-c1">=</span> []
 
-**主要过程**：
-![](https://i.ibb.co/X8T3xnX/image.png)
+<span class="pl-k">for</span> <span class="pl-s1">epoch</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-s1">epochs</span>):
+    <span class="pl-c"># 前向传播</span>
+    <span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-en">model</span>(<span class="pl-v">X_tensor</span>)
+    <span class="pl-s1">loss</span> <span class="pl-c1">=</span> <span class="pl-en">criterion</span>(<span class="pl-s1">y_pred</span>, <span class="pl-s1">y_tensor</span>)
 
-**优点**：
-- 适用于大规模数据。
-- 可以逐步逼近全局最优解。
+    <span class="pl-c"># 反向传播和优化</span>
+    <span class="pl-s1">optimizer</span>.<span class="pl-c1">zero_grad</span>()
+    <span class="pl-s1">loss</span>.<span class="pl-c1">backward</span>()
+    <span class="pl-s1">optimizer</span>.<span class="pl-c1">step</span>()
 
----
+    <span class="pl-c"># 记录损失</span>
+    <span class="pl-s1">losses</span>.<span class="pl-c1">append</span>(<span class="pl-s1">loss</span>.<span class="pl-c1">item</span>())
+    <span class="pl-k">if</span> <span class="pl-s1">epoch</span> <span class="pl-c1">%</span> <span class="pl-c1">100</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
+        <span class="pl-en">print</span>(<span class="pl-s">f"Epoch <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">epoch</span><span class="pl-kos">}</span></span>, Loss: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">loss</span>.<span class="pl-c1">item</span>():.4f<span class="pl-kos">}</span></span>"</span>)
 
-#### 3.正则化（L1/L2）处理过拟合
+<span class="pl-c"># 5. 获取权重和偏置</span>
+<span class="pl-s1">w</span>, <span class="pl-s1">b</span> <span class="pl-c1">=</span> <span class="pl-s1">model</span>.<span class="pl-c1">linear</span>.<span class="pl-c1">weight</span>.<span class="pl-c1">item</span>(), <span class="pl-s1">model</span>.<span class="pl-c1">linear</span>.<span class="pl-c1">bias</span>.<span class="pl-c1">item</span>()
+<span class="pl-en">print</span>(<span class="pl-s">f"预测权重: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">w</span>:.2f<span class="pl-kos">}</span></span>, 预测偏置: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">b</span>:.2f<span class="pl-kos">}</span></span>"</span>)
 
-#### **简单解释**
-正则化通过在损失函数中增加一个惩罚项，限制模型参数的大小，从而防止过拟合。主要有两种形式：
-
-![](https://i.ibb.co/wrtDfHZ/image.png)
-
-**正则化的意义**：
-- 防止模型过度拟合训练数据。
-- 提高模型对新数据的泛化能力。
-
----
-
-#### 4.更简单的代码显示
-
-
-**4.1. 使用 PyTorch 实现线性回归**
-
-**代码实现**
-
-```python
-import torch
-import torch.nn as nn
-import matplotlib.pyplot as plt
-import numpy as np
-
-# 1. 生成数据
-np.random.seed(42)
-X = 2 * np.random.rand(100, 1).astype(np.float32)
-y = 3 * X + 5 + np.random.randn(100, 1).astype(np.float32)  # y = 3X + 5 + 噪声
-
-# 转换为 PyTorch 张量
-X_tensor = torch.from_numpy(X)
-y_tensor = torch.from_numpy(y)
-
-# 2. 定义模型
-class LinearRegressionModel(nn.Module):
- def __init__(self):
-     super(LinearRegressionModel, self).__init__()
-     self.linear = nn.Linear(1, 1)  # 输入维度 1，输出维度 1
-
- def forward(self, x):
-     return self.linear(x)
-
-# 创建模型实例
-model = LinearRegressionModel()
-
-# 3. 定义损失函数和优化器
-criterion = nn.MSELoss()  # 均方误差损失
-optimizer = torch.optim.SGD(model.parameters(), lr=0.01)  # 随机梯度下降
-
-# 4. 训练模型
-epochs = 1000
-losses = []
-
-for epoch in range(epochs):
- # 前向传播
- y_pred = model(X_tensor)
- loss = criterion(y_pred, y_tensor)
-
- # 反向传播和优化
- optimizer.zero_grad()
- loss.backward()
- optimizer.step()
-
- # 记录损失
- losses.append(loss.item())
- if epoch % 100 == 0:
-     print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
-
-# 5. 获取权重和偏置
-w, b = model.linear.weight.item(), model.linear.bias.item()
-print(f"预测权重: {w:.2f}, 预测偏置: {b:.2f}")
-
-# 6. 结果
-y_pred = model(X_tensor).detach().numpy()  # 获取预测值
-
-</code></pre>
+<span class="pl-c"># 6. 结果</span>
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-en">model</span>(<span class="pl-v">X_tensor</span>).<span class="pl-c1">detach</span>().<span class="pl-c1">numpy</span>()  <span class="pl-c"># 获取预测值</span></pre></div>
 <hr>
 <p><strong>4.2. 使用 Scikit-learn 实现线性回归（带正则化）</strong></p>
 <p><strong>a. 普通线性回归</strong></p>
