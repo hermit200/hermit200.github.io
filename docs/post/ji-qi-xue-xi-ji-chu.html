@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:title" content="机器学习基础">
+<meta property="og:description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/ji-qi-xue-xi-ji-chu.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>机器学习基础</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">机器学习基础</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/9" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。这里是**第一章“绪论”**的阅读笔记。本文整理了相关知识点，并且记录了我在阅读时的一些疑惑和思考，当然也有我自己的尝试性解答。</p>
+<p>希望这份笔记对你有帮助🌟</p>
+<h3>1.什么是机器学习</h3>
+<blockquote>
+<p>机器学习致力于研究如何通过计算的手段，利用经验来改善系统自身的性能。</p>
+</blockquote>
+<p><strong>1.1 机器学习的定义与本质</strong></p>
+<ul>
+<li>机器学习是让计算机通过<strong>数据学习</strong>并改善自身性能，而不是通过明确的指令编程。</li>
+<li><strong>数据 → 学习算法 → 模型 → 推断与应用</strong>：这是机器学习的核心流程。</li>
+</ul>
+<p><strong>1.2 数据、模型、算法的关系</strong></p>
+<ol>
+<li>
+<p><strong>数据（Experience）</strong></p>
+<ul>
+<li>数据是机器学习的“燃料”。它可以是图片、文字、音频、数值等。</li>
+<li>数据通常需要清洗与预处理，例如去除异常值或填补缺失值。</li>
+</ul>
+</li>
+<li>
+<p><strong>模型（Model）</strong></p>
+<ul>
+<li>模型是数据与学习算法的产物，它是机器学习的核心结果。</li>
+<li><strong>模型的本质</strong>：它是一个函数 (f(x))，能从输入 (x)（数据特征）预测输出 (y)（目标值）。</li>
+<li>不同模型适用于不同问题：
+<ul>
+<li>回归问题：线性回归模型。</li>
+<li>分类问题：逻辑回归、支持向量机等。</li>
+<li>生成问题：生成对抗网络（GAN）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>算法（Learning Algorithm）</strong></p>
+<ul>
+<li>算法是从数据中学习模型的工具。例如，梯度下降算法通过不断调整模型参数，使其预测误差最小化。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>1.3 机器学习的类别</strong><br>
+机器学习根据数据特征和学习目标分为以下三类：</p>
+<ol>
+<li>
+<p><strong>监督学习（Supervised Learning）</strong></p>
+<ul>
+<li>数据包含输入和对应的正确输出（标注数据）。模型从这些数据中学习规则。</li>
+<li>例子：
+<ul>
+<li>输入：图片；输出：是否含有猫（分类）。</li>
+<li>输入：房屋面积；输出：房价（回归）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>无监督学习（Unsupervised Learning）</strong></p>
+<ul>
+<li>数据没有明确的输出，目标是发现数据的结构或规律。</li>
+<li>例子：
+<ul>
+<li>聚类：把相似的图片分为一组。</li>
+<li>降维：将高维数据映射到低维空间。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>强化学习（Reinforcement Learning）</strong></p>
+<ul>
+<li>模型通过与环境的交互学习策略，目标是最大化长期回报。</li>
+<li>例子：
+<ul>
+<li>AlphaGo 学习下棋。</li>
+<li>机器人学习控制。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>1.4 思考：学习算法如何定义“学习”</strong></p>
+<ul>
+<li>
+<p><strong>机器是否真正“理解”了数据？</strong><br>
+机器学习模型的表现取决于数据的质量和学习算法的能力。但模型本质上只是寻找输入与输出的数学关系，它并不能“理解”数据的语义。</p>
+</li>
+<li>
+<p><strong>学习的衡量标准</strong>：<br>
+学习是否成功的标准是模型在新数据上的表现（即<strong>泛化能力</strong>）。</p>
+</li>
+</ul>
+<hr>
+<h3>2.基础术语</h3>
+<p>在机器学习中，数据和模型是核心。以下是书上涉及到的主要术语解析和补充案例：</p>
+<hr>
+<p><strong>1. 数据相关术语</strong></p>
+<ol>
+<li>
+<p><strong>数据集 (Dataset)</strong></p>
+<ul>
+<li>定义：由多条数据记录组成，每条记录描述一个对象或事件。</li>
+<li>例子：<br>
+一个水果的“数据集”可能包括以下记录：<br>
+{“颜色”: “红色”, “大小”: “大”, “重量”: “重”}<br>
+{“颜色”: “黄色”, “大小”: “中”, “重量”: “轻”}</li>
+</ul>
+</li>
+<li>
+<p><strong>样本 (Sample) 或示例 (Instance)</strong></p>
+<ul>
+<li>定义：数据集中每一条数据记录称为“样本”。</li>
+<li>例子：<br>
+一条示例可能是：{“颜色”: “绿色”, “大小”: “小”, “重量”: “中”}。</li>
+</ul>
+</li>
+<li>
+<p><strong>属性 (Attribute) 或特征 (Feature)</strong></p>
+<ul>
+<li>定义：描述样本的某一方面的性质或属性。</li>
+<li>例子：<br>
+在水果的数据中，“颜色”、“大小”和“重量”就是属性。</li>
+</ul>
+</li>
+<li>
+<p><strong>属性空间 (Attribute Space)</strong></p>
+<ul>
+<li>定义：所有属性的组合构成了属性空间，每个样本可视为属性空间中的一个点。</li>
+<li>例子：<br>
+如果有 3 个属性：颜色、大小、重量，属性空间是一个三维空间。</li>
+</ul>
+</li>
+<li>
+<p><strong>特征向量 (Feature Vector)</strong></p>
+<ul>
+<li>定义：一个样本在属性空间中的坐标。</li>
+<li>例子：<br>
+对于示例 {“颜色”: “红色”, “大小”: “中”, “重量”: “重”}，假设我们用数值化的方法编码，特征向量可能是 [1, 2, 3]。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>2. 训练与学习相关术语</strong></p>
+<ol>
+<li>
+<p><strong>训练集 (Training Set)</strong></p>
+<ul>
+<li>定义：用于训练模型的数据集。</li>
+<li>例子：<br>
+包括水果的颜色、大小和重量等信息以及其<strong>类别（label）</strong>（例如“苹果”或“橙子”）。</li>
+</ul>
+</li>
+<li>
+<p><strong>假设 (Hypothesis)</strong></p>
+<ul>
+<li>定义：模型学习到的潜在规则。</li>
+<li>例子：<br>
+假设“如果颜色是红色，大小是中等，重量是重的，那么是苹果”。</li>
+</ul>
+</li>
+<li>
+<p><strong>模型 (Model)</strong></p>
+<ul>
+<li>定义：训练过程生成的用于预测新数据的工具。</li>
+<li>例子：<br>
+决策树、支持向量机等机器学习算法生成的结构。</li>
+</ul>
+</li>
+<li>
+<p><strong>标签/类别 (Label)</strong></p>
+<ul>
+<li>定义：样本对应的目标值。</li>
+<li>例子：<br>
+对于样本 {“颜色”: “黄色”, “大小”: “大”}，标签可以是“香蕉”。</li>
+</ul>
+</li>
+<li>
+<p><strong>测试集 (Testing Set)</strong></p>
+<ul>
+<li>定义：用于评估模型性能的独立数据集。</li>
+<li>例子：<br>
+包含水果特征的数据，<strong>但没有用于训练模型</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>泛化能力 (Generalization)</strong></p>
+<ul>
+<li>定义：模型对未见数据的预测能力。</li>
+<li>例子：<br>
+如果模型在测试集上准确率高，说明其泛化能力强。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>3. 不同的机器学习任务</strong></p>
+<ol>
+<li>
+<p><strong>分类 (Classification)</strong></p>
+<ul>
+<li>定义：预测数据所属的类别。</li>
+<li>例子：<br>
+输入图片，输出是“猫”或“狗”。</li>
+</ul>
+</li>
+<li>
+<p><strong>回归 (Regression)</strong></p>
+<ul>
+<li>定义：预测一个连续值。</li>
+<li>例子：<br>
+输入房屋面积，输出房价。</li>
+</ul>
+</li>
+<li>
+<p><strong>聚类 (Clustering)</strong></p>
+<ul>
+<li>定义：将数据分成若干组，每组包含相似的样本。</li>
+<li>例子：<br>
+根据购物习惯将顾客分为不同群体。</li>
+</ul>
+</li>
+<li>
+<p><strong>监督学习 (Supervised Learning)</strong></p>
+<ul>
+<li>定义：数据有明确的输入和输出。</li>
+<li>例子：<br>
+用带有标签的水果数据训练分类器。</li>
+</ul>
+</li>
+<li>
+<p><strong>无监督学习 (Unsupervised Learning)</strong></p>
+<ul>
+<li>定义：数据没有明确的输出。</li>
+<li>例子：<br>
+用聚类算法自动分组水果。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>4. 常见分布假设</strong></p>
+<ol>
+<li><strong>独立同分布 (IID)</strong>
+<ul>
+<li>定义：训练样本和测试样本服从同一分布，并且样本之间相互独立。</li>
+<li>例子：<br>
+水果数据中的每个样本都是独立的，不互相影响。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4><strong>总结表格</strong></h4>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>术语</strong></th>
+<th><strong>定义</strong></th>
+<th><strong>例子</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据集</td>
+<td>一组记录的集合</td>
+<td>包括水果颜色、大小和重量的数据集</td>
+</tr>
+<tr>
+<td>样本/示例</td>
+<td>数据集中的一条记录</td>
+<td>{“颜色”: “黄色”, “大小”: “大”}</td>
+</tr>
+<tr>
+<td>属性/特征</td>
+<td>样本的某一方面的性质</td>
+<td>“颜色”、 “大小”、 “重量”</td>
+</tr>
+<tr>
+<td>特征向量</td>
+<td>样本在属性空间中的坐标</td>
+<td>[1, 2, 3]（编码后的属性值）</td>
+</tr>
+<tr>
+<td>训练集</td>
+<td>用于训练模型的数据集</td>
+<td>包括水果特征和其类别</td>
+</tr>
+<tr>
+<td>假设</td>
+<td>模型学到的潜在规则</td>
+<td>“红色且重的水果是苹果”</td>
+</tr>
+<tr>
+<td>测试集</td>
+<td>用于评估模型的数据集</td>
+<td>独立于训练集的水果数据</td>
+</tr>
+<tr>
+<td>分类</td>
+<td>预测类别</td>
+<td>输出“苹果”或“橙子”</td>
+</tr>
+<tr>
+<td>回归</td>
+<td>预测连续值</td>
+<td>输出房价</td>
+</tr>
+<tr>
+<td>聚类</td>
+<td>自动分组数据</td>
+<td>将顾客分为“高消费”和“低消费”群体</td>
+</tr>
+<tr>
+<td>独立同分布</td>
+<td>数据样本独立，且来源于同一分布</td>
+<td>数据集中的每条记录独立，来源一致</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>3.假设空间</h3>
+<blockquote>
+<p>归纳和演绎是科学推理的两大手段，前者是从特殊到一般的泛化，后者是从一般到特殊的特化。</p>
+</blockquote>
+<p><strong>1. 什么是假设空间？</strong><br>
+假设空间是机器学习中核心的理论概念之一，它指的是模型在学习过程中所有可能的假设集合，用于解释训练数据中的规律。简单来说，<strong>假设空间定义了模型可以选择的潜在规则的范围</strong>。</p>
+<p>在西瓜问题中（详细见西瓜书），假设空间是所有可能的属性组合，例如：</p>
+<p>$$
+\text{色泽=青绿}, \text{根蒂=蜷缩}, \text{敲声=浊响}
+$$</p>
+<p>$$
+\text{色泽=青绿}, \text{根蒂=蜷缩}, \text{敲声=浊响或沉闷}
+$$</p>
+<p>假设空间的重要性在于，它限制了模型的搜索范围，同时也<strong>决定了模型的能力与表现</strong>。</p>
+<p>假设空间太大，可能会导致学习效率低下；假设空间太小，可能会限制模型的表达能力。</p>
+<hr>
+<p><strong>2. 广义假设与狭义假设</strong></p>
+<p>假设空间可以分为广义假设和狭义假设：</p>
+<ol>
+<li>
+<p><strong>广义假设</strong></p>
+<ul>
+<li>它的特点是包容性较强，对数据的要求较少。例如，在西瓜问题中，广义假设可以是“色泽为青绿的西瓜都是好瓜”，无论根蒂和敲声是什么。</li>
+<li><strong>优点</strong>：更容易匹配新的样本，泛化能力较强。</li>
+<li><strong>缺点</strong>：可能包含错误假设，导致准确率下降。</li>
+</ul>
+</li>
+<li>
+<p><strong>狭义假设</strong></p>
+<ul>
+<li>它的特点是限制性较强，对数据的约束条件更多。例如，假设“色泽为青绿且根蒂为蜷缩且敲声为浊响的西瓜是好瓜”。</li>
+<li><strong>优点</strong>：更加精确地匹配已知数据。</li>
+<li><strong>缺点</strong>：对未见数据的泛化能力较差。</li>
+</ul>
+</li>
+</ol>
+<p><strong>思考：</strong><br>
+广义假设和狭义假设之间的选择类似于机器学习中**“偏差-方差权衡”**的概念。狭义假设偏向于减少训练误差，但容易过拟合；广义假设偏向于提高泛化能力，但可能欠拟合。</p>
+<hr>
+<p><strong>3. 假设空间的搜索</strong></p>
+<p>机器学习的学习过程可以看作是在假设空间中搜索一个与训练数据一致的假设。这种搜索过程分为以下几步：</p>
+<ol>
+<li><strong>假设空间的构建</strong>
+<ul>
+<li>假设空间是由属性的所有可能取值的组合形成的。例如，在西瓜问题中：
+<ul>
+<li>色泽：青绿、乌黑、浅白；</li>
+<li>根蒂：蜷缩、稍蜷、硬挺；</li>
+<li>敲声：浊响、沉闷、清脆。<br>
+假设空间的大小为：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>$$
+3 \times 3 \times 3 = 27
+$$</p>
+<ol start="2">
+<li><strong>版本空间 (Version Space)</strong>
+<ul>
+<li>在训练数据的约束下，假设空间会被逐步缩小，最终形成版本空间。</li>
+<li><strong>版本空间就是所有与训练数据一致的假设集合</strong>。例如，在西瓜例子中，训练数据可能缩小假设空间，使得只有以下假设满足条件：</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>1：</li>
+</ul>
+<p>$$
+\text{色泽=青绿}, \text{根蒂=蜷缩}, \text{敲声=浊响}
+$$</p>
+<ul>
+<li>2：</li>
+</ul>
+<p>$$
+\text{色泽=青绿}, \text{根蒂=蜷缩}, \text{敲声=*}
+$$</p>
+<ol start="3">
+<li><strong>假设的选择策略</strong>
+<ul>
+<li><strong>自顶向下搜索</strong>：从广义假设开始，不断增加约束。</li>
+<li><strong>自底向上搜索</strong>：从狭义假设开始，不断放宽约束。</li>
+</ul>
+</li>
+</ol>
+<p><strong>思考：</strong><br>
+版本空间的概念与<strong>模型的复杂性控制密切</strong>相关。如果训练数据不足，可能会出现多个假设同时满足条件，这就需要选择“最优假设”。在实际应用中，我们通常使用正则化或交叉验证等技术选择模型。</p>
+<hr>
+<p><strong>4. 假设空间的实际意义</strong></p>
+<ol>
+<li>
+<p><strong>泛化能力的体现</strong><br>
+假设空间中，假设越复杂，模型的泛化能力可能越差。一个好的假设空间设计需要在复杂度与泛化能力之间找到平衡。例如，在西瓜问题中：</p>
+<ul>
+<li>假设“色泽=青绿”的泛化能力较好；</li>
+<li>假设“色泽=青绿、根蒂=蜷缩、敲声=浊响”的泛化能力较差。</li>
+</ul>
+</li>
+<li>
+<p><strong>搜索效率的优化</strong></p>
+<ul>
+<li>假设空间过大时，搜索效率会显著降低。这时，可以使用启发式方法（如决策树剪枝或随机森林中的特征选择）来缩小搜索范围。</li>
+</ul>
+</li>
+<li>
+<p><strong>对偏差的控制</strong></p>
+<ul>
+<li>如果假设空间过于狭窄，模型可能无法学到训练数据的规律（高偏差问题）。</li>
+<li>如果假设空间过于广泛，模型可能会过拟合（高方差问题）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>#<strong>总结表格：假设空间中的关键点</strong></h3>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>术语</strong></th>
+<th><strong>定义</strong></th>
+<th><strong>例子</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>假设空间 (Hypothesis Space)</td>
+<td>所有可能假设的集合</td>
+<td>西瓜问题中的所有属性组合形成的假设空间。</td>
+</tr>
+<tr>
+<td>广义假设</td>
+<td>假设条件较宽松，适用于更多样本</td>
+<td>“色泽=青绿的西瓜都是好瓜”。</td>
+</tr>
+<tr>
+<td>狭义假设</td>
+<td>假设条件严格，精确匹配训练数据</td>
+<td>“色泽=青绿且根蒂=蜷缩且敲声=浊响的西瓜是好瓜”。</td>
+</tr>
+<tr>
+<td>版本空间 (Version Space)</td>
+<td>所有与训练数据一致的假设集合</td>
+<td>经过训练数据筛选后的假设。</td>
+</tr>
+<tr>
+<td>自顶向下搜索</td>
+<td>从广义假设开始，不断增加约束</td>
+<td>逐步从“色泽=*”收敛到“色泽=青绿”。</td>
+</tr>
+<tr>
+<td>自底向上搜索</td>
+<td>从狭义假设开始，不断放宽约束</td>
+<td>从“色泽=青绿，根蒂=蜷缩，敲声=浊响”放宽到“色泽=青绿”。</td>
+</tr>
+<tr>
+<td>泛化能力</td>
+<td>模型对未见数据的预测能力</td>
+<td>选择较广的假设有助于泛化能力，但可能牺牲准确率。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<h3>4.归纳偏好</h3>
+<p><strong>归纳偏好</strong>是机器学习算法用来选择假设的一种“偏向”，它帮助算法从多个符合训练数据的假设中挑选一个更优的假设。</p>
+<p>这个选择往往基于<strong>一些事先定义的规则或经验</strong>，比如“更简单的假设通常更好”。这种偏好是机器学习算法在有限数据下做出推断的关键因素。</p>
+<hr>
+<p><strong>1. 为什么需要归纳偏好？</strong></p>
+<ol>
+<li>
+<p><strong>训练数据不足</strong><br>
+在实际问题中，训练数据往往是有限的，可能无法完全覆盖所有情况。这时，就会出现多个假设都与训练数据一致的情况。例如：</p>
+<ul>
+<li>假设 A：所有青绿色的西瓜是好瓜。</li>
+<li>假设 B：所有青绿色且根蒂蜷缩且敲声浊响的西瓜是好瓜。</li>
+</ul>
+<p>训练数据不足以告诉我们 A 和 B 哪个更好，而归纳偏好能为我们提供一种“选择策略”。</p>
+</li>
+<li>
+<p><strong>假设空间过大</strong><br>
+假设空间可能包含非常多的假设，遍历所有假设是不现实的。归纳偏好通过对假设的倾向，缩小了搜索范围。</p>
+</li>
+<li>
+<p><strong>泛化能力的提升</strong><br>
+归纳偏好使得算法不仅在训练数据上表现良好，还能在未见数据上表现更好（即提高泛化能力）。</p>
+</li>
+</ol>
+<hr>
+<p><strong>2. 归纳偏好的实际表现</strong></p>
+<p>归纳偏好常常表现为一种偏向性选择，以下是一些典型的归纳偏好：</p>
+<ol>
+<li>
+<p><strong>奥卡姆剃刀原则</strong></p>
+<ul>
+<li>偏好简单的假设。</li>
+<li>例如：如果假设 A 和假设 B 都能解释训练数据，选择逻辑更简单的 A。</li>
+<li><strong>直观理解</strong>：更简单的假设不容易过拟合，更可能适用于未见数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>平滑优先原则</strong></p>
+<ul>
+<li>偏好平滑的函数或模型。</li>
+<li>例如：在回归任务中，偏向于选择一条平滑的直线，而不是一条波动剧烈的曲线。</li>
+<li><strong>直观理解</strong>：平滑模型通常意味着泛化能力更强，而剧烈波动的模型可能仅仅是对训练数据的过拟合。</li>
+</ul>
+</li>
+<li>
+<p><strong>概率优先原则</strong></p>
+<ul>
+<li>偏好具有较高先验概率的假设。</li>
+<li>例如：在贝叶斯学习中，归纳偏好可以通过先验分布（Prior Distribution）来体现，先验概率较高的假设更容易被选择。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>3. 归纳偏好的作用</strong></p>
+<ol>
+<li>
+<p><strong>选择最优假设</strong></p>
+<ul>
+<li>在训练数据不足时，多个假设都可能与数据一致，而归纳偏好帮助算法选择一个“更合理”的假设。</li>
+<li><strong>例子</strong>：在水果分类问题中，归纳偏好可能倾向于选择“青绿色的水果是苹果”，而不是“青绿色且重量大于200克的水果是苹果”，因为前者更简单。</li>
+</ul>
+</li>
+<li>
+<p><strong>提升泛化能力</strong></p>
+<ul>
+<li>归纳偏好让模型在训练数据有限的情况下，仍然可以对未见数据进行合理预测。</li>
+<li><strong>例子</strong>：如果模型偏向选择简单的线性关系，而不是复杂的高次多项式关系，那么它可能在测试数据上表现更好。</li>
+</ul>
+</li>
+<li>
+<p><strong>限制搜索范围</strong></p>
+<ul>
+<li>假设空间可能非常庞大，归纳偏好通过选择性地关注部分假设，显著减少了搜索复杂度。</li>
+<li><strong>例子</strong>：在逻辑推理中，归纳偏好可以通过减少条件数，快速找到符合训练数据的假设。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>4. 奥卡姆剃刀的直观解释</strong></p>
+<p>奥卡姆剃刀原则是归纳偏好中最常见的一种规则。它的核心思想是：</p>
+<ul>
+<li><strong>如果多个假设都能解释数据，应优先选择最简单的假设。</strong></li>
+</ul>
+<p><strong>为什么选择简单的假设？</strong></p>
+<ol>
+<li>
+<p><strong>简单假设泛化能力强</strong>：<br>
+简单假设通常不容易过拟合训练数据，因此在未见数据上表现更好。</p>
+<ul>
+<li><strong>例子</strong>：在直线拟合问题中，选择一条平滑的直线往往比选择复杂的高次多项式更可靠。</li>
+</ul>
+</li>
+<li>
+<p><strong>简单假设更容易理解</strong>：<br>
+简单的规则往往更直观、更容易被人类理解和验证。</p>
+<ul>
+<li><strong>例子</strong>：在逻辑回归中，选择“青绿色的水果是苹果”比选择“青绿色且重量大于200克且表面光滑的水果是苹果”更符合直觉。</li>
+</ul>
+</li>
+<li>
+<p><strong>复杂假设可能过拟合</strong>：<br>
+复杂假设虽然在训练数据上表现优秀，但可能只是“记住”了训练数据的细节，而不能有效泛化。</p>
+</li>
+</ol>
+<hr>
+<p><strong>5. 没有免费的午餐定理（NFL 定理）</strong></p>
+<p>NFL 定理指出：</p>
+<ul>
+<li><strong>在所有可能的问题上，任何学习算法的平均表现是相同的。</strong></li>
+</ul>
+<p>这意味着，没有一种归纳偏好可以在所有问题上都表现优异。因此：</p>
+<ol>
+<li>
+<p><strong>归纳偏好必须针对特定问题</strong>：<br>
+归纳偏好需要根据问题的特点进行设计。例如：</p>
+<ul>
+<li>对于简单问题，偏向于简单模型。</li>
+<li>对于复杂问题，可能需要更复杂的模型。</li>
+</ul>
+</li>
+<li>
+<p><strong>避免过度依赖归纳偏好</strong>：<br>
+NFL 定理提醒我们，归纳偏好并非万能。它能帮助算法选择假设，但不能保证在每个问题上都表现最好。</p>
+</li>
+</ol>
+<hr>
+<p><strong>6. 一个直观的例子：西瓜分类问题</strong></p>
+<p>假设我们有以下训练数据：</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th>色泽</th>
+<th>根蒂</th>
+<th>敲声</th>
+<th>好瓜?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>青绿</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>是</td>
+</tr>
+<tr>
+<td>浅白</td>
+<td>硬挺</td>
+<td>清脆</td>
+<td>否</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>训练数据不足以完全约束假设空间，我们可能得到两个假设：</p>
+<ul>
+<li>假设 A：</li>
+</ul>
+<p>$$
+\text{色泽} = \text{青绿} \land \text{根蒂} = \text{蜷缩}
+$$</p>
+<ul>
+<li>假设 B：</li>
+</ul>
+<p>$$
+\text{色泽=青绿} \land \text{根蒂=蜷缩} \land \text{敲声=浊响}
+$$</p>
+<p><strong>归纳偏好如何影响选择？</strong></p>
+<ul>
+<li>如果算法偏向简单假设，它会选择 A。</li>
+<li>如果算法偏向复杂假设，它会选择 B。</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>如果测试数据包含“色泽=青绿但敲声=沉闷”的西瓜，选择 A 的模型可能预测正确，而选择 B 的模型可能会过拟合训练数据，预测错误。</li>
+</ul>
+<hr>
+<h3>头脑风暴</h3>
+<h4>1. 版本空间是否总能收敛到唯一假设？</h4>
+<p><strong>问题</strong>：在训练数据有限的情况下，版本空间是否一定能收敛到唯一假设？如果版本空间中始终有多个假设，我们应该如何选择？</p>
+<p><strong>解答</strong>：</p>
+<ul>
+<li><strong>版本空间的收敛性</strong>取决于训练数据的丰富程度：
+<ul>
+<li>如果训练数据足够覆盖问题的全部可能性，那么版本空间会收敛到唯一假设。</li>
+<li>但如果训练数据不足，版本空间可能包含多个假设，这就是“归纳偏好”发挥作用的场景。</li>
+</ul>
+</li>
+<li><strong>解决方法</strong>：
+<ul>
+<li><strong>引入先验知识</strong>：通过归纳偏好选择版本空间中更简单或更符合常识的假设。</li>
+<li><strong>获取更多数据</strong>：通过扩大训练集，进一步缩小版本空间。</li>
+<li><strong>引入正则化</strong>：通过惩罚复杂假设（例如 L1、L2 正则化）来引导模型选择更简单的假设。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4>2. <strong>1. 广义假设和狭义假设之间的选择类似于“偏差-方差权衡”的关系</strong></h4>
+<p><strong>问题解释</strong><br>
+广义假设和狭义假设的选择确实可以类比为“偏差-方差权衡”的问题：</p>
+<ul>
+<li><strong>广义假设</strong>：偏向简单的规则，包含较少的条件限制，更容易泛化，但可能欠拟合（偏差大）。</li>
+<li><strong>狭义假设</strong>：偏向复杂的规则，包含更多的条件限制，可以更好地拟合训练数据，但容易过拟合（方差大）。</li>
+</ul>
+<p><strong>解答</strong><br>
+“偏差-方差权衡”是机器学习中选择模型复杂度的核心问题，这里进行类比分析：</p>
+<ol>
+<li>
+<p><strong>广义假设（类似于高偏差）</strong></p>
+<ul>
+<li><strong>特点</strong>：广义假设对训练数据的拟合能力较低（可能会遗漏某些规律），但在测试数据上表现更稳定。</li>
+<li><strong>风险</strong>：可能会忽略训练数据中的细节（欠拟合），导致模型无法充分学习数据的潜在规律。</li>
+<li><strong>适用场景</strong>：适合简单问题或训练数据不足的情况。例如，在训练样本数量很少时，广义假设可以减少过拟合的风险。</li>
+</ul>
+</li>
+<li>
+<p><strong>狭义假设（类似于高方差）</strong></p>
+<ul>
+<li><strong>特点</strong>：狭义假设对训练数据的拟合能力很强（可以记住所有细节），但可能在测试数据上表现不佳。</li>
+<li><strong>风险</strong>：容易受到训练数据中的噪声影响（过拟合），导致泛化能力下降。</li>
+<li><strong>适用场景</strong>：适合数据量充足且问题复杂的情况，例如深度学习中的大规模训练数据场景。</li>
+</ul>
+</li>
+<li>
+<p><strong>权衡的实现</strong></p>
+<ul>
+<li>通过引入正则化（如 L1/L2）、交叉验证或其他泛化技术，可以在广义假设和狭义假设之间找到一个平衡点。</li>
+<li>选择广义还是狭义假设取决于具体问题：
+<ul>
+<li>如果我们希望<strong>泛化能力强</strong>，可以优先选择广义假设（偏向简单模型）。</li>
+<li>如果我们希望<strong>拟合能力强</strong>，可以优先选择狭义假设（偏向复杂模型）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4><strong>3.没有最好的模型，只有最好的选择</strong></h4>
+<p><strong>1. NFL 定理的本质</strong><br>
+NFL 定理告诉我们：</p>
+<ul>
+<li>
+<p><strong>模型性能取决于问题和数据的特性</strong>。<br>
+不同的问题需要不同的模型，没有“放之四海而皆准”的最佳模型。<br>
+比如线性模型在线性数据上表现优异，但在非线性问题上会失败。而深度学习在大规模非结构化数据（如图像、文本）上表现突出，但在小数据集场景下可能表现不佳。</p>
+</li>
+<li>
+<p><strong>模型选择只是问题的一部分</strong>。<br>
+在大多数实际场景中，模型的选择远远没有数据处理和任务理解重要。</p>
+</li>
+</ul>
+<hr>
+<p><strong>2. 数据处理是机器学习的核心</strong></p>
+<p>数据是机器学习的“燃料”。再好的模型也需要高质量的数据作为基础。</p>
+<p><strong>垃圾进，垃圾出（Garbage In, Garbage Out）</strong></p>
+<ul>
+<li>如果数据本身有噪声或不完整，模型很难学到有用的规律。</li>
+<li><strong>案例</strong>：在信用卡欺诈检测中，如果训练数据中欺诈样本的标签有错误（例如标记为非欺诈），再好的模型都会学到错误的规则。</li>
+</ul>
+<p><strong>特征工程是提升性能的关键</strong></p>
+<ul>
+<li>机器学习的本质是学习输入特征与目标之间的映射关系。</li>
+<li>数据预处理和特征工程直接影响模型的性能：
+<ul>
+<li>数据清洗（去除异常值和缺失值）。</li>
+<li>数据转换（标准化、归一化）。</li>
+<li>特征提取（如将文本转换为词向量）。</li>
+</ul>
+</li>
+<li><strong>案例</strong>：在图像分类中，数据增强（如旋转、裁剪、翻转）可以显著提升深度学习模型的泛化能力。</li>
+</ul>
+<p><strong>数据的重要性甚至优于模型</strong></p>
+<ul>
+<li>深度学习的崛起本质上是数据量爆炸的结果。如果没有足够的数据，深度学习模型将无法超越简单模型。</li>
+<li><strong>案例</strong>：在一个小数据集上，逻辑回归可能表现比深度神经网络更好，因为它对数据需求更少。</li>
+</ul>
+<hr>
+<p>** 为什么“最好的模型”并不重要？**</p>
+<ol>
+<li>
+<p><strong>模型性能依赖于数据</strong><br>
+再强大的模型，如果没有合适的数据，其性能都会受到限制。模型选择本质上是对假设空间的探索，而假设空间的好坏更多取决于数据的质量。</p>
+</li>
+<li>
+<p><strong>简单模型往往足够好</strong></p>
+<ul>
+<li>在许多场景下，简单模型（如线性回归、决策树）可以提供接近于复杂模型的性能，尤其是在数据有限或任务简单的情况下。</li>
+<li>复杂模型可能带来边际收益，但同时需要更高的计算资源和调参成本。</li>
+</ul>
+</li>
+<li>
+<p><strong>模型不是学习的终点</strong></p>
+<ul>
+<li>学习算法只是整个机器学习管道的一部分：数据收集 → 数据清洗 → 特征工程 → 模型训练 → 模型部署。</li>
+<li>实际中，数据处理和模型调优对最终效果的贡献可能远远超过模型选择本身。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>思考</strong></p>
+<ol>
+<li>
+<p><strong>优先关注数据质量</strong></p>
+<ul>
+<li>清洗和增强数据比盲目选择复杂模型更有用。例如，在分类问题中，解决类别不平衡（如过采样或欠采样）可能比尝试各种模型更有效。</li>
+</ul>
+</li>
+<li>
+<p><strong>匹配问题需求而非盲目追求复杂模型</strong></p>
+<ul>
+<li>模型选择应服务于问题背景。例如：<br>
+对实时性要求高的任务，选择简单、快速的模型。对准确性要求极高的任务，可以选择复杂模型，但同时需要丰富的数据和资源支持。</li>
+</ul>
+</li>
+<li>
+<p><strong>利用归纳偏好指导模型设计</strong><br>
+在选择模型时，思考任务的特性（如局部性、时间依赖性）和先验知识如何帮助学习更高效。</p>
+</li>
+</ol>
+<hr>
+<h3>文章参考</h3>
+<ul>
+<li>《机器学习（西瓜书）》</li>
+<li>部分LaTeX 公式借助了AI的帮助</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
