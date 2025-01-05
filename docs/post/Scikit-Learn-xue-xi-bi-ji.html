@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="**文章使用说明**
+
+以下是我在学习 Scikit-Learn 库时的学习笔记，内容涵盖了其**基础功能和使用方法**，包括数据加载、预处理、模型训练与评估等核心知识点。">
+<meta property="og:title" content="Scikit-Learn学习笔记">
+<meta property="og:description" content="**文章使用说明**
+
+以下是我在学习 Scikit-Learn 库时的学习笔记，内容涵盖了其**基础功能和使用方法**，包括数据加载、预处理、模型训练与评估等核心知识点。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/Scikit-Learn-xue-xi-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>Scikit-Learn学习笔记</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">Scikit-Learn学习笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/8" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p><strong>文章使用说明</strong></p>
+<p>以下是我在学习 Scikit-Learn 库时的学习笔记，内容涵盖了其<strong>基础功能和使用方法</strong>，包括数据加载、预处理、模型训练与评估等核心知识点。同时，笔记中还简要提及了 管道设计 和 超参数调优 等扩展特性，但具体的理论讲解和应用场景，将在后续的专题笔记中详细展开。</p>
+<p>因此，本篇笔记主要以基础内容为主，适合Scikit-Learn 初学者阅读。</p>
+<hr>
+<h3>一、 什么是 Scikit-Learn？</h3>
+<p><strong>Scikit-Learn</strong> 是一个强大的 <strong>机器学习</strong> 库，提供了丰富的工具用于 <strong>数据预处理</strong>、<strong>特征工程</strong>、<strong>模型训练与评估</strong> 等。它是基于 NumPy、SciPy 和 Matplotlib 构建的，非常适合构建、验证和部署机器学习模型。</p>
+<p>Scikit-Learn 的核心优势在于：</p>
+<ul>
+<li><strong>统一的 API</strong>：所有模型的调用方式一致。</li>
+<li><strong>丰富的模型库</strong>：支持分类、回归、聚类、降维等任务。</li>
+<li><strong>简化的流程</strong>：通过一小部分代码完成完整的机器学习管道。</li>
+</ul>
+<p>主要模块包括：</p>
+<ul>
+<li><strong>数据预处理</strong>：<code class="notranslate">sklearn.preprocessing</code></li>
+<li><strong>特征选择</strong>：<code class="notranslate">sklearn.feature_selection</code></li>
+<li><strong>模型选择与评估</strong>：<code class="notranslate">sklearn.model_selection</code></li>
+<li><strong>机器学习算法</strong>：分类、回归、聚类模型</li>
+<li><strong>降维</strong>：主成分分析（PCA）、奇异值分解（SVD）等</li>
+</ul>
+<hr>
+<h3>二、 基本工作流程</h3>
+<p>机器学习任务一般遵循以下步骤：</p>
+<ol>
+<li>数据准备（加载数据、预处理）。</li>
+<li>划分训练集和测试集。</li>
+<li>选择模型并训练。</li>
+<li>模型评估与优化。</li>
+<li>预测新数据。</li>
+</ol>
+<hr>
+<h3>三、 Scikit-Learn 快速入门</h3>
+<p>我们以一个分类任务为例，使用鸢尾花数据集（Iris Dataset）展示完整流程。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># 导入必要库</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">load_iris</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-s1">train_test_split</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">preprocessing</span> <span class="pl-k">import</span> <span class="pl-v">StandardScaler</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">RandomForestClassifier</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">metrics</span> <span class="pl-k">import</span> <span class="pl-s1">accuracy_score</span>, <span class="pl-s1">classification_report</span>
+
+<span class="pl-c"># 1. 加载数据</span>
+<span class="pl-s1">iris</span> <span class="pl-c1">=</span> <span class="pl-en">load_iris</span>()
+<span class="pl-c1">X</span> <span class="pl-c1">=</span> <span class="pl-s1">iris</span>.<span class="pl-c1">data</span>  <span class="pl-c"># 特征</span>
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">iris</span>.<span class="pl-c1">target</span>  <span class="pl-c"># 标签</span>
+
+<span class="pl-c"># 2. 划分训练集和测试集</span>
+<span class="pl-v">X_train</span>, <span class="pl-v">X_test</span>, <span class="pl-s1">y_train</span>, <span class="pl-s1">y_test</span> <span class="pl-c1">=</span> <span class="pl-en">train_test_split</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-s1">test_size</span><span class="pl-c1">=</span><span class="pl-c1">0.3</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-c"># 3. 数据标准化</span>
+<span class="pl-s1">scaler</span> <span class="pl-c1">=</span> <span class="pl-en">StandardScaler</span>()
+<span class="pl-v">X_train</span> <span class="pl-c1">=</span> <span class="pl-s1">scaler</span>.<span class="pl-c1">fit_transform</span>(<span class="pl-v">X_train</span>)
+<span class="pl-v">X_test</span> <span class="pl-c1">=</span> <span class="pl-s1">scaler</span>.<span class="pl-c1">transform</span>(<span class="pl-v">X_test</span>)
+
+<span class="pl-c"># 4. 训练模型</span>
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">RandomForestClassifier</span>(<span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+<span class="pl-s1">model</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train</span>, <span class="pl-s1">y_train</span>)
+
+<span class="pl-c"># 5. 模型评估</span>
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">model</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred</span>))
+<span class="pl-en">print</span>(<span class="pl-s">"分类报告:<span class="pl-cce">\n</span>"</span>, <span class="pl-en">classification_report</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred</span>))</pre></div>
+<hr>
+<hr>
+<h3>四、 数据加载与生成</h3>
+<h4><strong>1.1 <code class="notranslate">datasets.load_*</code></strong></h4>
+<p>Scikit-Learn 提供了多个经典数据集（如鸢尾花、手写数字等），可以直接使用。</p>
+<ul>
+<li>
+<p><strong>常见数据集：</strong></p>
+<ul>
+<li><code class="notranslate">load_iris()</code>：鸢尾花分类数据集</li>
+<li><code class="notranslate">load_digits()</code>：手写数字数据集</li>
+<li><code class="notranslate">load_boston()</code>：波士顿房价数据集（回归任务）</li>
+<li><code class="notranslate">load_wine()</code>：葡萄酒分类数据集</li>
+</ul>
+</li>
+<li>
+<p><strong>返回结果：</strong> 数据集通常是类似字典的对象，包含：</p>
+<ul>
+<li><code class="notranslate">data</code>：特征数据</li>
+<li><code class="notranslate">target</code>：目标变量</li>
+<li><code class="notranslate">DESCR</code>：数据集描述</li>
+</ul>
+</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">load_iris</span>
+
+<span class="pl-c"># 加载鸢尾花数据集</span>
+<span class="pl-s1">iris</span> <span class="pl-c1">=</span> <span class="pl-en">load_iris</span>()
+
+<span class="pl-c"># 查看数据集内容</span>
+<span class="pl-en">print</span>(<span class="pl-s">"数据集描述:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">iris</span>.<span class="pl-c1">DESCR</span>[:<span class="pl-c1">500</span>])  <span class="pl-c"># 数据集描述</span>
+<span class="pl-en">print</span>(<span class="pl-s">"特征数据:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">iris</span>.<span class="pl-c1">data</span>[:<span class="pl-c1">5</span>])  <span class="pl-c"># 前5行特征</span>
+<span class="pl-en">print</span>(<span class="pl-s">"目标变量:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">iris</span>.<span class="pl-c1">target</span>[:<span class="pl-c1">5</span>])  <span class="pl-c"># 前5个标签</span></pre></div>
+<hr>
+<h4><strong>1.2 <code class="notranslate">datasets.make_*</code></strong></h4>
+<p>用于生成合成数据，适合测试机器学习算法。</p>
+<ul>
+<li><strong>常见函数：</strong>
+<ul>
+<li><code class="notranslate">make_classification()</code>：生成分类任务数据</li>
+<li><code class="notranslate">make_regression()</code>：生成回归任务数据</li>
+<li><code class="notranslate">make_blobs()</code>：生成聚类数据</li>
+</ul>
+</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">make_classification</span>
+
+<span class="pl-c"># 生成分类数据</span>
+<span class="pl-c1">X</span>, <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-en">make_classification</span>(<span class="pl-s1">n_samples</span><span class="pl-c1">=</span><span class="pl-c1">100</span>, <span class="pl-s1">n_features</span><span class="pl-c1">=</span><span class="pl-c1">2</span>, <span class="pl-s1">n_classes</span><span class="pl-c1">=</span><span class="pl-c1">2</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"特征数据:<span class="pl-cce">\n</span>"</span>, <span class="pl-c1">X</span>[:<span class="pl-c1">5</span>])
+<span class="pl-en">print</span>(<span class="pl-s">"目标变量:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">y</span>[:<span class="pl-c1">5</span>])</pre></div>
+<hr>
+<h3>五、 数据预处理模块 <code class="notranslate">sklearn.preprocessing</code></h3>
+<h4><strong>5.1 数据标准化 <code class="notranslate">StandardScaler</code></strong></h4>
+<p>将特征数据的均值调整为 0，标准差调整为 1，使数据分布均匀，适合梯度下降类模型。</p>
+<ul>
+<li><strong>常用方法：</strong>
+<ul>
+<li><code class="notranslate">fit()</code>：计算训练集的均值和标准差。</li>
+<li><code class="notranslate">transform()</code>：应用标准化变换。</li>
+<li><code class="notranslate">fit_transform()</code>：结合计算和变换。</li>
+</ul>
+</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">preprocessing</span> <span class="pl-k">import</span> <span class="pl-v">StandardScaler</span>
+<span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
+
+<span class="pl-c"># 示例数据</span>
+<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([[<span class="pl-c1">1.0</span>, <span class="pl-c1">2.0</span>, <span class="pl-c1">3.0</span>], [<span class="pl-c1">4.0</span>, <span class="pl-c1">5.0</span>, <span class="pl-c1">6.0</span>], [<span class="pl-c1">7.0</span>, <span class="pl-c1">8.0</span>, <span class="pl-c1">9.0</span>]])
+
+<span class="pl-c"># 初始化标准化器</span>
+<span class="pl-s1">scaler</span> <span class="pl-c1">=</span> <span class="pl-en">StandardScaler</span>()
+
+<span class="pl-c"># 标准化</span>
+<span class="pl-s1">data_scaled</span> <span class="pl-c1">=</span> <span class="pl-s1">scaler</span>.<span class="pl-c1">fit_transform</span>(<span class="pl-s1">data</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"原始数据:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">data</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"标准化后:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">data_scaled</span>)</pre></div>
+<hr>
+<h4><strong>5.2 数据归一化 <code class="notranslate">MinMaxScaler</code></strong></h4>
+<p>将特征数据缩放到指定范围（默认 [0, 1]）。</p>
+<ul>
+<li><strong>常用方法：</strong>
+<ul>
+<li><code class="notranslate">fit()</code>：计算训练集的最小值和最大值。</li>
+<li><code class="notranslate">transform()</code>：应用归一化。</li>
+<li><code class="notranslate">inverse_transform()</code>：将归一化数据恢复到原始范围。</li>
+</ul>
+</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">preprocessing</span> <span class="pl-k">import</span> <span class="pl-v">MinMaxScaler</span>
+
+<span class="pl-c"># 示例数据</span>
+<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([[<span class="pl-c1">1.0</span>, <span class="pl-c1">2.0</span>], [<span class="pl-c1">3.0</span>, <span class="pl-c1">4.0</span>], [<span class="pl-c1">5.0</span>, <span class="pl-c1">6.0</span>]])
+
+<span class="pl-c"># 初始化归一化器</span>
+<span class="pl-s1">scaler</span> <span class="pl-c1">=</span> <span class="pl-en">MinMaxScaler</span>(<span class="pl-s1">feature_range</span><span class="pl-c1">=</span>(<span class="pl-c1">0</span>, <span class="pl-c1">1</span>))
+
+<span class="pl-c"># 归一化</span>
+<span class="pl-s1">data_scaled</span> <span class="pl-c1">=</span> <span class="pl-s1">scaler</span>.<span class="pl-c1">fit_transform</span>(<span class="pl-s1">data</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"原始数据:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">data</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"归一化后:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">data_scaled</span>)</pre></div>
+<hr>
+<h4><strong>5.3 缺失值处理 <code class="notranslate">SimpleImputer</code></strong></h4>
+<p>用于填补缺失值，可选择填充策略，如均值、中位数或最常见值。</p>
+<ul>
+<li><strong>参数：</strong>
+<ul>
+<li><code class="notranslate">missing_values</code>：指定缺失值（如 <code class="notranslate">np.nan</code>）。</li>
+<li><code class="notranslate">strategy</code>：填充策略（<code class="notranslate">mean</code>、<code class="notranslate">median</code> 或 <code class="notranslate">most_frequent</code>）。</li>
+</ul>
+</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">impute</span> <span class="pl-k">import</span> <span class="pl-v">SimpleImputer</span>
+
+<span class="pl-c"># 示例数据</span>
+<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [<span class="pl-s1">np</span>.<span class="pl-c1">nan</span>, <span class="pl-c1">3</span>], [<span class="pl-c1">7</span>, <span class="pl-c1">6</span>]])
+
+<span class="pl-c"># 初始化填充器</span>
+<span class="pl-s1">imputer</span> <span class="pl-c1">=</span> <span class="pl-en">SimpleImputer</span>(<span class="pl-s1">strategy</span><span class="pl-c1">=</span><span class="pl-s">'mean'</span>)
+
+<span class="pl-c"># 填补缺失值</span>
+<span class="pl-s1">data_filled</span> <span class="pl-c1">=</span> <span class="pl-s1">imputer</span>.<span class="pl-c1">fit_transform</span>(<span class="pl-s1">data</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"原始数据:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">data</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"填充后:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">data_filled</span>)</pre></div>
+<hr>
+<h3>六、 模型训练与评估</h3>
+<h4><strong>6.1 模型训练流程</strong></h4>
+<p>Scikit-Learn 模型的 API 一致性非常高，以下是通用流程：</p>
+<ol>
+<li><strong>初始化模型</strong>：如 <code class="notranslate">model = LogisticRegression()</code>。</li>
+<li><strong>训练模型</strong>：<code class="notranslate">model.fit(X_train, y_train)</code>。</li>
+<li><strong>预测新数据</strong>：<code class="notranslate">y_pred = model.predict(X_test)</code>。</li>
+<li><strong>评估模型</strong>：<code class="notranslate">accuracy_score(y_test, y_pred)</code> 等评估函数。</li>
+</ol>
+<hr>
+<h4><strong>6.2 分类任务示例：逻辑回归</strong></h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">load_iris</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-s1">train_test_split</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">linear_model</span> <span class="pl-k">import</span> <span class="pl-v">LogisticRegression</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">metrics</span> <span class="pl-k">import</span> <span class="pl-s1">accuracy_score</span>
+
+<span class="pl-c"># 加载数据</span>
+<span class="pl-s1">iris</span> <span class="pl-c1">=</span> <span class="pl-en">load_iris</span>()
+<span class="pl-c1">X</span>, <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">iris</span>.<span class="pl-c1">data</span>, <span class="pl-s1">iris</span>.<span class="pl-c1">target</span>
+
+<span class="pl-c"># 划分训练集和测试集</span>
+<span class="pl-v">X_train</span>, <span class="pl-v">X_test</span>, <span class="pl-s1">y_train</span>, <span class="pl-s1">y_test</span> <span class="pl-c1">=</span> <span class="pl-en">train_test_split</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-s1">test_size</span><span class="pl-c1">=</span><span class="pl-c1">0.3</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-c"># 初始化逻辑回归模型</span>
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">LogisticRegression</span>(<span class="pl-s1">max_iter</span><span class="pl-c1">=</span><span class="pl-c1">200</span>)
+
+<span class="pl-c"># 训练模型</span>
+<span class="pl-s1">model</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train</span>, <span class="pl-s1">y_train</span>)
+
+<span class="pl-c"># 预测</span>
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">model</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test</span>)
+
+<span class="pl-c"># 评估</span>
+<span class="pl-en">print</span>(<span class="pl-s">"准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred</span>))</pre></div>
+<hr>
+<h4><strong>6.3 回归任务示例：线性回归</strong></h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">linear_model</span> <span class="pl-k">import</span> <span class="pl-v">LinearRegression</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">metrics</span> <span class="pl-k">import</span> <span class="pl-s1">mean_squared_error</span>
+
+<span class="pl-c"># 示例数据</span>
+<span class="pl-c1">X</span> <span class="pl-c1">=</span> [[<span class="pl-c1">1</span>], [<span class="pl-c1">2</span>], [<span class="pl-c1">3</span>], [<span class="pl-c1">4</span>]]
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> [<span class="pl-c1">2.2</span>, <span class="pl-c1">4.4</span>, <span class="pl-c1">6.6</span>, <span class="pl-c1">8.8</span>]
+
+<span class="pl-c"># 初始化线性回归模型</span>
+<span class="pl-s1">regressor</span> <span class="pl-c1">=</span> <span class="pl-en">LinearRegression</span>()
+
+<span class="pl-c"># 训练模型</span>
+<span class="pl-s1">regressor</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-c"># 预测</span>
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">regressor</span>.<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>)
+
+<span class="pl-c"># 评估</span>
+<span class="pl-en">print</span>(<span class="pl-s">"均方误差:"</span>, <span class="pl-en">mean_squared_error</span>(<span class="pl-s1">y</span>, <span class="pl-s1">y_pred</span>))</pre></div>
+<hr>
+<h4><strong>6.4 模型评估函数</strong></h4>
+<ul>
+<li>
+<p><strong>分类评估：</strong></p>
+<ul>
+<li><code class="notranslate">accuracy_score()</code>：分类正确的比例。</li>
+<li><code class="notranslate">classification_report()</code>：精确率、召回率、F1 值等。</li>
+<li><code class="notranslate">confusion_matrix()</code>：混淆矩阵。</li>
+</ul>
+</li>
+<li>
+<p><strong>回归评估：</strong></p>
+<ul>
+<li><code class="notranslate">mean_squared_error()</code>：均方误差。</li>
+<li><code class="notranslate">r2_score()</code>：判定系数，衡量拟合优度。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>七、常用模型大总结</h3>
+<p>Scikit-Learn 提供了分类、回归、聚类、降维等多种算法，以下是常用模型的分类及用途：</p>
+<hr>
+<h4>1. <strong>分类模型</strong></h4>
+<ul>
+<li><strong>逻辑回归</strong>：<code class="notranslate">sklearn.linear_model.LogisticRegression</code></li>
+<li><strong>支持向量机（SVM）</strong>：<code class="notranslate">sklearn.svm.SVC</code></li>
+<li><strong>决策树</strong>：<code class="notranslate">sklearn.tree.DecisionTreeClassifier</code></li>
+<li><strong>随机森林</strong>：<code class="notranslate">sklearn.ensemble.RandomForestClassifier</code></li>
+<li><strong>K 近邻（KNN）</strong>：<code class="notranslate">sklearn.neighbors.KNeighborsClassifier</code></li>
+<li><strong>朴素贝叶斯</strong>：<code class="notranslate">sklearn.naive_bayes.GaussianNB</code></li>
+</ul>
+<h4>2. <strong>回归模型</strong></h4>
+<ul>
+<li><strong>线性回归</strong>：<code class="notranslate">sklearn.linear_model.LinearRegression</code></li>
+<li><strong>岭回归</strong>：<code class="notranslate">sklearn.linear_model.Ridge</code></li>
+<li><strong>随机森林回归</strong>：<code class="notranslate">sklearn.ensemble.RandomForestRegressor</code></li>
+<li><strong>支持向量回归（SVR）</strong>：<code class="notranslate">sklearn.svm.SVR</code></li>
+</ul>
+<h4>3. <strong>聚类模型</strong></h4>
+<ul>
+<li><strong>K 均值（K-Means）</strong>：<code class="notranslate">sklearn.cluster.KMeans</code></li>
+<li><strong>层次聚类（Agglomerative Clustering）</strong>：<code class="notranslate">sklearn.cluster.AgglomerativeClustering</code></li>
+<li><strong>DBSCAN</strong>：<code class="notranslate">sklearn.cluster.DBSCAN</code></li>
+</ul>
+<h4>4. <strong>降维模型</strong></h4>
+<ul>
+<li><strong>主成分分析（PCA）</strong>：<code class="notranslate">sklearn.decomposition.PCA</code></li>
+<li><strong>奇异值分解（SVD）</strong>：<code class="notranslate">sklearn.decomposition.TruncatedSVD</code></li>
+<li><strong>线性判别分析（LDA）</strong>：<code class="notranslate">sklearn.discriminant_analysis.LinearDiscriminantAnalysis</code></li>
+</ul>
+<h4>5. <strong>集成模型</strong></h4>
+<ul>
+<li><strong>随机森林</strong>：<code class="notranslate">sklearn.ensemble.RandomForestClassifier</code>/<code class="notranslate">Regressor</code></li>
+<li><strong>梯度提升（GBDT）</strong>：<code class="notranslate">sklearn.ensemble.GradientBoostingClassifier</code>/<code class="notranslate">Regressor</code></li>
+<li><strong>极限随机树（ExtraTrees）</strong>：<code class="notranslate">sklearn.ensemble.ExtraTreesClassifier</code>/<code class="notranslate">Regressor</code></li>
+<li><strong>投票分类器（VotingClassifier）</strong>：<code class="notranslate">sklearn.ensemble.VotingClassifier</code></li>
+</ul>
+<hr>
+<h3>八、 超参数调优</h3>
+<p>超参数是模型训练前需要指定的参数，不会在训练过程中自动调整。<br>
+Scikit-Learn 提供了两种常用超参数调优方法：</p>
+<h4>2.1 网格搜索 <code class="notranslate">GridSearchCV</code></h4>
+<p><strong>功能：</strong></p>
+<ul>
+<li>对指定参数组合进行穷举搜索。</li>
+</ul>
+<p><strong>主要参数：</strong></p>
+<ul>
+<li><code class="notranslate">param_grid</code>：字典形式的参数搜索空间。</li>
+<li><code class="notranslate">cv</code>：交叉验证的折数。</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">GridSearchCV</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">svm</span> <span class="pl-k">import</span> <span class="pl-c1">SVC</span>
+
+<span class="pl-c"># 模拟数据</span>
+<span class="pl-c1">X</span> <span class="pl-c1">=</span> [[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>], [<span class="pl-c1">2</span>, <span class="pl-c1">3</span>], [<span class="pl-c1">3</span>, <span class="pl-c1">4</span>], [<span class="pl-c1">4</span>, <span class="pl-c1">5</span>]]
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> [<span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>]
+
+<span class="pl-c"># 参数搜索空间</span>
+<span class="pl-s1">param_grid</span> <span class="pl-c1">=</span> {<span class="pl-s">'C'</span>: [<span class="pl-c1">0.1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">10</span>], <span class="pl-s">'kernel'</span>: [<span class="pl-s">'linear'</span>, <span class="pl-s">'rbf'</span>]}
+
+<span class="pl-c"># 初始化模型</span>
+<span class="pl-s1">svc</span> <span class="pl-c1">=</span> <span class="pl-en">SVC</span>()
+
+<span class="pl-c"># 网格搜索</span>
+<span class="pl-s1">grid_search</span> <span class="pl-c1">=</span> <span class="pl-en">GridSearchCV</span>(<span class="pl-s1">svc</span>, <span class="pl-s1">param_grid</span>, <span class="pl-s1">cv</span><span class="pl-c1">=</span><span class="pl-c1">3</span>)
+<span class="pl-s1">grid_search</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"最佳参数:"</span>, <span class="pl-s1">grid_search</span>.<span class="pl-c1">best_params_</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"最佳得分:"</span>, <span class="pl-s1">grid_search</span>.<span class="pl-c1">best_score_</span>)</pre></div>
+<hr>
+<h4>2.2 随机搜索 <code class="notranslate">RandomizedSearchCV</code></h4>
+<p><strong>功能：</strong></p>
+<ul>
+<li>随机从参数空间中采样，适用于参数空间较大的情况。</li>
+</ul>
+<p><strong>主要参数：</strong></p>
+<ul>
+<li><code class="notranslate">param_distributions</code>：参数搜索空间。</li>
+<li><code class="notranslate">n_iter</code>：搜索次数。</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">RandomizedSearchCV</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">RandomForestClassifier</span>
+<span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
+
+<span class="pl-c"># 模拟数据</span>
+<span class="pl-c1">X</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">random</span>.<span class="pl-c1">rand</span>(<span class="pl-c1">100</span>, <span class="pl-c1">5</span>)
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">random</span>.<span class="pl-c1">randint</span>(<span class="pl-c1">0</span>, <span class="pl-c1">2</span>, <span class="pl-s1">size</span><span class="pl-c1">=</span><span class="pl-c1">100</span>)
+
+<span class="pl-c"># 参数搜索空间</span>
+<span class="pl-s1">param_distributions</span> <span class="pl-c1">=</span> {
+    <span class="pl-s">'n_estimators'</span>: [<span class="pl-c1">50</span>, <span class="pl-c1">100</span>, <span class="pl-c1">200</span>],
+    <span class="pl-s">'max_depth'</span>: [<span class="pl-c1">None</span>, <span class="pl-c1">10</span>, <span class="pl-c1">20</span>, <span class="pl-c1">30</span>],
+    <span class="pl-s">'min_samples_split'</span>: [<span class="pl-c1">2</span>, <span class="pl-c1">5</span>, <span class="pl-c1">10</span>]
+}
+
+<span class="pl-c"># 随机搜索</span>
+<span class="pl-s1">random_search</span> <span class="pl-c1">=</span> <span class="pl-en">RandomizedSearchCV</span>(<span class="pl-en">RandomForestClassifier</span>(), <span class="pl-s1">param_distributions</span>, <span class="pl-s1">n_iter</span><span class="pl-c1">=</span><span class="pl-c1">10</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>, <span class="pl-s1">cv</span><span class="pl-c1">=</span><span class="pl-c1">3</span>)
+<span class="pl-s1">random_search</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"最佳参数:"</span>, <span class="pl-s1">random_search</span>.<span class="pl-c1">best_params_</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"最佳得分:"</span>, <span class="pl-s1">random_search</span>.<span class="pl-c1">best_score_</span>)</pre></div>
+<hr>
+<h3>九、管道</h3>
+<p><strong>管道的作用：</strong></p>
+<ul>
+<li>将多个步骤串联起来，如数据预处理 + 特征选择 + 模型训练。</li>
+<li>避免数据泄露（测试集信息泄露到训练过程）。</li>
+</ul>
+<h4>使用 <code class="notranslate">Pipeline</code></h4>
+<p><strong>主要组件：</strong></p>
+<ul>
+<li><code class="notranslate">Pipeline</code>：创建管道。</li>
+<li><code class="notranslate">make_pipeline</code>：自动命名步骤的简化方式。</li>
+</ul>
+<h4>示例：</h4>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">pipeline</span> <span class="pl-k">import</span> <span class="pl-v">Pipeline</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">preprocessing</span> <span class="pl-k">import</span> <span class="pl-v">StandardScaler</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">svm</span> <span class="pl-k">import</span> <span class="pl-c1">SVC</span>
+
+<span class="pl-c"># 创建管道</span>
+<span class="pl-s1">pipeline</span> <span class="pl-c1">=</span> <span class="pl-en">Pipeline</span>([
+    (<span class="pl-s">'scaler'</span>, <span class="pl-en">StandardScaler</span>()),  <span class="pl-c"># 第一步：标准化</span>
+    (<span class="pl-s">'svm'</span>, <span class="pl-en">SVC</span>(<span class="pl-s1">kernel</span><span class="pl-c1">=</span><span class="pl-s">'linear'</span>, <span class="pl-c1">C</span><span class="pl-c1">=</span><span class="pl-c1">1</span>))  <span class="pl-c"># 第二步：SVM分类</span>
+])
+
+<span class="pl-c"># 训练管道</span>
+<span class="pl-s1">pipeline</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-c"># 预测</span>
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">pipeline</span>.<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"预测结果:"</span>, <span class="pl-s1">y_pred</span>)</pre></div>
+<hr>
+<h3>十、Scikit-Learn 的扩展用法</h3>
+<p>以下内容涵盖了我阅读代码时碰见过的其他用法，包括交叉验证策略、特征选择、模型持久化、并行处理等。</p>
+<hr>
+<h4>1. 交叉验证策略</h4>
+<h5><strong>1.1 什么是交叉验证？</strong></h5>
+<p>交叉验证（Cross-Validation）是将数据划分为多个训练集和验证集，交替用于模型训练和评估的一种方法，目的是提高模型的泛化能力。</p>
+<hr>
+<h5><strong>1.2 常用的交叉验证策略</strong></h5>
+<p>Scikit-Learn 提供了多种交叉验证策略，适用于不同场景。</p>
+<ol>
+<li>
+<p><strong><code class="notranslate">KFold</code></strong>（K 折交叉验证）<br>
+将数据分成 <code class="notranslate">K</code> 份，依次使用其中一份作为验证集，其余作为训练集。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">KFold</span>
+<span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
+
+<span class="pl-c1">X</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">arange</span>(<span class="pl-c1">10</span>)  <span class="pl-c"># 示例数据</span>
+<span class="pl-s1">kf</span> <span class="pl-c1">=</span> <span class="pl-en">KFold</span>(<span class="pl-s1">n_splits</span><span class="pl-c1">=</span><span class="pl-c1">5</span>, <span class="pl-s1">shuffle</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-k">for</span> <span class="pl-s1">train_index</span>, <span class="pl-s1">test_index</span> <span class="pl-c1">in</span> <span class="pl-s1">kf</span>.<span class="pl-c1">split</span>(<span class="pl-c1">X</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"训练集:"</span>, <span class="pl-s1">train_index</span>, <span class="pl-s">"验证集:"</span>, <span class="pl-s1">test_index</span>)</pre></div>
+</li>
+<li>
+<p><strong><code class="notranslate">StratifiedKFold</code></strong>（分层 K 折交叉验证）<br>
+保持标签的类别分布在训练集和验证集中的比例一致，适用于分类任务。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">StratifiedKFold</span>
+
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> [<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>]  <span class="pl-c"># 标签数据</span>
+<span class="pl-s1">skf</span> <span class="pl-c1">=</span> <span class="pl-en">StratifiedKFold</span>(<span class="pl-s1">n_splits</span><span class="pl-c1">=</span><span class="pl-c1">3</span>, <span class="pl-s1">shuffle</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-k">for</span> <span class="pl-s1">train_index</span>, <span class="pl-s1">test_index</span> <span class="pl-c1">in</span> <span class="pl-s1">skf</span>.<span class="pl-c1">split</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"训练集:"</span>, <span class="pl-s1">train_index</span>, <span class="pl-s">"验证集:"</span>, <span class="pl-s1">test_index</span>)</pre></div>
+</li>
+<li>
+<p><strong><code class="notranslate">LeaveOneOut</code></strong>（留一验证法）<br>
+每次将一个样本作为验证集，其他样本作为训练集。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">LeaveOneOut</span>
+
+<span class="pl-s1">loo</span> <span class="pl-c1">=</span> <span class="pl-en">LeaveOneOut</span>()
+<span class="pl-k">for</span> <span class="pl-s1">train_index</span>, <span class="pl-s1">test_index</span> <span class="pl-c1">in</span> <span class="pl-s1">loo</span>.<span class="pl-c1">split</span>(<span class="pl-c1">X</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"训练集:"</span>, <span class="pl-s1">train_index</span>, <span class="pl-s">"验证集:"</span>, <span class="pl-s1">test_index</span>)</pre></div>
+</li>
+<li>
+<p><strong><code class="notranslate">ShuffleSplit</code></strong>（随机划分交叉验证）<br>
+每次随机划分训练集和验证集，控制每次划分的比例。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">ShuffleSplit</span>
+
+<span class="pl-s1">ss</span> <span class="pl-c1">=</span> <span class="pl-en">ShuffleSplit</span>(<span class="pl-s1">n_splits</span><span class="pl-c1">=</span><span class="pl-c1">5</span>, <span class="pl-s1">test_size</span><span class="pl-c1">=</span><span class="pl-c1">0.2</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+<span class="pl-k">for</span> <span class="pl-s1">train_index</span>, <span class="pl-s1">test_index</span> <span class="pl-c1">in</span> <span class="pl-s1">ss</span>.<span class="pl-c1">split</span>(<span class="pl-c1">X</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"训练集:"</span>, <span class="pl-s1">train_index</span>, <span class="pl-s">"验证集:"</span>, <span class="pl-s1">test_index</span>)</pre></div>
+</li>
+</ol>
+<hr>
+<h4>2. 特征选择</h4>
+<h5><strong>2.1 为什么需要特征选择？</strong></h5>
+<ul>
+<li>去除无关或冗余的特征，减少模型复杂性。</li>
+<li>提高训练效率。</li>
+<li>减轻过拟合，提高泛化能力。</li>
+</ul>
+<hr>
+<h5><strong>2.2 特征选择方法</strong></h5>
+<ol>
+<li>
+<p><strong>过滤法（Filter Method）</strong><br>
+根据统计指标筛选特征。</p>
+<ul>
+<li>示例：<code class="notranslate">SelectKBest</code></li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">feature_selection</span> <span class="pl-k">import</span> <span class="pl-v">SelectKBest</span>, <span class="pl-s1">f_classif</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">load_iris</span>
+
+<span class="pl-c"># 加载数据</span>
+<span class="pl-s1">iris</span> <span class="pl-c1">=</span> <span class="pl-en">load_iris</span>()
+<span class="pl-c1">X</span>, <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">iris</span>.<span class="pl-c1">data</span>, <span class="pl-s1">iris</span>.<span class="pl-c1">target</span>
+
+<span class="pl-c"># 筛选得分最高的两个特征</span>
+<span class="pl-s1">selector</span> <span class="pl-c1">=</span> <span class="pl-en">SelectKBest</span>(<span class="pl-s1">score_func</span><span class="pl-c1">=</span><span class="pl-s1">f_classif</span>, <span class="pl-s1">k</span><span class="pl-c1">=</span><span class="pl-c1">2</span>)
+<span class="pl-v">X_new</span> <span class="pl-c1">=</span> <span class="pl-s1">selector</span>.<span class="pl-c1">fit_transform</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"筛选后的特征:<span class="pl-cce">\n</span>"</span>, <span class="pl-v">X_new</span>[:<span class="pl-c1">5</span>])</pre></div>
+</li>
+<li>
+<p><strong>嵌入法（Embedded Method）</strong><br>
+结合模型的特性自动选择重要特征。</p>
+<ul>
+<li>示例：基于随机森林的重要性</li>
+</ul>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">RandomForestClassifier</span>
+
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">RandomForestClassifier</span>()
+<span class="pl-s1">model</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"特征重要性:<span class="pl-cce">\n</span>"</span>, <span class="pl-s1">model</span>.<span class="pl-c1">feature_importances_</span>)</pre></div>
+</li>
+<li>
+<p><strong>递归特征消除（RFE）</strong><br>
+通过训练模型反复删除不重要的特征。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">feature_selection</span> <span class="pl-k">import</span> <span class="pl-c1">RFE</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">linear_model</span> <span class="pl-k">import</span> <span class="pl-v">LogisticRegression</span>
+
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">LogisticRegression</span>()
+<span class="pl-s1">selector</span> <span class="pl-c1">=</span> <span class="pl-en">RFE</span>(<span class="pl-s1">model</span>, <span class="pl-s1">n_features_to_select</span><span class="pl-c1">=</span><span class="pl-c1">2</span>)
+<span class="pl-v">X_new</span> <span class="pl-c1">=</span> <span class="pl-s1">selector</span>.<span class="pl-c1">fit_transform</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"选择后的特征:<span class="pl-cce">\n</span>"</span>, <span class="pl-v">X_new</span>[:<span class="pl-c1">5</span>])</pre></div>
+</li>
+</ol>
+<hr>
+<h4>3. 模型持久化</h4>
+<h4><strong>3.1 为什么需要模型持久化？</strong></h4>
+<ul>
+<li>保存训练好的模型，以便后续直接加载使用。</li>
+<li>节省重复训练的时间。</li>
+</ul>
+<h5><strong>3.2 常用方法</strong></h5>
+<ol>
+<li>
+<p><strong>使用 <code class="notranslate">joblib</code></strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">RandomForestClassifier</span>
+<span class="pl-k">import</span> <span class="pl-s1">joblib</span>
+
+<span class="pl-c"># 训练模型</span>
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">RandomForestClassifier</span>()
+<span class="pl-s1">model</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-c"># 保存模型</span>
+<span class="pl-s1">joblib</span>.<span class="pl-c1">dump</span>(<span class="pl-s1">model</span>, <span class="pl-s">'model.pkl'</span>)
+
+<span class="pl-c"># 加载模型</span>
+<span class="pl-s1">loaded_model</span> <span class="pl-c1">=</span> <span class="pl-s1">joblib</span>.<span class="pl-c1">load</span>(<span class="pl-s">'model.pkl'</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"加载模型后预测:"</span>, <span class="pl-s1">loaded_model</span>.<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>[:<span class="pl-c1">5</span>]))</pre></div>
+</li>
+<li>
+<p><strong>使用 <code class="notranslate">pickle</code></strong></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">pickle</span>
+
+<span class="pl-c"># 保存模型</span>
+<span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">'model.pkl'</span>, <span class="pl-s">'wb'</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">pickle</span>.<span class="pl-c1">dump</span>(<span class="pl-s1">model</span>, <span class="pl-s1">file</span>)
+
+<span class="pl-c"># 加载模型</span>
+<span class="pl-k">with</span> <span class="pl-en">open</span>(<span class="pl-s">'model.pkl'</span>, <span class="pl-s">'rb'</span>) <span class="pl-k">as</span> <span class="pl-s1">file</span>:
+    <span class="pl-s1">loaded_model</span> <span class="pl-c1">=</span> <span class="pl-s1">pickle</span>.<span class="pl-c1">load</span>(<span class="pl-s1">file</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"加载模型后预测:"</span>, <span class="pl-s1">loaded_model</span>.<span class="pl-c1">predict</span>(<span class="pl-c1">X</span>[:<span class="pl-c1">5</span>]))</pre></div>
+</li>
+</ol>
+<hr>
+<h4>4. 并行处理</h4>
+<p>Scikit-Learn 支持并行处理，可以通过设置参数 <code class="notranslate">n_jobs</code> 实现，尤其适用于集成模型（如随机森林、梯度提升等）。</p>
+<h5>示例：随机森林中的并行处理</h5>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">RandomForestClassifier</span>
+
+<span class="pl-c"># 并行训练模型</span>
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">RandomForestClassifier</span>(<span class="pl-s1">n_estimators</span><span class="pl-c1">=</span><span class="pl-c1">100</span>, <span class="pl-s1">n_jobs</span><span class="pl-c1">=</span><span class="pl-c1">-</span><span class="pl-c1">1</span>)
+<span class="pl-s1">model</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"训练完成，支持并行处理。"</span>)</pre></div>
+<hr>
+<h4>5. 管道优化与超参数调优</h4>
+<h5><strong>5.1 管道结合网格搜索</strong></h5>
+<p>将管道与网格搜索结合，可以统一优化数据预处理步骤与模型参数。</p>
+<p>示例：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">pipeline</span> <span class="pl-k">import</span> <span class="pl-v">Pipeline</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">preprocessing</span> <span class="pl-k">import</span> <span class="pl-v">StandardScaler</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">svm</span> <span class="pl-k">import</span> <span class="pl-c1">SVC</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-v">GridSearchCV</span>
+
+<span class="pl-c"># 构建管道</span>
+<span class="pl-s1">pipeline</span> <span class="pl-c1">=</span> <span class="pl-en">Pipeline</span>([
+    (<span class="pl-s">'scaler'</span>, <span class="pl-en">StandardScaler</span>()),
+    (<span class="pl-s">'svm'</span>, <span class="pl-en">SVC</span>())
+])
+
+<span class="pl-c"># 参数网格</span>
+<span class="pl-s1">param_grid</span> <span class="pl-c1">=</span> {
+    <span class="pl-s">'svm__C'</span>: [<span class="pl-c1">0.1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">10</span>],
+    <span class="pl-s">'svm__kernel'</span>: [<span class="pl-s">'linear'</span>, <span class="pl-s">'rbf'</span>]
+}
+
+<span class="pl-c"># 网格搜索</span>
+<span class="pl-s1">grid_search</span> <span class="pl-c1">=</span> <span class="pl-en">GridSearchCV</span>(<span class="pl-s1">pipeline</span>, <span class="pl-s1">param_grid</span>, <span class="pl-s1">cv</span><span class="pl-c1">=</span><span class="pl-c1">3</span>)
+<span class="pl-s1">grid_search</span>.<span class="pl-c1">fit</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"最佳参数:"</span>, <span class="pl-s1">grid_search</span>.<span class="pl-c1">best_params_</span>)</pre></div>
+<hr>
+<h3>文章参考</h3>
+<ul>
+<li>Scikit-Learn 官方文档：<a href="https://scikit-learn.org/stable/documentation.html" rel="nofollow">https://scikit-learn.org/stable/documentation.html</a></li>
+<li>代码练习网站：<a href="https://www.kaggle.com" rel="nofollow">https://www.kaggle.com</a></li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>
+
+</html>
