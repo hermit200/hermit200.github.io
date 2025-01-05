@@ -92,7 +92,7 @@ Scikit-Learn 提供了多个经典数据集（如鸢尾花、手写数字等）�
   - `target`：目标变量
   - `DESCR`：数据集描述
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.datasets import load_iris
 
@@ -115,7 +115,7 @@ print("目标变量:\n", iris.target[:5])  # 前5个标签
   - `make_regression()`：生成回归任务数据
   - `make_blobs()`：生成聚类数据
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.datasets import make_classification
 
@@ -138,7 +138,7 @@ print("目标变量:\n", y[:5])
   - `transform()`：应用标准化变换。
   - `fit_transform()`：结合计算和变换。
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.preprocessing import StandardScaler
 import numpy as np
@@ -166,7 +166,7 @@ print("标准化后:\n", data_scaled)
   - `transform()`：应用归一化。
   - `inverse_transform()`：将归一化数据恢复到原始范围。
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.preprocessing import MinMaxScaler
 
@@ -192,7 +192,7 @@ print("归一化后:\n", data_scaled)
   - `missing_values`：指定缺失值（如 `np.nan`）。
   - `strategy`：填充策略（`mean`、`median` 或 `most_frequent`）。
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.impute import SimpleImputer
 
@@ -340,7 +340,7 @@ Scikit-Learn 提供了两种常用超参数调优方法：
 - `param_grid`：字典形式的参数搜索空间。
 - `cv`：交叉验证的折数。
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
@@ -374,7 +374,7 @@ print("最佳得分:", grid_search.best_score_)
 - `param_distributions`：参数搜索空间。
 - `n_iter`：搜索次数。
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
@@ -413,7 +413,7 @@ print("最佳得分:", random_search.best_score_)
 - `Pipeline`：创建管道。
 - `make_pipeline`：自动命名步骤的简化方式。
 
-#### 示例：
+#### 示例
 ```python
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
