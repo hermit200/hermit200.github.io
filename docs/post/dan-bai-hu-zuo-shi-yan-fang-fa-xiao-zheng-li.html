@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+
+本文整理了 4 种常见的蛋白互作实验方法，详细介绍 **酵母双杂交（Y2H）**、**GST Pull-Down**、**亲和纯化质谱（AP-MS）** 和 **免疫共沉淀（Co-IP）** 的实验原理，希望对你有所帮助🌟
+
+
+
+#### 1. 酵母双杂交（Yeast Two-Hybrid, Y2H）
+
+![](https://www.lifeasible.com/wp-content/themes/v1/images/The-Yeast-Two-Hybrid-Assay-in-Plants-pic1.png)
+
+（图像来自www.lifeasible.com）
+
+**原理**
+
+酵母双杂交技术基于真核转录因子的模块化功能，将 DNA 结合域（BD）和转录激活域（AD）分离。">
+<meta property="og:title" content="蛋白互作实验方法小整理">
+<meta property="og:description" content="
+
+本文整理了 4 种常见的蛋白互作实验方法，详细介绍 **酵母双杂交（Y2H）**、**GST Pull-Down**、**亲和纯化质谱（AP-MS）** 和 **免疫共沉淀（Co-IP）** 的实验原理，希望对你有所帮助🌟
+
+
+
+#### 1. 酵母双杂交（Yeast Two-Hybrid, Y2H）
+
+![](https://www.lifeasible.com/wp-content/themes/v1/images/The-Yeast-Two-Hybrid-Assay-in-Plants-pic1.png)
+
+（图像来自www.lifeasible.com）
+
+**原理**
+
+酵母双杂交技术基于真核转录因子的模块化功能，将 DNA 结合域（BD）和转录激活域（AD）分离。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/dan-bai-hu-zuo-shi-yan-fang-fa-xiao-zheng-li.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>蛋白互作实验方法小整理</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">蛋白互作实验方法小整理</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/21" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文整理了 4 种常见的蛋白互作实验方法，详细介绍 <strong>酵母双杂交（Y2H）</strong>、<strong>GST Pull-Down</strong>、<strong>亲和纯化质谱（AP-MS）</strong> 和 <strong>免疫共沉淀（Co-IP）</strong> 的实验原理，希望对你有所帮助🌟</p>
+<h4>1. 酵母双杂交（Yeast Two-Hybrid, Y2H）</h4>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/a7a077115f51330d2f83bb51a606824c3bd97c1969f2854febabedb535312bb0/68747470733a2f2f7777772e6c696665617369626c652e636f6d2f77702d636f6e74656e742f7468656d65732f76312f696d616765732f5468652d59656173742d54776f2d4879627269642d41737361792d696e2d506c616e74732d706963312e706e67"><img src="https://camo.githubusercontent.com/a7a077115f51330d2f83bb51a606824c3bd97c1969f2854febabedb535312bb0/68747470733a2f2f7777772e6c696665617369626c652e636f6d2f77702d636f6e74656e742f7468656d65732f76312f696d616765732f5468652d59656173742d54776f2d4879627269642d41737361792d696e2d506c616e74732d706963312e706e67" alt="" data-canonical-src="https://www.lifeasible.com/wp-content/themes/v1/images/The-Yeast-Two-Hybrid-Assay-in-Plants-pic1.png" style="max-width: 100%;"></a></p>
+<p>（图像来自www.lifeasible.com）</p>
+<p><strong>原理</strong></p>
+<p>酵母双杂交技术基于真核转录因子的模块化功能，将 DNA 结合域（BD）和转录激活域（AD）分离。其核心思想是将两个候选蛋白（如 A 和 B）分别与 BD 和 AD 融合，分别称为诱饵蛋白和靶蛋白。如果 A 和 B 之间存在物理相互作用，则两部分重新结合形成功能性转录因子，激活下游报告基因（如 HIS3 和 lacZ）的表达。</p>
+<p><strong>具体步骤：</strong></p>
+<ol>
+<li><strong>构建融合蛋白</strong>：通过基因工程将候选蛋白分别与 BD 和 AD 融合，构建表达载体。</li>
+<li><strong>酵母转化</strong>：将两个载体共同转入酵母细胞，表达融合蛋白。</li>
+<li><strong>筛选与检测</strong>：通过报告基因表达（如利用缺陷型培养基检测 HIS3 表达或显色反应检测 lacZ 表达），判断蛋白间是否存在相互作用。</li>
+</ol>
+<p><strong>补充说明</strong></p>
+<p><strong>报告基因系统</strong>：常用的报告基因包括 HIS3（使酵母在缺陷培养基中生长）、lacZ（产生β-半乳糖苷酶，引发显色反应）。<br>
+<strong>优化条件</strong>：融合蛋白表达和互作发生在酵母细胞核内，需要避免可能的错误定位。</p>
+<h4>2. GST Pull-Down</h4>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/3c5e07f4351514d8f2fdfaa5656c73bca1e8681e47c856de14e6c12c17380bc6/68747470733a2f2f6d65646963696e652e62696f72756e2e636f6d2f75706c6f6164732f3230323230362f30322f5248566846643577354a4b344f59473065594a384a3262314d79676564494b5059386755594976442e6a7067"><img src="https://camo.githubusercontent.com/3c5e07f4351514d8f2fdfaa5656c73bca1e8681e47c856de14e6c12c17380bc6/68747470733a2f2f6d65646963696e652e62696f72756e2e636f6d2f75706c6f6164732f3230323230362f30322f5248566846643577354a4b344f59473065594a384a3262314d79676564494b5059386755594976442e6a7067" alt="" data-canonical-src="https://medicine.biorun.com/uploads/202206/02/RHVhFd5w5JK4OYG0eYJ8J2b1MygedIKPY8gUYIvD.jpg" style="max-width: 100%;"></a></p>
+<p>（图像来自medicine.biorun.com）</p>
+<p><strong>原理</strong></p>
+<p>GST pull-down 技术是一种体外蛋白质相互作用检测方法，通过将目标蛋白融合至谷胱甘肽-S-转移酶（GST）标签，利用 GST 与谷胱甘肽（GSH）之间的高亲和力将目标蛋白固定在亲和基质上，再通过结合实验检测是否存在候选互作蛋白。</p>
+<p><strong>具体步骤：</strong></p>
+<ol>
+<li><strong>融合蛋白表达和纯化</strong>：构建 GST-目标蛋白融合蛋白表达载体，在大肠杆菌中表达并纯化。</li>
+<li><strong>固定融合蛋白</strong>：将 GST 融合蛋白与预装有谷胱甘肽的琼脂糖珠（GSH-beads）结合。</li>
+<li><strong>候选蛋白孵育</strong>：将候选互作蛋白（通常为细胞裂解液中的蛋白）加入珠子体系，允许结合。</li>
+<li><strong>洗脱与分析</strong>：通过缓冲液洗去未结合蛋白，用 SDS-PAGE 电泳和免疫印迹检测结合的候选蛋白。</li>
+</ol>
+<p><strong>补充说明</strong></p>
+<p><strong>结合条件优化</strong>：通过调整缓冲液成分（如盐浓度、pH 值）减少非特异性结合。<br>
+<strong>实验局限性</strong>：实验环境为体外条件，不完全模拟体内的复杂环境，可能导致结果与生理条件不一致。</p>
+<h4>3. 亲和纯化质谱（Affinity Purification Mass Spectrometry, AP-MS）</h4>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/96778dafef68a9b2c699f1e482688306700af1e27ebbdb4863e89a2db3855fac/68747470733a2f2f636c6f756466726f6e742e6a6f76652e636f6d2f66696c65732f6674705f75706c6f61642f35373732302f3537373230666967316c617267652e6a7067"><img src="https://camo.githubusercontent.com/96778dafef68a9b2c699f1e482688306700af1e27ebbdb4863e89a2db3855fac/68747470733a2f2f636c6f756466726f6e742e6a6f76652e636f6d2f66696c65732f6674705f75706c6f61642f35373732302f3537373230666967316c617267652e6a7067" alt="" data-canonical-src="https://cloudfront.jove.com/files/ftp_upload/57720/57720fig1large.jpg" style="max-width: 100%;"></a></p>
+<p>（图像来自文献《2 in 1: One-step Affinity Purification for the Parallel Analysis of Protein-Protein and Protein-Metabolite Complexes》，doi:10.3791/57720）</p>
+<p><strong>原理</strong></p>
+<p>亲和纯化质谱结合了蛋白捕获技术和高通量质谱分析，用于检测目标蛋白与其结合伙伴之间的相互作用。通过抗体或标签结合捕获目标蛋白及其复合物后，用质谱仪识别互作蛋白。</p>
+<p><strong>具体步骤：</strong></p>
+<ol>
+<li><strong>标签标记或内源性捕获</strong>：通过基因工程将目标蛋白标记特定标签（如 FLAG、HA），或者直接利用抗体识别内源性目标蛋白。</li>
+<li><strong>细胞裂解与结合</strong>：将细胞裂解液与抗体或亲和基质结合，捕获目标蛋白及其互作复合物。</li>
+<li><strong>洗脱与纯化</strong>：用洗脱缓冲液分离捕获物，同时去除非特异性结合蛋白。</li>
+<li><strong>质谱分析</strong>：通过液相色谱-质谱联用技术（LC-MS/MS）对互作蛋白进行鉴定和定量。</li>
+</ol>
+<p><strong>补充说明</strong></p>
+<ul>
+<li><strong>数据分析</strong>：质谱分析产生的大量数据需通过生物信息学工具（如 STRING 数据库）解析互作网络。</li>
+<li><strong>动态研究</strong>：可通过时间点采样或不同条件处理，研究互作的动态变化。</li>
+</ul>
+<hr>
+<h4>4. 免疫共沉淀（Co-Immunoprecipitation, Co-IP）</h4>
+<p><strong>原理</strong></p>
+<p>免疫共沉淀是一种体内蛋白质互作检测方法，利用抗体特异性结合目标蛋白，通过结合复合物一同沉淀并分析互作蛋白。它被广泛用于验证天然条件下的蛋白质互作。</p>
+<p><strong>具体步骤：</strong></p>
+<ol>
+<li><strong>细胞裂解</strong>：利用温和裂解缓冲液保持蛋白复合物的天然状态。</li>
+<li><strong>抗体结合</strong>：将目标蛋白特异性抗体加入裂解液中，与目标蛋白结合形成免疫复合物。</li>
+<li><strong>沉淀与洗涤</strong>：通过 Protein A/G beads 捕获抗体-蛋白复合物，洗涤去除非特异性结合。</li>
+<li><strong>检测互作蛋白</strong>：通过 SDS-PAGE 和免疫印迹（Western Blot）分析互作蛋白。</li>
+</ol>
+<p><strong>补充说明</strong></p>
+<p><strong>抗体选择</strong>：高特异性和高亲和力抗体是成功的关键。<br>
+<strong>实验优化</strong>：避免裂解过程中过多破坏复合物，减少背景噪声。</p>
+<h4>总结</h4>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+<th><strong>适用方向</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>酵母双杂交</strong></td>
+<td>高通量筛选，适合检测大规模互作网络；可用于功能位点研究。</td>
+<td>可能存在假阳性和假阴性；依赖蛋白在酵母中的正确折叠与功能保持。</td>
+<td>高通量初筛、发现未知蛋白互作。</td>
+</tr>
+<tr>
+<td><strong>GST Pull-Down</strong></td>
+<td>验证直接蛋白互作的经典方法；实验操作简单，结果直观。</td>
+<td>仅限体外条件，不能反映体内天然状态；对蛋白纯度要求高。</td>
+<td>验证两个蛋白之间的直接互作。</td>
+</tr>
+<tr>
+<td><strong>亲和纯化质谱</strong></td>
+<td>高分辨率，可检测复杂网络；能同时识别多种互作蛋白。</td>
+<td>样品制备复杂，对实验条件要求高；数据分析难度较大。</td>
+<td>高分辨率的蛋白互作组学研究。</td>
+</tr>
+<tr>
+<td><strong>免疫共沉淀（Co-IP）</strong></td>
+<td>可反映体内天然状态的蛋白互作，可信度高；保留细胞/组织中的天然环境。</td>
+<td>需高质量抗体，灵敏度低；可能因非特异性结合产生噪声。</td>
+<td>检测体内蛋白天然互作。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>
+
+</html>
