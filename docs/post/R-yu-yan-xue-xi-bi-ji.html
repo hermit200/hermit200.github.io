@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="这篇文章是我的 R 语言学习笔记，涵盖了基础操作、数据处理、可视化技巧以及生信分析等内容，还搭配了一些案例分享，希望能帮到你 😊
+
+
+---
+
+## **1. R语言基础**
+
+ **1.1 环境与基本操作**
+1. **安装与配置**：
+   - 下载 R：https://cran.r-project.org/
+   - 下载 RStudio：https://www.rstudio.com/products/rstudio/
+2. **基础操作**：
+
+ 设置工作目录：
+     ```R
+     getwd() # 查看当前目录
+     setwd('你的工作路径') # 设置工作目录
+     ```
+3.**RStudio工作面板介绍**
+
+![](https://i.ibb.co/gz2bQmq/r-studio.png)
+
+ **1. 脚本编辑区（黄色框）**
+**功能**：
+- 主要用于编写、编辑和保存 R 语言代码。">
+<meta property="og:title" content="R语言学习笔记">
+<meta property="og:description" content="这篇文章是我的 R 语言学习笔记，涵盖了基础操作、数据处理、可视化技巧以及生信分析等内容，还搭配了一些案例分享，希望能帮到你 😊
+
+
+---
+
+## **1. R语言基础**
+
+ **1.1 环境与基本操作**
+1. **安装与配置**：
+   - 下载 R：https://cran.r-project.org/
+   - 下载 RStudio：https://www.rstudio.com/products/rstudio/
+2. **基础操作**：
+
+ 设置工作目录：
+     ```R
+     getwd() # 查看当前目录
+     setwd('你的工作路径') # 设置工作目录
+     ```
+3.**RStudio工作面板介绍**
+
+![](https://i.ibb.co/gz2bQmq/r-studio.png)
+
+ **1. 脚本编辑区（黄色框）**
+**功能**：
+- 主要用于编写、编辑和保存 R 语言代码。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/R-yu-yan-xue-xi-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>R语言学习笔记</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">R语言学习笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/16" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>这篇文章是我的 R 语言学习笔记，涵盖了基础操作、数据处理、可视化技巧以及生信分析等内容，还搭配了一些案例分享，希望能帮到你 😊</p>
+<hr>
+<h2><strong>1. R语言基础</strong></h2>
+<p><strong>1.1 环境与基本操作</strong></p>
+<ol>
+<li><strong>安装与配置</strong>：
+<ul>
+<li>下载 R：<a href="https://cran.r-project.org/" rel="nofollow">https://cran.r-project.org/</a></li>
+<li>下载 RStudio：<a href="https://www.rstudio.com/products/rstudio/" rel="nofollow">https://www.rstudio.com/products/rstudio/</a></li>
+</ul>
+</li>
+<li><strong>基础操作</strong>：</li>
+</ol>
+<p>设置工作目录：<br>
+<code class="notranslate">R getwd() # 查看当前目录 setwd("你的工作路径") # 设置工作目录 </code><br>
+3.<strong>RStudio工作面板介绍</strong></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/c3177a8e8f14cb4c69c10426baf8d7b8a1d0cf047ffcba980f8548d71f820a1e/68747470733a2f2f692e6962622e636f2f677a3262516d712f722d73747564696f2e706e67"><img src="https://camo.githubusercontent.com/c3177a8e8f14cb4c69c10426baf8d7b8a1d0cf047ffcba980f8548d71f820a1e/68747470733a2f2f692e6962622e636f2f677a3262516d712f722d73747564696f2e706e67" alt="" data-canonical-src="https://i.ibb.co/gz2bQmq/r-studio.png" style="max-width: 100%;"></a></p>
+<p><strong>1. 脚本编辑区（黄色框）</strong><br>
+<strong>功能</strong>：</p>
+<ul>
+<li>主要用于编写、编辑和保存 R 语言代码。</li>
+<li>支持多标签页，可以同时打开和编辑多个脚本文件（例如 <code class="notranslate">.R</code>、<code class="notranslate">.Rmd</code>）。</li>
+</ul>
+<p><strong>主要按钮</strong>：</p>
+<ul>
+<li><strong>Run</strong>：运行当前选中的代码行或光标所在行。</li>
+<li><strong>Source</strong>：运行整个脚本文件。</li>
+<li><strong>Save</strong>：保存当前脚本文件。</li>
+<li><strong>Code Tools</strong>：
+<ul>
+<li>格式化代码、查找替换等功能。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. 环境与历史区（绿色框）</strong><br>
+<strong>功能</strong>：</p>
+<ul>
+<li>
+<p><strong>Environment（环境）</strong>：</p>
+<ul>
+<li>显示当前 R 会话中加载的所有对象（如数据框、变量、函数）。</li>
+<li>提供对象的大小、结构等基本信息。</li>
+<li>可以通过点击对象名称快速查看或编辑。</li>
+</ul>
+</li>
+<li>
+<p><strong>History（历史）</strong>：</p>
+<ul>
+<li>记录当前 R 会话中运行的所有命令。</li>
+<li>可以从历史中选择命令并重新运行。</li>
+</ul>
+</li>
+<li>
+<p><strong>Connections（连接）</strong>：</p>
+<ul>
+<li>用于连接数据库或其他外部数据源。</li>
+</ul>
+</li>
+</ul>
+<p><strong>主要按钮</strong>：</p>
+<ul>
+<li><strong>Import Dataset</strong>：
+<ul>
+<li>提供图形化界面从外部文件（如 CSV、Excel）导入数据。</li>
+</ul>
+</li>
+<li><strong>清理环境</strong>：
+<ul>
+<li>点击扫帚图标清除所有已加载的变量和对象。</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. 绘图与工具区（红色框）</strong><br>
+<strong>功能</strong>：</p>
+<ul>
+<li>
+<p><strong>Plots（图形）</strong>：</p>
+<ul>
+<li>显示使用 R 代码生成的图表，例如 <code class="notranslate">ggplot2</code> 或 <code class="notranslate">base</code> 绘图。</li>
+<li>提供缩放、导出（为 PDF、PNG 等格式）的功能。</li>
+<li>可通过前后按钮浏览之前生成的图表。</li>
+</ul>
+</li>
+<li>
+<p><strong>Files（文件）</strong>：</p>
+<ul>
+<li>显示当前工作目录的文件列表，支持文件浏览、打开和删除操作。</li>
+</ul>
+</li>
+<li>
+<p><strong>Packages（包管理器）</strong>：</p>
+<ul>
+<li>查看已安装的 R 包。</li>
+<li>支持搜索、安装和更新 R 包。</li>
+</ul>
+</li>
+<li>
+<p><strong>Help（帮助文档）</strong>：</p>
+<ul>
+<li>显示 R 函数、包的官方文档。</li>
+<li>可以通过搜索框快速查找帮助信息。</li>
+</ul>
+</li>
+<li>
+<p><strong>Viewer</strong>：</p>
+<ul>
+<li>用于显示 HTML 或交互式的内容（例如 Shiny 应用）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>主要按钮</strong>：</p>
+<ul>
+<li><strong>Zoom</strong>：将当前图表放大到新窗口中。</li>
+<li><strong>Export</strong>：将当前图表导出为图片或 PDF。</li>
+</ul>
+<p><strong>4. 控制台与终端区（紫色框）</strong><br>
+<strong>功能</strong>：</p>
+<ul>
+<li>
+<p><strong>Console（控制台）</strong>：</p>
+<ul>
+<li>提供交互式 R 命令行，可以直接运行代码并查看输出结果。</li>
+<li>实时显示代码的输出、错误和警告信息。</li>
+<li>支持快捷键运行代码，快速测试和调试。</li>
+</ul>
+</li>
+<li>
+<p><strong>Terminal（终端）</strong>：</p>
+<ul>
+<li>集成系统终端（如 Bash），可执行非 R 语言相关的系统命令。</li>
+<li>适合管理文件、运行 Git 命令等。</li>
+</ul>
+</li>
+<li>
+<p><strong>Background Jobs（后台任务）</strong>：</p>
+<ul>
+<li>显示和管理正在运行的后台任务。</li>
+</ul>
+</li>
+</ul>
+<p><strong>主要按钮</strong>：</p>
+<ul>
+<li><strong>清空控制台</strong>：清除控制台中现有的输出内容。</li>
+<li><strong>运行按钮</strong>：运行选中的代码或脚本。</li>
+</ul>
+<p><strong>总结</strong></p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>标记</strong></th>
+<th><strong>窗口名称</strong></th>
+<th><strong>主要功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>脚本编辑区</td>
+<td>编写、编辑 R 代码，运行和保存脚本文件。</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>环境与历史区</td>
+<td>管理数据对象，查看运行历史，导入外部数据。</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>绘图与工具区</td>
+<td>显示图表，管理文件与包，查看帮助文档。</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>控制台与终端区</td>
+<td>运行 R 代码，显示输出和错误信息，执行系统命令。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>1.2 数据类型与结构</strong></p>
+<p><strong>1.2.1 基本数据类型</strong></p>
+<ul>
+<li><strong>数值型</strong>（Numeric）：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">x</span> <span class="pl-k">&lt;-</span> <span class="pl-c1">10.5</span>
+class(<span class="pl-smi">x</span>) <span class="pl-c"><span class="pl-c">#</span> 输出："numeric"</span></pre></div>
+</li>
+<li><strong>字符型</strong>（Character）：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">name</span> <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>R语言<span class="pl-pds">"</span></span>
+class(<span class="pl-smi">name</span>) <span class="pl-c"><span class="pl-c">#</span> 输出："character"</span></pre></div>
+</li>
+<li><strong>逻辑型</strong>（Logical）：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">is_true</span> <span class="pl-k">&lt;-</span> <span class="pl-c1">TRUE</span>
+class(<span class="pl-smi">is_true</span>) <span class="pl-c"><span class="pl-c">#</span> 输出："logical"</span></pre></div>
+</li>
+<li><strong>因子</strong>（Factor）：用于表示分类变量。
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">colors</span> <span class="pl-k">&lt;-</span> <span class="pl-k">factor</span>(c(<span class="pl-s"><span class="pl-pds">"</span>红<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>蓝<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>蓝<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>红<span class="pl-pds">"</span></span>))
+class(<span class="pl-smi">colors</span>) <span class="pl-c"><span class="pl-c">#</span> 输出："factor"</span></pre></div>
+</li>
+</ul>
+<p><strong>1.2.2 数据结构</strong></p>
+<ol>
+<li><strong>向量</strong>（Vector）：同类型元素的集合。
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">vec</span> <span class="pl-k">&lt;-</span> c(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>)</pre></div>
+</li>
+<li><strong>矩阵</strong>（Matrix）：二维的数值集合。
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">mat</span> <span class="pl-k">&lt;-</span> <span class="pl-k">matrix</span>(<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">6</span>, <span class="pl-v">nrow</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>, <span class="pl-v">ncol</span> <span class="pl-k">=</span> <span class="pl-c1">3</span>)</pre></div>
+</li>
+<li><strong>数据框</strong>（Data Frame）：表格形式的结构，类似于 Excel。
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">df</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-v">ID</span> <span class="pl-k">=</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">3</span>, <span class="pl-v">Name</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>A<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>B<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>C<span class="pl-pds">"</span></span>))</pre></div>
+</li>
+<li><strong>列表</strong>（List）：可以包含不同类型的元素。
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">lst</span> <span class="pl-k">&lt;-</span> <span class="pl-k">list</span>(<span class="pl-v">Name</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>R<span class="pl-pds">"</span></span>, <span class="pl-v">Numbers</span> <span class="pl-k">=</span> c(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>))</pre></div>
+</li>
+</ol>
+<p><strong>1.3 基础操作</strong></p>
+<ol>
+<li><strong>变量赋值</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">x</span> <span class="pl-k">&lt;-</span> <span class="pl-c1">5</span>
+<span class="pl-smi">y</span> <span class="pl-k">&lt;-</span> c(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>)</pre></div>
+</li>
+<li><strong>基本函数</strong>：
+<ul>
+<li>统计函数：
+<div class="highlight highlight-source-r"><pre class="notranslate">mean(<span class="pl-smi">y</span>) <span class="pl-c"><span class="pl-c">#</span> 平均值</span>
+sum(<span class="pl-smi">y</span>)  <span class="pl-c"><span class="pl-c">#</span> 总和</span>
+length(<span class="pl-smi">y</span>) <span class="pl-c"><span class="pl-c">#</span> 长度</span></pre></div>
+</li>
+<li>序列生成：
+<div class="highlight highlight-source-r"><pre class="notranslate">seq(<span class="pl-c1">1</span>, <span class="pl-c1">10</span>, <span class="pl-v">by</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>) <span class="pl-c"><span class="pl-c">#</span> 输出：1, 3, 5, 7, 9</span></pre></div>
+</li>
+</ul>
+</li>
+<li><strong>条件语句</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-k">if</span> (<span class="pl-smi">x</span> <span class="pl-k">&gt;</span> <span class="pl-c1">3</span>) {
+  print(<span class="pl-s"><span class="pl-pds">"</span>x大于3<span class="pl-pds">"</span></span>)
+} <span class="pl-k">else</span> {
+  print(<span class="pl-s"><span class="pl-pds">"</span>x小于等于3<span class="pl-pds">"</span></span>)
+}</pre></div>
+</li>
+<li><strong>循环语句</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-k">for</span> (<span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>) {
+  print(<span class="pl-smi">i</span>)
+}</pre></div>
+</li>
+</ol>
+<h2><strong>2. 数据操作</strong></h2>
+<p><strong>2.1 数据导入与导出</strong></p>
+<ol>
+<li>
+<p><strong>读取 CSV 文件</strong>：</p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">data</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">"</span>data.csv<span class="pl-pds">"</span></span>)
+head(<span class="pl-smi">data</span>) <span class="pl-c"><span class="pl-c">#</span> 查看前几行</span></pre></div>
+</li>
+<li>
+<p><strong>保存数据</strong>：</p>
+<div class="highlight highlight-source-r"><pre class="notranslate">write.csv(<span class="pl-smi">data</span>, <span class="pl-s"><span class="pl-pds">"</span>output.csv<span class="pl-pds">"</span></span>)</pre></div>
+</li>
+<li>
+<p><strong>读取 Excel 文件</strong>：</p>
+<ul>
+<li>
+<p>安装 <code class="notranslate">readxl</code> 包：</p>
+<div class="highlight highlight-source-r"><pre class="notranslate">install.packages(<span class="pl-s"><span class="pl-pds">"</span>readxl<span class="pl-pds">"</span></span>)
+library(<span class="pl-smi">readxl</span>)
+<span class="pl-smi">data</span> <span class="pl-k">&lt;-</span> read_excel(<span class="pl-s"><span class="pl-pds">"</span>data.xlsx<span class="pl-pds">"</span></span>)</pre></div>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>2.2 数据清洗</strong></p>
+<ol>
+<li><strong>筛选与过滤</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate">subset(<span class="pl-smi">data</span>, <span class="pl-smi">Age</span> <span class="pl-k">&gt;</span> <span class="pl-c1">30</span>) <span class="pl-c"><span class="pl-c">#</span> 筛选年龄大于30的行</span></pre></div>
+</li>
+<li><strong>缺失值处理</strong>：
+<ul>
+<li>检查缺失值：
+<div class="highlight highlight-source-r"><pre class="notranslate">is.na(<span class="pl-smi">data</span>)</pre></div>
+</li>
+<li>移除缺失值：
+<div class="highlight highlight-source-r"><pre class="notranslate">na.omit(<span class="pl-smi">data</span>)</pre></div>
+</li>
+</ul>
+</li>
+<li><strong>排序与重排</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">sorted_data</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">data</span>[order(<span class="pl-smi">data</span><span class="pl-k">$</span><span class="pl-smi">Age</span>), ] <span class="pl-c"><span class="pl-c">#</span> 按年龄排序</span></pre></div>
+</li>
+</ol>
+<p><strong>2.3 数据操作包</strong></p>
+<p><strong>2.3.1 dplyr 包核心函数</strong></p>
+<div class="highlight highlight-source-r"><pre class="notranslate">install.packages(<span class="pl-s"><span class="pl-pds">"</span>dplyr<span class="pl-pds">"</span></span>)
+library(<span class="pl-smi">dplyr</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 示例数据</span>
+<span class="pl-smi">data</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-v">ID</span> <span class="pl-k">=</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>, <span class="pl-v">Age</span> <span class="pl-k">=</span> c(<span class="pl-c1">25</span>, <span class="pl-c1">30</span>, <span class="pl-c1">35</span>, <span class="pl-c1">40</span>, <span class="pl-c1">45</span>), <span class="pl-v">Income</span> <span class="pl-k">=</span> c(<span class="pl-c1">50</span>, <span class="pl-c1">60</span>, <span class="pl-c1">70</span>, <span class="pl-c1">80</span>, <span class="pl-c1">90</span>))
+
+<span class="pl-c"><span class="pl-c">#</span> 筛选行</span>
+<span class="pl-smi">data</span> %<span class="pl-k">&gt;</span>% filter(<span class="pl-smi">Age</span> <span class="pl-k">&gt;</span> <span class="pl-c1">30</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 选择列</span>
+<span class="pl-smi">data</span> %<span class="pl-k">&gt;</span>% select(<span class="pl-smi">ID</span>, <span class="pl-smi">Age</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 增加新列</span>
+<span class="pl-smi">data</span> %<span class="pl-k">&gt;</span>% mutate(<span class="pl-v">Savings</span> <span class="pl-k">=</span> <span class="pl-smi">Income</span> <span class="pl-k">-</span> <span class="pl-c1">20</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 分组与聚合</span>
+<span class="pl-smi">data</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">Age</span>) %<span class="pl-k">&gt;</span>% summarize(<span class="pl-v">Mean_Income</span> <span class="pl-k">=</span> mean(<span class="pl-smi">Income</span>))</pre></div>
+<h2><strong>3. 数据可视化</strong></h2>
+<p><strong>3.1 基础绘图</strong></p>
+<ol>
+<li>
+<p><strong>散点图</strong>：</p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">x</span> <span class="pl-k">&lt;-</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">10</span>
+<span class="pl-smi">y</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">x</span><span class="pl-k">^</span><span class="pl-c1">2</span>
+plot(<span class="pl-smi">x</span>, <span class="pl-smi">y</span>, <span class="pl-v">type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>p<span class="pl-pds">"</span></span>, <span class="pl-v">main</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>散点图<span class="pl-pds">"</span></span>, <span class="pl-v">xlab</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>X值<span class="pl-pds">"</span></span>, <span class="pl-v">ylab</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Y值<span class="pl-pds">"</span></span>)</pre></div>
+</li>
+<li>
+<p><strong>直方图</strong>：</p>
+<div class="highlight highlight-source-r"><pre class="notranslate">hist(<span class="pl-smi">mtcars</span><span class="pl-k">$</span><span class="pl-smi">mpg</span>, <span class="pl-v">main</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>直方图<span class="pl-pds">"</span></span>, <span class="pl-v">xlab</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>mpg<span class="pl-pds">"</span></span>, <span class="pl-v">col</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>lightblue<span class="pl-pds">"</span></span>)</pre></div>
+</li>
+</ol>
+<p><strong>3.2 ggplot2 高级可视化</strong></p>
+<p><strong>基本概念</strong></p>
+<p>ggplot2 的核心是图层（layers）概念，每个图表由以下几部分组成：</p>
+<p>数据：用 data 指定数据框。<br>
+美学映射（Aesthetic Mapping）：用 aes() 定义变量与图形属性（如颜色、大小）的映射。<br>
+几何对象（Geometries）：用 geom_<em>() 指定图形类型（如点、线、柱状图等）。<br>
+图层叠加：可以叠加多个 geom_</em> 图层，生成复杂图形。</p>
+<p><strong>基本绘图模板</strong></p>
+<div class="highlight highlight-source-r"><pre class="notranslate">ggplot(<span class="pl-v">data</span> <span class="pl-k">=</span> 数据框, aes(<span class="pl-v">x</span> <span class="pl-k">=</span> 变量<span class="pl-c1">1</span>, <span class="pl-v">y</span> <span class="pl-k">=</span> 变量<span class="pl-c1">2</span>)) <span class="pl-k">+</span>
+  <span class="pl-smi">geom_</span>几何对象() <span class="pl-k">+</span>
+  其他图层</pre></div>
+<p><strong>示例</strong></p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 加载必要的包</span>
+library(<span class="pl-smi">ggplot2</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 模拟城市数据集</span>
+set.seed(<span class="pl-c1">42</span>)
+<span class="pl-smi">data</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(
+  <span class="pl-v">City</span> <span class="pl-k">=</span> paste(<span class="pl-s"><span class="pl-pds">"</span>City<span class="pl-pds">"</span></span>, <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">20</span>),                <span class="pl-c"><span class="pl-c">#</span> 城市名称</span>
+  <span class="pl-v">Population</span> <span class="pl-k">=</span> runif(<span class="pl-c1">20</span>, <span class="pl-c1">500000</span>, <span class="pl-c1">10000000</span>), <span class="pl-c"><span class="pl-c">#</span> 城市人口 (50 万 - 1000 万)</span>
+  <span class="pl-v">GDP</span> <span class="pl-k">=</span> runif(<span class="pl-c1">20</span>, <span class="pl-c1">10000</span>, <span class="pl-c1">90000</span>),            <span class="pl-c"><span class="pl-c">#</span> 城市 GDP (1 万 - 9 万美元)</span>
+  <span class="pl-v">UnemploymentRate</span> <span class="pl-k">=</span> runif(<span class="pl-c1">20</span>, <span class="pl-c1">2</span>, <span class="pl-c1">15</span>)       <span class="pl-c"><span class="pl-c">#</span> 失业率 (2% - 15%)</span>
+)
+
+<span class="pl-c"><span class="pl-c">#</span> 绘制散点图</span>
+ggplot(<span class="pl-smi">data</span>, aes(<span class="pl-v">x</span> <span class="pl-k">=</span> <span class="pl-smi">Population</span> <span class="pl-k">/</span> <span class="pl-c1">1e6</span>,      <span class="pl-c"><span class="pl-c">#</span> 人口 (单位：百万)</span>
+                 <span class="pl-v">y</span> <span class="pl-k">=</span> <span class="pl-smi">GDP</span>,                   <span class="pl-c"><span class="pl-c">#</span> GDP</span>
+                 <span class="pl-v">size</span> <span class="pl-k">=</span> <span class="pl-smi">UnemploymentRate</span>,  <span class="pl-c"><span class="pl-c">#</span> 点大小为失业率</span>
+                 <span class="pl-v">color</span> <span class="pl-k">=</span> <span class="pl-smi">UnemploymentRate</span>)) <span class="pl-k">+</span>  <span class="pl-c"><span class="pl-c">#</span> 点颜色为失业率</span>
+  geom_point(<span class="pl-v">alpha</span> <span class="pl-k">=</span> <span class="pl-c1">0.8</span>, <span class="pl-v">shape</span> <span class="pl-k">=</span> <span class="pl-c1">21</span>) <span class="pl-k">+</span>     <span class="pl-c"><span class="pl-c">#</span> 半透明点，带边框</span>
+  scale_color_gradient(<span class="pl-v">low</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>green<span class="pl-pds">"</span></span>, <span class="pl-v">high</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>red<span class="pl-pds">"</span></span>, <span class="pl-v">name</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Unemployment Rate (%)<span class="pl-pds">"</span></span>) <span class="pl-k">+</span> <span class="pl-c"><span class="pl-c">#</span> 渐变颜色</span>
+  scale_size(<span class="pl-v">range</span> <span class="pl-k">=</span> c(<span class="pl-c1">3</span>, <span class="pl-c1">12</span>), <span class="pl-v">name</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Unemployment Rate (%)<span class="pl-pds">"</span></span>) <span class="pl-k">+</span> <span class="pl-c"><span class="pl-c">#</span> 点大小范围</span>
+  labs(<span class="pl-v">title</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>City Population vs GDP<span class="pl-pds">"</span></span>,
+       <span class="pl-v">subtitle</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>A visual exploration of urban population, GDP, and unemployment rate<span class="pl-pds">"</span></span>,
+       <span class="pl-v">x</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Population (Million)<span class="pl-pds">"</span></span>,
+       <span class="pl-v">y</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>GDP (USD)<span class="pl-pds">"</span></span>) <span class="pl-k">+</span> 
+  theme_minimal(<span class="pl-v">base_size</span> <span class="pl-k">=</span> <span class="pl-c1">15</span>) <span class="pl-k">+</span>           <span class="pl-c"><span class="pl-c">#</span> 简洁主题</span>
+  theme(
+    <span class="pl-v">plot.title</span> <span class="pl-k">=</span> element_text(<span class="pl-v">hjust</span> <span class="pl-k">=</span> <span class="pl-c1">0.5</span>, <span class="pl-v">face</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>bold<span class="pl-pds">"</span></span>, <span class="pl-v">size</span> <span class="pl-k">=</span> <span class="pl-c1">18</span>), <span class="pl-c"><span class="pl-c">#</span> 居中标题</span>
+    <span class="pl-v">plot.subtitle</span> <span class="pl-k">=</span> element_text(<span class="pl-v">hjust</span> <span class="pl-k">=</span> <span class="pl-c1">0.5</span>, <span class="pl-v">size</span> <span class="pl-k">=</span> <span class="pl-c1">14</span>),            <span class="pl-c"><span class="pl-c">#</span> 居中副标题</span>
+    <span class="pl-v">axis.text</span> <span class="pl-k">=</span> element_text(<span class="pl-v">size</span> <span class="pl-k">=</span> <span class="pl-c1">12</span>),                             <span class="pl-c"><span class="pl-c">#</span> 坐标轴标签大小</span>
+    <span class="pl-v">axis.title</span> <span class="pl-k">=</span> element_text(<span class="pl-v">size</span> <span class="pl-k">=</span> <span class="pl-c1">14</span>, <span class="pl-v">face</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>bold<span class="pl-pds">"</span></span>),             <span class="pl-c"><span class="pl-c">#</span> 坐标轴标题样式</span>
+    <span class="pl-v">legend.position</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>right<span class="pl-pds">"</span></span>,                                       <span class="pl-c"><span class="pl-c">#</span> 图例放置右侧</span>
+    <span class="pl-v">panel.grid.minor</span> <span class="pl-k">=</span> element_blank()                               <span class="pl-c"><span class="pl-c">#</span> 移除次网格线</span>
+  )
+</pre></div>
+<p><strong>图片展示</strong></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/fbc3da89716910c543418bcd0bcc1302ec38d1eb1ce6098f9ea25574f179c3a6/68747470733a2f2f692e6962622e636f2f5144796b6233502f6578616d706c652d466f726767706c6f742e706e67"><img src="https://camo.githubusercontent.com/fbc3da89716910c543418bcd0bcc1302ec38d1eb1ce6098f9ea25574f179c3a6/68747470733a2f2f692e6962622e636f2f5144796b6233502f6578616d706c652d466f726767706c6f742e706e67" alt="" data-canonical-src="https://i.ibb.co/QDykb3P/example-Forggplot.png" style="max-width: 100%;"></a></p>
+<h2><strong>4. 统计分析</strong></h2>
+<p><strong>4.1 描述性统计</strong></p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-smi">data</span> <span class="pl-k">&lt;-</span> c(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>, <span class="pl-c1">30</span>, <span class="pl-c1">40</span>, <span class="pl-c1">50</span>)
+mean(<span class="pl-smi">data</span>) <span class="pl-c"><span class="pl-c">#</span> 平均值</span>
+median(<span class="pl-smi">data</span>) <span class="pl-c"><span class="pl-c">#</span> 中位数</span>
+sd(<span class="pl-smi">data</span>) <span class="pl-c"><span class="pl-c">#</span> 标准差</span>
+summary(<span class="pl-smi">data</span>) <span class="pl-c"><span class="pl-c">#</span> 数据分布</span></pre></div>
+<p><strong>4.2 假设检验</strong></p>
+<ol>
+<li><strong>单样本 t 检验</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate">t.test(<span class="pl-smi">data</span>, <span class="pl-v">mu</span> <span class="pl-k">=</span> <span class="pl-c1">25</span>)</pre></div>
+</li>
+<li><strong>双样本 t 检验</strong>：
+<div class="highlight highlight-source-r"><pre class="notranslate">t.test(<span class="pl-smi">data1</span>, <span class="pl-smi">data2</span>, <span class="pl-v">paired</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>)</pre></div>
+</li>
+</ol>
+<h2><strong>5.Bioconductor,用于生物信息学分析的开源项目</strong></h2>
+<p><strong>5.1什么是 Bioconductor？</strong></p>
+<p><strong>Bioconductor</strong> 是一个用于生物信息学分析的开源软件项目，构建在 R 语言之上，专注于基因组学、生物医学研究等领域的数据分析。它提供了大量的 R 包，支持从数据处理到高层次分析的全流程，例如基因表达分析、功能富集分析、基因组可视化等。</p>
+<p>官方网站：<a href="https://www.bioconductor.org/" rel="nofollow">Bioconductor</a></p>
+<p><strong>5.2 Bioconductor 的功能</strong></p>
+<ol>
+<li>
+<p><strong>丰富的 R 包</strong>：</p>
+<ul>
+<li>Bioconductor 提供超过 2000 个 R 包，涵盖从基础数据处理到高级分析的各个方面。</li>
+<li>常见领域包括转录组学、蛋白组学、功能注释、代谢组学等。</li>
+</ul>
+</li>
+<li>
+<p><strong>支持多种生物数据格式</strong>：</p>
+<ul>
+<li>支持处理常见的生物数据文件格式（如 FASTQ、BAM、VCF、GTF 等）。</li>
+<li>提供与公共生物数据库（如 GEO、Ensembl、KEGG）的交互接口。</li>
+</ul>
+</li>
+<li>
+<p><strong>标准化分析流程</strong>：</p>
+<ul>
+<li>提供多个包，用于标准化数据预处理、统计分析、可视化和功能富集分析。</li>
+</ul>
+</li>
+<li>
+<p><strong>社区支持</strong>：</p>
+<ul>
+<li>拥有活跃的开发者社区，提供最新的生物信息学工具和分析方法。</li>
+</ul>
+</li>
+</ol>
+<p><strong>5.3功能富集分析</strong><br>
+功能富集分析（Functional Enrichment Analysis）是 Bioconductor 的一个常见应用场景，用于分析基因列表是否显著富集于某些生物学功能、通路或注释中。</p>
+<p><strong>主要分析目标</strong></p>
+<ul>
+<li><strong>GO（Gene Ontology）分析</strong>：评估基因列表是否富集于某些 GO term（如生物过程、分子功能或细胞组分）。</li>
+<li><strong>KEGG 通路分析</strong>：检查基因列表是否显著关联于某些 KEGG 通路。</li>
+<li><strong>Reactome 分析</strong>：探索基因列表在 Reactome 数据库中的生物通路。</li>
+</ul>
+<p><strong>功能富集分析的常用 Bioconductor 包</strong></p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>包名称</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>clusterProfiler</strong></td>
+<td>支持 GO、KEGG、Reactome 等功能富集分析与可视化，是人类功能富集分析的核心工具之一。</td>
+</tr>
+<tr>
+<td><strong>org.Hs.eg.db</strong></td>
+<td>人类基因注释数据库，用于将基因 ID 映射到 GO、KEGG 等注释。</td>
+</tr>
+<tr>
+<td><strong>KEGGREST</strong></td>
+<td>提供 KEGG 数据库的直接接口，用于 KEGG 通路的查询与分析。</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>功能富集分析的基本步骤</strong></p>
+<p><strong>1. 安装必要的包</strong></p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-k">if</span> (<span class="pl-k">!</span>requireNamespace(<span class="pl-s"><span class="pl-pds">"</span>BiocManager<span class="pl-pds">"</span></span>, <span class="pl-v">quietly</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>))
+    install.packages(<span class="pl-s"><span class="pl-pds">"</span>BiocManager<span class="pl-pds">"</span></span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 安装 Bioconductor 包</span>
+<span class="pl-e">BiocManager</span><span class="pl-k">::</span>install(c(<span class="pl-s"><span class="pl-pds">"</span>clusterProfiler<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>org.Hs.eg.db<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>KEGGREST<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>pathview<span class="pl-pds">"</span></span>))</pre></div>
+<p><strong>2. 准备基因列表</strong></p>
+<p>基因列表通常来自差异表达分析的结果，表示一组感兴趣的基因（例如上调或下调基因）。人类基因的常见 ID 格式包括 <strong>Entrez ID</strong>、<strong>Gene Symbol</strong> 等。</p>
+<p><strong>示例：</strong></p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 示例基因列表 (Entrez ID)</span>
+<span class="pl-smi">gene_list</span> <span class="pl-k">&lt;-</span> c(<span class="pl-s"><span class="pl-pds">"</span>1956<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>2064<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>5290<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>5921<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>7157<span class="pl-pds">"</span></span>)  <span class="pl-c"><span class="pl-c">#</span> 这些 ID 为人类基因</span></pre></div>
+<p>如果目标基因 ID 不是 Entrez ID，可以使用 <code class="notranslate">org.Hs.eg.db</code> 将 Gene Symbol 或其他 ID 转换为 Entrez ID：</p>
+<div class="highlight highlight-source-r"><pre class="notranslate">library(<span class="pl-smi">org.Hs.eg.db</span>)
+library(<span class="pl-smi">clusterProfiler</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 基因符号 (Gene Symbol) 转换为 Entrez ID</span>
+<span class="pl-smi">gene_symbols</span> <span class="pl-k">&lt;-</span> c(<span class="pl-s"><span class="pl-pds">"</span>TP53<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>EGFR<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>BRCA1<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>BRCA2<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>MYC<span class="pl-pds">"</span></span>)
+<span class="pl-smi">entrez_ids</span> <span class="pl-k">&lt;-</span> bitr(<span class="pl-smi">gene_symbols</span>, 
+                   <span class="pl-v">fromType</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>SYMBOL<span class="pl-pds">"</span></span>, 
+                   <span class="pl-v">toType</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>ENTREZID<span class="pl-pds">"</span></span>, 
+                   <span class="pl-v">OrgDb</span> <span class="pl-k">=</span> <span class="pl-smi">org.Hs.eg.db</span>)
+print(<span class="pl-smi">entrez_ids</span>)</pre></div>
+<p><strong>3. GO 富集分析</strong><br>
+使用 <code class="notranslate">clusterProfiler</code> 包进行 GO 富集分析（包括 Biological Process、Molecular Function、Cellular Component）。</p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 加载 clusterProfiler</span>
+library(<span class="pl-smi">clusterProfiler</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 使用 enrichGO 进行 GO 富集分析</span>
+<span class="pl-smi">go_enrich</span> <span class="pl-k">&lt;-</span> enrichGO(<span class="pl-v">gene</span>         <span class="pl-k">=</span> <span class="pl-smi">gene_list</span>,
+                      <span class="pl-v">OrgDb</span>        <span class="pl-k">=</span> <span class="pl-smi">org.Hs.eg.db</span>,  <span class="pl-c"><span class="pl-c">#</span> 使用人类基因注释数据库</span>
+                      <span class="pl-v">keyType</span>      <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>ENTREZID<span class="pl-pds">"</span></span>,    <span class="pl-c"><span class="pl-c">#</span> 输入基因 ID 的类型</span>
+                      <span class="pl-v">ont</span>          <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>BP<span class="pl-pds">"</span></span>,          <span class="pl-c"><span class="pl-c">#</span> 生物过程 (Biological Process)</span>
+                      <span class="pl-v">pAdjustMethod</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>BH<span class="pl-pds">"</span></span>,         <span class="pl-c"><span class="pl-c">#</span> 调整 p 值的方法</span>
+                      <span class="pl-v">pvalueCutoff</span> <span class="pl-k">=</span> <span class="pl-c1">0.05</span>,
+                      <span class="pl-v">qvalueCutoff</span> <span class="pl-k">=</span> <span class="pl-c1">0.2</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 查看结果</span>
+head(<span class="pl-smi">go_enrich</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 可视化 GO 富集结果</span>
+library(<span class="pl-smi">enrichplot</span>)
+barplot(<span class="pl-smi">go_enrich</span>, <span class="pl-v">showCategory</span> <span class="pl-k">=</span> <span class="pl-c1">10</span>)  <span class="pl-c"><span class="pl-c">#</span> 柱状图</span>
+dotplot(<span class="pl-smi">go_enrich</span>)                     <span class="pl-c"><span class="pl-c">#</span> 点图</span></pre></div>
+<p><strong>结果</strong></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/ef83b267e524750212c5ba09fb01424ac75e3011336d5b1d7b68ad1352d4a735/68747470733a2f2f692e6962622e636f2f546d34676d436d2f474f2e706e67"><img src="https://camo.githubusercontent.com/ef83b267e524750212c5ba09fb01424ac75e3011336d5b1d7b68ad1352d4a735/68747470733a2f2f692e6962622e636f2f546d34676d436d2f474f2e706e67" alt="" data-canonical-src="https://i.ibb.co/Tm4gmCm/GO.png" style="max-width: 100%;"></a></p>
+<p><strong>4. KEGG 富集分析</strong><br>
+使用 <code class="notranslate">clusterProfiler</code> 进行 KEGG 通路富集分析，<code class="notranslate">hsa</code> 是人类的 KEGG Organism Code。</p>
+<div class="highlight highlight-source-r"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 运行 KEGG 富集分析</span>
+<span class="pl-smi">kegg_enrich</span> <span class="pl-k">&lt;-</span> enrichKEGG(<span class="pl-v">gene</span>         <span class="pl-k">=</span> <span class="pl-smi">gene_list</span>,
+                          <span class="pl-v">organism</span>     <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>hsa<span class="pl-pds">"</span></span>,    <span class="pl-c"><span class="pl-c">#</span> 人类的 KEGG 代码</span>
+                          <span class="pl-v">keyType</span>      <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>kegg<span class="pl-pds">"</span></span>,   <span class="pl-c"><span class="pl-c">#</span> 输入基因 ID 类型为 KEGG ID</span>
+                          <span class="pl-v">pAdjustMethod</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>BH<span class="pl-pds">"</span></span>,    <span class="pl-c"><span class="pl-c">#</span> 使用 Benjamini-Hochberg 方法调整 p 值</span>
+                          <span class="pl-v">pvalueCutoff</span> <span class="pl-k">=</span> <span class="pl-c1">0.05</span>,
+                          <span class="pl-v">qvalueCutoff</span> <span class="pl-k">=</span> <span class="pl-c1">0.2</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 查看 KEGG 富集分析结果</span>
+head(<span class="pl-smi">kegg_enrich</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> 可视化 KEGG 富集结果</span>
+dotplot(<span class="pl-smi">kegg_enrich</span>)    <span class="pl-c"><span class="pl-c">#</span> 点图</span></pre></div>
+<p><strong>结果</strong><br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/000428ec9f018b76373ffe3a68430a370a497cda059499e3f93b0e73d57b8ed7/68747470733a2f2f692e6962622e636f2f437734514e356b2f4b4e45452e706e67"><img src="https://camo.githubusercontent.com/000428ec9f018b76373ffe3a68430a370a497cda059499e3f93b0e73d57b8ed7/68747470733a2f2f692e6962622e636f2f437734514e356b2f4b4e45452e706e67" alt="" data-canonical-src="https://i.ibb.co/Cw4QN5k/KNEE.png" style="max-width: 100%;"></a></p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>
+
+</html>
