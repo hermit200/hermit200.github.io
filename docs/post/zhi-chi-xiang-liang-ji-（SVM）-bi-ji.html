@@ -10,11 +10,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="
-本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta name="description" content="本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
 <meta property="og:title" content="支持向量机（SVM）笔记">
-<meta property="og:description" content="
-本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:description" content="本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hermit200.github.io/post/zhi-chi-xiang-liang-ji-%EF%BC%88SVM%EF%BC%89-bi-ji.html">
 <meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
@@ -140,7 +138,7 @@ $$</p>
 <hr>
 <h3><strong>3. 线性不可分支持向量机</strong></h3>
 <p><strong>3.1 问题背景</strong><br>
-现实数据中，通常无法线性分割。例如，两个类别可能互相交叉。这种情况下，我们需要允许一定的分类错误。</p>
+现实数据中，通常无法线性分割。例如，两个类别可能互相交叉。这种情况下，模型需要允许一定的分类错误。</p>
 <p><strong>3.2 引入松弛变量</strong></p>
 <ul>
 <li><strong>软间隔 SVM</strong>：
@@ -163,7 +161,7 @@ $$</p>
 <hr>
 <h3><strong>4. 核方法</strong></h3>
 <p><strong>4.1 核函数的引入</strong><br>
-在数据无法线性分割时，我们可以通过核函数将数据映射到高维空间，在高维空间中实现线性分割。</p>
+在数据无法线性分割时，我们可以通过核函数将数据映射到高维空间，在高维空间中实现线性分割。（后面有例子）</p>
 <p><strong>4.2 常见核函数</strong></p>
 <ol>
 <li><strong>线性核</strong>：</li>
