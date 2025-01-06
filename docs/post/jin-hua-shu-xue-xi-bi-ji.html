@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+
+本文聚焦于**进化树**的相关知识，部分内容来源于我的课堂笔记，希望能对你有所帮助 😊
+
+---
+
+## **1. 进化树的基本概念**
+
+**什么是进化树？**
+- **定义**：
+  - 进化树是一种分支图，用于表示生物序列（DNA、RNA、蛋白质）或物种之间的进化关系。">
+<meta property="og:title" content="进化树学习笔记">
+<meta property="og:description" content="
+
+本文聚焦于**进化树**的相关知识，部分内容来源于我的课堂笔记，希望能对你有所帮助 😊
+
+---
+
+## **1. 进化树的基本概念**
+
+**什么是进化树？**
+- **定义**：
+  - 进化树是一种分支图，用于表示生物序列（DNA、RNA、蛋白质）或物种之间的进化关系。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/jin-hua-shu-xue-xi-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>进化树学习笔记</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">进化树学习笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/18" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文聚焦于<strong>进化树</strong>的相关知识，部分内容来源于我的课堂笔记，希望能对你有所帮助 😊</p>
+<hr>
+<h2><strong>1. 进化树的基本概念</strong></h2>
+<p><strong>什么是进化树？</strong></p>
+<ul>
+<li><strong>定义</strong>：
+<ul>
+<li>进化树是一种分支图，用于表示生物序列（DNA、RNA、蛋白质）或物种之间的进化关系。</li>
+</ul>
+</li>
+<li><strong>目的</strong>：
+<ul>
+<li>研究物种分化。</li>
+<li>分析基因的同源性。</li>
+<li>预测未知基因功能。</li>
+</ul>
+</li>
+</ul>
+<p><strong>进化树的组成</strong></p>
+<ol>
+<li><strong>节点</strong>：
+<ul>
+<li><strong>内部节点</strong>：表示共同祖先。</li>
+<li><strong>叶子节点</strong>：表示当前物种或基因。</li>
+</ul>
+</li>
+<li><strong>分支</strong>：
+<ul>
+<li>表示从一个祖先到后代的演化路径。</li>
+</ul>
+</li>
+<li><strong>根节点</strong>：
+<ul>
+<li>表示最近共同祖先（有根树特有）。</li>
+</ul>
+</li>
+<li><strong>长度</strong>：
+<ul>
+<li>分支的长度通常表示进化距离或时间。</li>
+</ul>
+</li>
+</ol>
+<p><strong>进化树的类型</strong></p>
+<ol>
+<li><strong>有根树（Rooted Tree）</strong>：
+<ul>
+<li>有明确的进化方向和共同祖先。</li>
+</ul>
+</li>
+<li><strong>无根树（Unrooted Tree）</strong>：
+<ul>
+<li>仅表示序列间的相对关系，没有明确方向。</li>
+</ul>
+</li>
+</ol>
+<h2><strong>2. 进化树的构建方法</strong></h2>
+<p><strong>2.1 距离法（Distance-Based Methods）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：
+<ul>
+<li>计算序列间的成对距离矩阵，根据距离构建进化树。</li>
+</ul>
+</li>
+<li><strong>常用算法</strong>：
+<ol>
+<li><strong>UPGMA（Unweighted Pair Group Method with Arithmetic Mean）</strong>：
+<ul>
+<li>假设分子钟（进化速率恒定），适合进化速率一致的序列。</li>
+<li>步骤：
+<ol>
+<li>计算序列间的成对距离矩阵。</li>
+<li>合并最近的两个簇，更新矩阵。</li>
+<li>递归合并直到只剩一个簇。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>邻接法（Neighbor-Joining, NJ）</strong>：
+<ul>
+<li>不要求分子钟假设，适合更广泛的序列数据。</li>
+<li>步骤：
+<ol>
+<li>计算距离矩阵，构造初始树。</li>
+<li>合并距离最近的两个节点，重新计算距离矩阵。</li>
+<li>继续合并，直到完成。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/66b9ae080b6b361f78fb4d2a4c300e3a48709051931541cfd897aac01cd84a1e/68747470733a2f2f692e6962622e636f2f4a4b64796a33332f696d6167652e706e67"><img src="https://camo.githubusercontent.com/66b9ae080b6b361f78fb4d2a4c300e3a48709051931541cfd897aac01cd84a1e/68747470733a2f2f692e6962622e636f2f4a4b64796a33332f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/JKdyj33/image.png" style="max-width: 100%;"></a></p>
+<p><strong>2.2 字符法（Character-Based Methods）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：<br>
+字符法直接基于序列的特征（如碱基位置），推导序列的演化关系，适合识别复杂的演化特征。</li>
+</ul>
+<p><strong>算法 1：最大简约法（Maximum Parsimony, MP）</strong></p>
+<p><strong>假设</strong></p>
+<ul>
+<li>假设最优进化树是发生演化变化最少的树。</li>
+<li>演化变化包括碱基替换、插入、缺失等。</li>
+</ul>
+<p><strong>步骤</strong></p>
+<ol>
+<li>
+<p><strong>定义变化成本</strong>：每个碱基或氨基酸的替换、插入或缺失有固定成本。</p>
+</li>
+<li>
+<p><strong>计算总变化</strong>：针对每棵可能的树，计算所需的总变化。</p>
+</li>
+<li>
+<p><strong>选择最优树</strong>：总变化最少的树为最优解。</p>
+</li>
+</ol>
+<p><strong>优点</strong>：简单直接，适合小规模序列。<br>
+<strong>缺点</strong>：<br>
+对长序列或高变异序列不适用。<br>
+可能有多个等优解。</p>
+<p><strong>算法 2：最大似然法（Maximum Likelihood, ML）</strong></p>
+<p><strong>假设</strong></p>
+<ul>
+<li>假设演化过程符合某种统计模型（如 Jukes-Cantor 模型）。</li>
+<li>最优树是具有最大似然值的树。</li>
+</ul>
+<p><strong>步骤</strong></p>
+<ol>
+<li>
+<p><strong>选择演化模型</strong>：根据数据选择合适的替换模型（如 JC69、GTR 模型）。</p>
+</li>
+<li>
+<p><strong>计算似然值</strong>：对每棵可能的树，计算观测序列给定树的概率 ( P(序列 | 树) )。</p>
+</li>
+<li>
+<p><strong>选择最优树</strong>：</p>
+<ul>
+<li>选择似然值最大的树。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>优点</strong>：精确，适合复杂演化关系。</li>
+<li><strong>缺点</strong>：计算量大，需要强大的计算资源。</li>
+</ul>
+<p><strong>2.3 贝叶斯推断（Bayesian Inference）</strong></p>
+<p><strong>基本思想</strong></p>
+<ul>
+<li>基于贝叶斯统计，通过后验概率推断最优进化树。<br>
+结合先验知识和观测数据构建树。</li>
+</ul>
+<p><strong>步骤</strong></p>
+<ol>
+<li>
+<p><strong>设定先验分布</strong>：设定树结构和参数的先验分布。</p>
+</li>
+<li>
+<p><strong>计算后验概率</strong>：使用贝叶斯公式：</p>
+</li>
+</ol>
+<p>$$
+P(树 | 数据) \propto P(数据 | 树) \cdot P(树)
+$$</p>
+<ol start="3">
+<li><strong>采样搜索</strong>：使用 Markov Chain Monte Carlo（MCMC）方法，在树空间中采样，寻找后验概率最大的树。</li>
+</ol>
+<p><strong>优点</strong>：<br>
+能结合先验知识，适合高度不确定的情况。<br>
+提供完整的后验概率分布。<br>
+<strong>缺点</strong>：计算复杂，训练时间长。</p>
+<p><strong>总结与对比</strong></p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>适用场景</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UPGMA</strong></td>
+<td>进化速率一致的序列</td>
+<td>简单快速</td>
+<td>对分子钟假设敏感</td>
+</tr>
+<tr>
+<td><strong>邻接法（NJ）</strong></td>
+<td>进化速率不一致的序列</td>
+<td>适用范围广</td>
+<td>对距离矩阵依赖高</td>
+</tr>
+<tr>
+<td><strong>最大简约法（MP）</strong></td>
+<td>小规模、低变异的序列</td>
+<td>简单直观</td>
+<td>不适合高变异或长序列</td>
+</tr>
+<tr>
+<td><strong>最大似然法（ML）</strong></td>
+<td>复杂序列或精确分析</td>
+<td>精确</td>
+<td>计算量大</td>
+</tr>
+<tr>
+<td><strong>贝叶斯推断</strong></td>
+<td>高度不确定或需结合先验知识</td>
+<td>提供后验概率分布</td>
+<td>训练时间长，计算复杂</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h2><strong>3. 进化树的构建流程</strong></h2>
+<p><strong>序列准备</strong></p>
+<ol>
+<li>收集目标序列：
+<ul>
+<li>DNA、RNA 或蛋白质序列。</li>
+</ul>
+</li>
+<li>进行多序列比对：
+<ul>
+<li>使用工具如 Clustal Omega、MUSCLE 或 MAFFT 对序列进行比对，找出序列的保守区域。</li>
+</ul>
+</li>
+</ol>
+<p><strong>计算距离或构建模型</strong></p>
+<ol>
+<li><strong>距离矩阵</strong>：
+<ul>
+<li>使用如 Jukes-Cantor（JC69）模型或 Kimura 两参数模型计算序列间的演化距离。</li>
+<li>生成成对距离矩阵。</li>
+</ul>
+</li>
+<li><strong>进化模型</strong>：
+<ul>
+<li>最大似然法需要选择合适的模型（如 GTR 模型）。</li>
+</ul>
+</li>
+</ol>
+<p><strong>选择算法</strong></p>
+<ul>
+<li>距离法：使用 NJ 或 UPGMA 构建进化树。</li>
+<li>字符法：使用 MP 或 ML 算法。</li>
+<li>贝叶斯推断：使用工具如 MrBayes。</li>
+</ul>
+<p><strong>构建进化树</strong></p>
+<ul>
+<li>使用如 MEGA 等软件，根据选择的算法构建树。</li>
+</ul>
+<p><strong>结果可视化</strong></p>
+<ul>
+<li>使用图形化工具绘制进化树，如：
+<ul>
+<li><strong>MEGA</strong>：可视化并编辑进化树。</li>
+</ul>
+</li>
+</ul>
+<h2><strong>4. 进化树的评估与优化</strong></h2>
+<p><strong>分支支持度（Bootstrap）</strong><br>
+<strong>作用</strong>：<br>
+评估进化树的稳定性和可靠性。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li>对原始数据进行重复抽样（如 100 次），重新构建进化树。</li>
+<li>统计每个分支出现在树中的比例（支持度），高支持度表示分支可靠。</li>
+</ul>
+<h2><strong>5. 进化树的应用</strong></h2>
+<p><strong>物种进化研究</strong><br>
+比较不同物种的基因组，推测其分化时间和关系。</p>
+<p><strong>基因功能预测</strong><br>
+比对未知基因与已知基因的进化关系，预测基因的可能功能。</p>
+<p><strong>疾病传播分析</strong><br>
+构建病毒进化树，研究疾病在不同地区和宿主间的传播路径。</p>
+<p><strong>环境微生物分析</strong><br>
+通过 16S rRNA 序列构建进化树，研究微生物群落的组成和演化。</p>
+<hr>
+<h2>本文参考</h2>
+<p>《生物信息学》 樊笼江主编</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
