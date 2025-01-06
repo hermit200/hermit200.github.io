@@ -1,5 +1,9 @@
-
 本文是我在阅读 *Definition of the effector landscape across 13 phytoplasma proteomes with LEAPH and EffectorComb*（https://doi.org/10.1093/nargab/lqae087 ）时所做的笔记。由于当时采用 PPT 的记录形式，因此本文也延续了“一张图一段话”的方式整理内容，希望对你有所帮助 😊
+
+### 注意
+本文图片较多，且采用的图床网站是GitHub，因此可能图片加载得慢或者无法加载（如果使用国内网络的话），请见谅
+
+如果实在需要图片对应观看，可以在*博客的about界面*找到我的联系方式（https://hermit200.github.io/about.html）
 
 ### Introduction
 
