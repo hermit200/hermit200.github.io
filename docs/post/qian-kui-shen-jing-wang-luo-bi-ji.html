@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:title" content="前馈神经网络笔记">
+<meta property="og:description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/qian-kui-shen-jing-wang-luo-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>前馈神经网络笔记</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">前馈神经网络笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/23" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。这里是 <strong>第五章“神经网络”</strong> 的阅读笔记。本文专注于<strong>前馈神经网络</strong>，并且记录了我的思考，希望对你有所帮助🎉</p>
+<hr>
+<h3><strong>基础知识</strong></h3>
+<p><strong>1 前馈神经网络的定义</strong><br>
+前馈神经网络是一种基础的人工神经网络结构，其特点是信息沿单方向从输入层传递到输出层，且没有循环或反馈。这种网络通常用于分类和回归任务。</p>
+<p><strong>关键特性</strong>：</p>
+<ul>
+<li>信息只沿“前向”传播。</li>
+<li>没有循环或时间依赖性。</li>
+<li>适用于静态数据处理任务。</li>
+</ul>
+<p><strong>2 网络结构</strong><br>
+前馈神经网络的结构包括三个基本部分：输入层、隐藏层和输出层。</p>
+<ol>
+<li>
+<p><strong>输入层</strong>：</p>
+<ul>
+<li>接收原始数据。</li>
+<li>每个神经元对应输入数据的一个特征。</li>
+</ul>
+</li>
+<li>
+<p><strong>隐藏层</strong>：</p>
+<ul>
+<li>通过加权求和和激活函数对输入数据进行非线性变换。</li>
+<li>隐藏层数量和神经元数量是网络设计的重要参数。</li>
+</ul>
+</li>
+<li>
+<p><strong>输出层</strong>：</p>
+<ul>
+<li>生成最终结果。</li>
+<li>分类问题中通常使用Softmax或Sigmoid激活函数。</li>
+<li>回归问题中可以是线性输出。</li>
+</ul>
+</li>
+</ol>
+<h3><strong>神经元模型</strong></h3>
+<ul>
+<li><strong>输入</strong>：( x_1, x_2, ..., x_n ) 为输入特征。</li>
+<li><strong>权重</strong>：( w_1, w_2, ..., w_n ) 为每个输入的权重。</li>
+<li><strong>偏置</strong>：( b ) 为一个可学习的常数项。</li>
+<li><strong>激活函数</strong>：将线性组合的结果转换为非线性输出。</li>
+</ul>
+<h2><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/66b1f54e32a10ec96b06c88e640fef4cb967873806145dd7257062407a11a930/68747470733a2f2f692e6962622e636f2f7a6e595a6636442f696d6167652e706e67"><img src="https://camo.githubusercontent.com/66b1f54e32a10ec96b06c88e640fef4cb967873806145dd7257062407a11a930/68747470733a2f2f692e6962622e636f2f7a6e595a6636442f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/znYZf6D/image.png" style="max-width: 100%;"></a></h2>
+<h3><strong>神经网络的架构</strong></h3>
+<p><strong>1 前馈神经网络的常见结构</strong></p>
+<ol>
+<li>
+<p><strong>单层前馈神经网络</strong>：</p>
+<ul>
+<li>仅包含一个隐藏层。</li>
+<li>适合简单任务，非线性表达能力有限。</li>
+</ul>
+</li>
+<li>
+<p><strong>多层前馈神经网络（MLP）</strong>：</p>
+<ul>
+<li>包含多个隐藏层。</li>
+<li>可以学习更复杂的特征表示。</li>
+</ul>
+</li>
+</ol>
+<p><strong>4.2 重要设计原则</strong></p>
+<ol>
+<li>
+<p><strong>层数与神经元数量</strong>：</p>
+<ul>
+<li>层数越多，模型的表达能力越强，但可能导致过拟合。</li>
+<li>隐藏层神经元数量需平衡复杂性和计算成本。</li>
+</ul>
+</li>
+<li>
+<p><strong>激活函数选择</strong>：</p>
+<ul>
+<li>ReLU 是目前使用最广泛的激活函数，因其计算简单且缓解梯度消失问题。</li>
+</ul>
+</li>
+<li>
+<p><strong>权重初始化</strong>：</p>
+<ul>
+<li>使用均匀分布或正态分布随机初始化。</li>
+<li>Xavier 初始化或 He 初始化常用于深层网络。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4><strong>3 前馈神经网络的实现</strong></h4>
+<p>以下是一个简单的实现示例（Python + PyTorch）：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">torch</span>
+<span class="pl-k">import</span> <span class="pl-s1">torch</span>.<span class="pl-s1">nn</span> <span class="pl-k">as</span> <span class="pl-s1">nn</span>
+<span class="pl-k">import</span> <span class="pl-s1">torch</span>.<span class="pl-s1">optim</span> <span class="pl-k">as</span> <span class="pl-s1">optim</span>
+
+<span class="pl-c"># 定义前馈神经网络</span>
+<span class="pl-k">class</span> <span class="pl-v">FeedforwardNN</span>(<span class="pl-s1">nn</span>.<span class="pl-c1">Module</span>):
+    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">input_size</span>, <span class="pl-s1">hidden_size</span>, <span class="pl-s1">output_size</span>):
+        <span class="pl-en">super</span>(<span class="pl-v">FeedforwardNN</span>, <span class="pl-s1">self</span>).<span class="pl-c1">__init__</span>()
+        <span class="pl-s1">self</span>.<span class="pl-c1">fc1</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Linear</span>(<span class="pl-s1">input_size</span>, <span class="pl-s1">hidden_size</span>)
+        <span class="pl-s1">self</span>.<span class="pl-c1">relu</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">ReLU</span>()
+        <span class="pl-s1">self</span>.<span class="pl-c1">fc2</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Linear</span>(<span class="pl-s1">hidden_size</span>, <span class="pl-s1">output_size</span>)
+        <span class="pl-s1">self</span>.<span class="pl-c1">softmax</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">Softmax</span>(<span class="pl-s1">dim</span><span class="pl-c1">=</span><span class="pl-c1">1</span>)
+
+    <span class="pl-k">def</span> <span class="pl-en">forward</span>(<span class="pl-s1">self</span>, <span class="pl-s1">x</span>):
+        <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">fc1</span>(<span class="pl-s1">x</span>)
+        <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">relu</span>(<span class="pl-s1">x</span>)
+        <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">fc2</span>(<span class="pl-s1">x</span>)
+        <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">softmax</span>(<span class="pl-s1">x</span>)
+        <span class="pl-k">return</span> <span class="pl-s1">x</span>
+
+<span class="pl-c"># 创建网络</span>
+<span class="pl-s1">input_size</span> <span class="pl-c1">=</span> <span class="pl-c1">4</span>
+<span class="pl-s1">hidden_size</span> <span class="pl-c1">=</span> <span class="pl-c1">16</span>
+<span class="pl-s1">output_size</span> <span class="pl-c1">=</span> <span class="pl-c1">3</span>
+<span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">FeedforwardNN</span>(<span class="pl-s1">input_size</span>, <span class="pl-s1">hidden_size</span>, <span class="pl-s1">output_size</span>)
+
+<span class="pl-c"># 损失函数和优化器</span>
+<span class="pl-s1">criterion</span> <span class="pl-c1">=</span> <span class="pl-s1">nn</span>.<span class="pl-c1">CrossEntropyLoss</span>()
+<span class="pl-s1">optimizer</span> <span class="pl-c1">=</span> <span class="pl-s1">optim</span>.<span class="pl-c1">Adam</span>(<span class="pl-s1">model</span>.<span class="pl-c1">parameters</span>(), <span class="pl-s1">lr</span><span class="pl-c1">=</span><span class="pl-c1">0.01</span>)
+
+<span class="pl-c"># 训练过程（示例）</span>
+<span class="pl-s1">inputs</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">randn</span>(<span class="pl-c1">10</span>, <span class="pl-s1">input_size</span>)  <span class="pl-c"># 随机生成输入</span>
+<span class="pl-s1">labels</span> <span class="pl-c1">=</span> <span class="pl-s1">torch</span>.<span class="pl-c1">randint</span>(<span class="pl-c1">0</span>, <span class="pl-s1">output_size</span>, (<span class="pl-c1">10</span>,))  <span class="pl-c"># 随机生成标签</span>
+
+<span class="pl-k">for</span> <span class="pl-s1">epoch</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">100</span>):
+    <span class="pl-s1">optimizer</span>.<span class="pl-c1">zero_grad</span>()
+    <span class="pl-s1">outputs</span> <span class="pl-c1">=</span> <span class="pl-en">model</span>(<span class="pl-s1">inputs</span>)
+    <span class="pl-s1">loss</span> <span class="pl-c1">=</span> <span class="pl-en">criterion</span>(<span class="pl-s1">outputs</span>, <span class="pl-s1">labels</span>)
+    <span class="pl-s1">loss</span>.<span class="pl-c1">backward</span>()
+    <span class="pl-s1">optimizer</span>.<span class="pl-c1">step</span>()
+
+<span class="pl-en">print</span>(<span class="pl-s">"训练完成！"</span>)</pre></div>
+<hr>
+<h3>4 头脑风暴</h3>
+<p><strong>问题 1：前馈神经网络的局限性是什么？如何克服这些局限性？</strong></p>
+<p>前馈神经网络存在以下局限性：</p>
+<ol>
+<li>
+<p><strong>无法处理序列数据或时间相关数据</strong>：</p>
+<ul>
+<li>前馈神经网络是静态模型，无法捕捉输入数据的时间依赖性或上下文信息。</li>
+<li><strong>解决方案</strong>：可以使用循环神经网络（RNN）或长短时记忆网络（LSTM）来处理时间序列数据。</li>
+</ul>
+</li>
+<li>
+<p><strong>参数数量庞大，容易导致过拟合</strong>：</p>
+<ul>
+<li>FNN 的每一层都与上一层完全连接，当网络层数或神经元数量较多时，参数量会迅速膨胀。</li>
+<li><strong>解决方案</strong>：
+<ul>
+<li>使用正则化（如 L1、L2 正则化）。</li>
+<li>采用 Dropout 等方法来随机丢弃部分神经元，防止模型过度拟合训练数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>对高维输入的特征提取能力有限</strong>：</p>
+<ul>
+<li>前馈神经网络缺乏针对特定任务（如图像分类）的结构化设计。</li>
+<li><strong>解决方案</strong>：在图像处理任务中，可以使用卷积神经网络（CNN），通过局部连接和权重共享机制减少参数量并提高性能。</li>
+</ul>
+</li>
+<li>
+<p><strong>梯度消失问题</strong>：</p>
+<ul>
+<li>当网络较深时，梯度可能会在反向传播中逐层缩小，导致参数无法有效更新。</li>
+<li><strong>解决方案</strong>：
+<ul>
+<li>使用 ReLU 或 Leaky ReLU 替代 Sigmoid 激活函数。</li>
+<li>使用梯度裁剪或采用更深层次的残差网络（ResNet）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>问题 2：如何选择前馈神经网络的架构（层数和每层的神经元数量）？</strong></p>
+<p>选择前馈神经网络的架构是一个经验性过程，需要根据具体问题和数据特点进行调整。以下是一些指导原则：</p>
+<ol>
+<li>
+<p><strong>层数的选择</strong>：</p>
+<ul>
+<li>较少的层数适合简单问题，例如线性可分问题。</li>
+<li>更深的网络适合复杂问题，但可能需要更多数据和计算资源。</li>
+<li>一般从 1-3 层开始，逐步增加，观察验证集上的性能。</li>
+</ul>
+</li>
+<li>
+<p><strong>每层神经元数量的选择</strong>：</p>
+<ul>
+<li>输入层神经元数量应等于输入特征的维度。</li>
+<li>输出层神经元数量取决于任务：
+<ul>
+<li>分类问题：与类别数量一致。</li>
+<li>回归问题：通常为 1。</li>
+</ul>
+</li>
+<li>隐藏层的神经元数量可以从输入和输出层数量的平均值开始尝试，然后通过实验调整。</li>
+</ul>
+</li>
+<li>
+<p><strong>试验与调整</strong>：</p>
+<ul>
+<li>使用网格搜索或随机搜索超参数优化方法，系统地尝试不同的架构。</li>
+<li>可以通过交叉验证选择性能最优的架构。</li>
+</ul>
+</li>
+<li>
+<p><strong>规则与经验</strong>：</p>
+<ul>
+<li>遵循“少量神经元的浅层网络优于过深或过宽的网络”的原则。</li>
+<li>避免过度复杂的架构导致过拟合。</li>
+</ul>
+</li>
+</ol>
+<p><strong>问题 3：为什么激活函数对前馈神经网络如此重要？如何选择合适的激活函数？</strong></p>
+<p>激活函数决定了神经网络的非线性表达能力，是前馈神经网络的核心组件。</p>
+<ol>
+<li>
+<p><strong>重要性</strong>：</p>
+<ul>
+<li>如果没有激活函数，前馈神经网络的每一层只能进行线性变换，整体上等效于单层网络，无法拟合非线性问题。</li>
+<li>激活函数引入非线性，使网络能够拟合复杂的决策边界和特征模式。</li>
+</ul>
+</li>
+<li>
+<p><strong>选择激活函数的关键考虑</strong>：</p>
+<ul>
+<li><strong>ReLU</strong>（Rectified Linear Unit）：
+<ul>
+<li>优点：简单计算，缓解梯度消失问题。</li>
+<li>缺点：可能导致神经元“死亡”（梯度恒为 0）。</li>
+<li>使用场景：隐藏层的默认选择。</li>
+</ul>
+</li>
+<li><strong>Sigmoid</strong>：
+<ul>
+<li>优点：输出范围在 (0,1)，适合概率输出。</li>
+<li>缺点：容易导致梯度消失，计算较慢。</li>
+<li>使用场景：输出层的二分类问题。</li>
+</ul>
+</li>
+<li><strong>Tanh</strong>：
+<ul>
+<li>优点：输出范围在 (-1,1)，中心对称。</li>
+<li>缺点：同样面临梯度消失问题。</li>
+<li>使用场景：隐藏层的非线性变换（较少使用）。</li>
+</ul>
+</li>
+<li><strong>Softmax</strong>：
+<ul>
+<li>优点：将输出转化为概率分布。</li>
+<li>使用场景：多分类问题的输出层。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3>文章参考</h3>
+<ul>
+<li>《机器学习（西瓜书）》</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>
+
+</html>
