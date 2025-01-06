@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:title" content="集成学习笔记">
+<meta property="og:description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/ji-cheng-xue-xi-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>集成学习笔记</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">集成学习笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/15" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。这里是 <strong>第八章“集成学习”</strong> 的阅读笔记。本文归纳整理了核心知识点，并且记录了我的思考，希望对你有所帮助🎉</p>
+<h2><strong>1. 集成学习的基本概念</strong></h2>
+<h3><strong>1.1 什么是集成学习</strong></h3>
+<p>集成学习是一种通过结合多个模型（基学习器）来提高整体预测性能的机器学习方法。核心思想是：<strong>将多个弱模型组合成一个强模型</strong>。</p>
+<ul>
+<li><strong>基学习器</strong>：单个模型（如决策树、线性模型等）。</li>
+<li><strong>集成策略</strong>：通过 Bagging、Boosting 或 Stacking 等技术，将多个基学习器的预测结果融合，得到最终预测。</li>
+</ul>
+<h3><strong>1.2 集成学习的两种主要策略</strong></h3>
+<ol>
+<li>
+<p><strong>Bagging（Bootstrap Aggregating）</strong>：</p>
+<ul>
+<li>通过对数据进行随机采样，训练多个独立的基学习器。</li>
+<li>对分类任务，通过多数投票决定类别；对回归任务，通过平均得到结果。</li>
+<li>例子：随机森林（Random Forest）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Boosting</strong>：</p>
+<ul>
+<li>按顺序训练基学习器，每个学习器关注前一模型的错误样本。</li>
+<li>最终结果由所有学习器的加权组合决定。</li>
+<li>例子：AdaBoost、GBDT、XGBoost。</li>
+</ul>
+</li>
+</ol>
+<h2><strong>2. Bagging 方法</strong></h2>
+<h3><strong>2.1 Bagging 的基本思想</strong></h3>
+<p>Bagging 是并行集成学习方法的代表，通过随机采样生成多个数据子集，分别训练独立的基学习器，再结合它们的预测结果。</p>
+<ul>
+<li><strong>随机采样</strong>：通过有放回抽样，生成多个大小相同的数据子集。</li>
+<li><strong>模型融合</strong>：
+<ul>
+<li>分类任务：多数投票。</li>
+<li>回归任务：取平均值。</li>
+</ul>
+</li>
+</ul>
+<h3><strong>2.2 随机森林（Random Forest）</strong></h3>
+<p>随机森林是 Bagging 的经典实现，使用多棵决策树作为基学习器，并在每棵树的训练中加入随机特征选择。</p>
+<ul>
+<li>
+<p><strong>算法特点</strong>：</p>
+<ul>
+<li>每棵树对特征随机抽样，避免强相关特征的过度拟合。</li>
+<li>提高泛化能力，减少过拟合。</li>
+</ul>
+</li>
+<li>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>高效，适合高维数据。</li>
+<li>鲁棒性强，对异常值和缺失值不敏感。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示意图</strong><br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b7d666ee32b51fc87231bcfc16622dd404149c1a095250b9a0f35937ec01e9a5/68747470733a2f2f692e6962622e636f2f63434374784c502f696d6167652e706e67"><img src="https://camo.githubusercontent.com/b7d666ee32b51fc87231bcfc16622dd404149c1a095250b9a0f35937ec01e9a5/68747470733a2f2f692e6962622e636f2f63434374784c502f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/cCCtxLP/image.png" style="max-width: 100%;"></a></p>
+<hr>
+<h2><strong>3. Boosting 方法</strong></h2>
+<h3><strong>3.1 Boosting 的基本思想</strong></h3>
+<p>Boosting 是一种序列化集成学习方法，通过按顺序训练多个模型，后续模型重点学习前一模型的错误样本。</p>
+<ul>
+<li><strong>训练过程</strong>：
+<ul>
+<li>每一轮训练中，调整样本权重，让后续模型更关注分类错误的样本。</li>
+<li>最终预测结果由所有模型的加权和决定。</li>
+</ul>
+</li>
+</ul>
+<h3><strong>3.2 AdaBoost（Adaptive Boosting）</strong></h3>
+<p>AdaBoost 是 Boosting 方法的经典实现，通过调整样本权重，使错误分类样本的权重增加。</p>
+<ul>
+<li><strong>核心公式</strong>：
+<ul>
+<li>样本权重更新：</li>
+</ul>
+</li>
+</ul>
+<p>$$
+w_i = w_i \cdot e^{\alpha \cdot I(y_i \neq \hat{y}_i)}
+$$</p>
+<p>w_i：第 i 个样本的权重。<br>
+alpha：基学习器的权重，取决于其分类精度。</p>
+<ul>
+<li>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>易于实现，能显著提高弱模型性能。</li>
+<li>对低偏差基学习器的改进效果明显。</li>
+</ul>
+</li>
+<li>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>对噪声和异常值较敏感。</li>
+</ul>
+</li>
+</ul>
+<h3><strong>3.3 梯度提升（Gradient Boosting）</strong></h3>
+<p>梯度提升是一种基于残差优化的 Boosting 方法，核心思想是：通过拟合当前模型的预测残差，逐步提高整体预测性能。</p>
+<ul>
+<li><strong>优化目标</strong>：</li>
+</ul>
+<p>$$
+\min_{\mathbf{f}} \sum_{i=1}^m L(y_i, f(x_i))
+$$</p>
+<ul>
+<li>
+<p>使用梯度下降优化损失函数。</p>
+</li>
+<li>
+<p><strong>常见实现</strong>：</p>
+<ul>
+<li><strong>GBDT</strong>（Gradient Boosting Decision Tree）：用决策树拟合残差。</li>
+<li><strong>XGBoost</strong>、<strong>LightGBM</strong> 和 <strong>CatBoost</strong> 是 GBDT 的高效改进版本。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><strong>4. Stacking 方法</strong></h2>
+<h3><strong>4.1 Stacking 的基本思想</strong></h3>
+<p>Stacking 是一种模型融合方法，不同于 Bagging 和 Boosting 的同质模型，它允许多种类型的基学习器协同工作。</p>
+<ul>
+<li>
+<p><strong>实现步骤</strong>：</p>
+<ol>
+<li>训练多个基学习器（如决策树、SVM、神经网络等）。</li>
+<li>使用基学习器的预测结果生成新特征，构造次级数据集。</li>
+<li>用次级数据集训练元学习器（Meta Learner），得到最终模型。</li>
+</ol>
+</li>
+<li>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>灵活，可以结合不同类型的基学习器。</li>
+<li>泛化性能强。</li>
+</ul>
+</li>
+<li>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>计算复杂度高，容易过拟合。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示意图</strong><br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/19e6e59fd9364c57edcb67a7e67846ad2ea97ee384678c80f3ba5c4ac70d4430/68747470733a2f2f692e6962622e636f2f734a774d5477562f696d6167652e706e67"><img src="https://camo.githubusercontent.com/19e6e59fd9364c57edcb67a7e67846ad2ea97ee384678c80f3ba5c4ac70d4430/68747470733a2f2f692e6962622e636f2f734a774d5477562f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/sJwMTwV/image.png" style="max-width: 100%;"></a></p>
+<hr>
+<h2><strong>5. Scikit-learn 实现集成学习</strong></h2>
+<p>以下代码展示了 Bagging、Boosting 和 Stacking 的实现。</p>
+<h3><strong>5.1 Bagging：随机森林</strong></h3>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">RandomForestClassifier</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">load_iris</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-s1">train_test_split</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">metrics</span> <span class="pl-k">import</span> <span class="pl-s1">accuracy_score</span>
+
+<span class="pl-c"># 1. 加载数据集</span>
+<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-en">load_iris</span>()
+<span class="pl-c1">X</span>, <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">data</span>.<span class="pl-c1">data</span>, <span class="pl-s1">data</span>.<span class="pl-c1">target</span>
+<span class="pl-v">X_train</span>, <span class="pl-v">X_test</span>, <span class="pl-s1">y_train</span>, <span class="pl-s1">y_test</span> <span class="pl-c1">=</span> <span class="pl-en">train_test_split</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-s1">test_size</span><span class="pl-c1">=</span><span class="pl-c1">0.3</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-c"># 2. 随机森林</span>
+<span class="pl-s1">rf</span> <span class="pl-c1">=</span> <span class="pl-en">RandomForestClassifier</span>(<span class="pl-s1">n_estimators</span><span class="pl-c1">=</span><span class="pl-c1">100</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+<span class="pl-s1">rf</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train</span>, <span class="pl-s1">y_train</span>)
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">rf</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"随机森林准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred</span>))</pre></div>
+<hr>
+<h3><strong>5.2 Boosting：AdaBoost</strong></h3>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">AdaBoostClassifier</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">tree</span> <span class="pl-k">import</span> <span class="pl-v">DecisionTreeClassifier</span>
+
+<span class="pl-c"># 1. 使用决策树作为基学习器</span>
+<span class="pl-s1">base_learner</span> <span class="pl-c1">=</span> <span class="pl-en">DecisionTreeClassifier</span>(<span class="pl-s1">max_depth</span><span class="pl-c1">=</span><span class="pl-c1">1</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+<span class="pl-s1">ada</span> <span class="pl-c1">=</span> <span class="pl-en">AdaBoostClassifier</span>(<span class="pl-s1">base_estimator</span><span class="pl-c1">=</span><span class="pl-s1">base_learner</span>, <span class="pl-s1">n_estimators</span><span class="pl-c1">=</span><span class="pl-c1">50</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-c"># 2. 训练模型</span>
+<span class="pl-s1">ada</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train</span>, <span class="pl-s1">y_train</span>)
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">ada</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"AdaBoost 准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred</span>))</pre></div>
+<hr>
+<h3><strong>5.3 Stacking</strong></h3>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">ensemble</span> <span class="pl-k">import</span> <span class="pl-v">StackingClassifier</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">svm</span> <span class="pl-k">import</span> <span class="pl-c1">SVC</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">linear_model</span> <span class="pl-k">import</span> <span class="pl-v">LogisticRegression</span>
+
+<span class="pl-c"># 1. 定义基学习器</span>
+<span class="pl-s1">estimators</span> <span class="pl-c1">=</span> [
+    (<span class="pl-s">'rf'</span>, <span class="pl-en">RandomForestClassifier</span>(<span class="pl-s1">n_estimators</span><span class="pl-c1">=</span><span class="pl-c1">10</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)),
+    (<span class="pl-s">'svc'</span>, <span class="pl-en">SVC</span>(<span class="pl-s1">probability</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>))
+]
+
+<span class="pl-c"># 2. 定义元学习器</span>
+<span class="pl-s1">stack</span> <span class="pl-c1">=</span> <span class="pl-en">StackingClassifier</span>(<span class="pl-s1">estimators</span><span class="pl-c1">=</span><span class="pl-s1">estimators</span>, <span class="pl-s1">final_estimator</span><span class="pl-c1">=</span><span class="pl-en">LogisticRegression</span>())
+
+<span class="pl-c"># 3. 训练模型</span>
+<span class="pl-s1">stack</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train</span>, <span class="pl-s1">y_train</span>)
+<span class="pl-s1">y_pred</span> <span class="pl-c1">=</span> <span class="pl-s1">stack</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"Stacking 准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred</span>))</pre></div>
+<hr>
+<h2><strong>6. 总结</strong></h2>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th><strong>策略</strong></th>
+<th><strong>代表算法</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bagging</td>
+<td>随机森林、Extra Trees</td>
+<td>减少过拟合，鲁棒性强</td>
+<td>对偏差大的模型改进有限</td>
+</tr>
+<tr>
+<td>Boosting</td>
+<td>AdaBoost、GBDT、XGBoost</td>
+<td>减少偏差，适合复杂任务</td>
+<td>对噪声数据敏感，训练时间长</td>
+</tr>
+<tr>
+<td>Stacking</td>
+<td>StackingClassifier</td>
+<td>泛化能力强，可结合不同类型基学习器</td>
+<td>模型复杂性高，容易过拟合</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<h2><strong>7.头脑风暴</strong></h2>
+<p><strong>1.  Bagging 适合降低方差，而 Boosting 更适合降低偏差</strong></p>
+<p><strong>Bagging 降低方差</strong></p>
+<ul>
+<li><strong>Bagging</strong> 的核心是通过对训练数据进行随机采样，生成多个子数据集，分别训练多个独立的基学习器。</li>
+<li><strong>随机性与独立性</strong>：每个基学习器在不同的数据子集上独立训练，彼此之间没有直接关系。
+<ul>
+<li>由于模型独立性强，最终通过平均（回归）或投票（分类）结合多个学习器，可以减少因训练数据分布随机性导致的预测波动（方差）。</li>
+</ul>
+</li>
+<li><strong>高方差基学习器</strong>： Bagging 通常搭配高方差模型（如深度决策树），因为这些模型容易过拟合，而 Bagging 可以通过集成平滑过拟合的效果。</li>
+</ul>
+<p><strong>举例</strong>：</p>
+<ul>
+<li>假设某基学习器（如深度决策树）在不同训练集上表现不一致，单独使用时预测方差较大。</li>
+<li>Bagging 通过集成多个基学习器的结果，能够有效平均模型的波动，降低预测的不稳定性。</li>
+</ul>
+<p><strong>Boosting 降低偏差</strong></p>
+<ul>
+<li><strong>Boosting</strong> 的核心是通过序列化训练，逐步修正模型的错误：
+<ul>
+<li>每一轮训练的基学习器关注前一轮错误分类的样本。</li>
+<li>最终结合多个学习器的加权结果。</li>
+</ul>
+</li>
+<li><strong>针对偏差的优化</strong>：Boosting 不随机采样数据集，而是动态调整样本权重，让模型更加关注难以预测的样本。
+<ul>
+<li>通过每一轮迭代，模型逐步纠正偏差，从而逼近真实决策边界。</li>
+</ul>
+</li>
+<li><strong>低偏差基学习器</strong>：Boosting 通常使用简单的弱学习器（如浅决策树、线性模型），通过多次迭代减少偏差，得到高精度预测。</li>
+</ul>
+<p><strong>举例</strong>：</p>
+<ul>
+<li>如果一个浅决策树模型的单独预测能力较差（高偏差），Boosting 通过序列训练强化学习过程，逐步逼近真实的分类决策边界。</li>
+</ul>
+<p><strong>2. Boosting 对噪声数据敏感，但 Stacking 能解决这个问题吗？</strong></p>
+<p><strong>Boosting 对噪声敏感的原因</strong><br>
+Boosting 的序列化训练机制会让模型逐步关注错误分类的样本：</p>
+<ul>
+<li>如果数据集中存在噪声样本（如错误标注的标签），Boosting 可能会不断尝试拟合这些噪声数据。</li>
+<li>结果：模型对噪声过拟合，导致泛化能力下降。</li>
+</ul>
+<p><strong>Stacking 能否缓解噪声问题？</strong></p>
+<p><strong>Stacking 的不同机制</strong>：</p>
+<ul>
+<li>与 Boosting 不同，Stacking 的基学习器是并行训练的，相互独立。</li>
+<li>元学习器综合多个基学习器的预测结果，关注全局特征，而非单一噪声样本的影响。</li>
+</ul>
+<p><strong>为什么 Stacking 能缓解噪声问题</strong>：</p>
+<ul>
+<li>如果某些基学习器对噪声样本过拟合，元学习器可以通过权重调整，减少这些基学习器的影响。</li>
+<li>元学习器能够自动学习哪些基学习器的预测更可信。</li>
+</ul>
+<p><strong>限制：Stacking 并非完全免疫噪声</strong></p>
+<ul>
+<li>如果所有基学习器都受噪声影响严重（比如样本质量差），Stacking 的元学习器也难以避免过拟合。</li>
+<li>元学习器本身可能对噪声预测结果敏感，导致整体性能下降。</li>
+</ul>
+<h2>文章参考</h2>
+<ul>
+<li>《机器学习（西瓜书）》</li>
+<li>部分LaTeX 公式借助了AI的帮助</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
