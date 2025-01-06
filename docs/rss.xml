@@ -1,5 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>HuangJY's Notes</title><link>https://hermit200.github.io</link><description>你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。</description><copyright>HuangJY's Notes</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp</url><title>avatar</title><link>https://hermit200.github.io</link></image><lastBuildDate>Mon, 06 Jan 2025 12:42:25 +0000</lastBuildDate><managingEditor>HuangJY's Notes</managingEditor><ttl>60</ttl><webMaster>HuangJY's Notes</webMaster><item><title>功能富集分析笔记</title><link>https://hermit200.github.io/post/gong-neng-fu-ji-fen-xi-bi-ji.html</link><description>&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>HuangJY's Notes</title><link>https://hermit200.github.io</link><description>你好，欢迎来到我的博客！这里将记录我在生命科学、生物信息学及计算机领域的学习笔记。</description><copyright>HuangJY's Notes</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp</url><title>avatar</title><link>https://hermit200.github.io</link></image><lastBuildDate>Mon, 06 Jan 2025 13:38:12 +0000</lastBuildDate><managingEditor>HuangJY's Notes</managingEditor><ttl>60</ttl><webMaster>HuangJY's Notes</webMaster><item><title>PyMOL简单介绍</title><link>https://hermit200.github.io/post/PyMOL-jian-dan-jie-shao.html</link><description>&#13;
+本文是关于PyMOL的简单笔记，更多详细内容可参考：http://pymol.chenzhaoqiang.com/intro/startManual.html#pymol&#13;
+希望能对你有所帮助&#13;
+&#13;
+**PyMOL 是一款功能强大的分子可视化和建模工具，它支持蛋白质、核酸和小分子等多种分子结构的展示和编辑**&#13;
+&#13;
+### 页面介绍&#13;
+&#13;
+![](https://i.ibb.co/4pbwvqH/pymol.png)&#13;
+&#13;
+**1. 顶部菜单栏**&#13;
+&#13;
+**File**：&#13;
+用于打开、保存和导出结构文件（如 PDB、CIF 等）。</description><guid isPermaLink="true">https://hermit200.github.io/post/PyMOL-jian-dan-jie-shao.html</guid><pubDate>Mon, 06 Jan 2025 13:37:38 +0000</pubDate></item><item><title>功能富集分析笔记</title><link>https://hermit200.github.io/post/gong-neng-fu-ji-fen-xi-bi-ji.html</link><description>&#13;
 &#13;
 本文聚焦于**功能富集分析**的相关知识，并使用R语言展示了GO和KEGG分析，希望能对你有所帮助🎉&#13;
 &#13;
