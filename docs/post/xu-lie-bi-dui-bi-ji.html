@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+本文聚焦于**序列比对**的相关知识，部分内容来源于我的课堂笔记，希望能对你有所帮助 😊
+
+
+## **1. 序列比对的基本概念**
+
+**1.1 什么是序列比对？**
+序列比对是通过排列两条或多条生物序列（DNA、RNA 或蛋白质），找到它们之间相似区域的过程。">
+<meta property="og:title" content="序列比对笔记">
+<meta property="og:description" content="
+本文聚焦于**序列比对**的相关知识，部分内容来源于我的课堂笔记，希望能对你有所帮助 😊
+
+
+## **1. 序列比对的基本概念**
+
+**1.1 什么是序列比对？**
+序列比对是通过排列两条或多条生物序列（DNA、RNA 或蛋白质），找到它们之间相似区域的过程。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/xu-lie-bi-dui-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>序列比对笔记</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">序列比对笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/17" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文聚焦于<strong>序列比对</strong>的相关知识，部分内容来源于我的课堂笔记，希望能对你有所帮助 😊</p>
+<h2><strong>1. 序列比对的基本概念</strong></h2>
+<p><strong>1.1 什么是序列比对？</strong><br>
+序列比对是通过排列两条或多条生物序列（DNA、RNA 或蛋白质），找到它们之间相似区域的过程。</p>
+<p><strong>目的：</strong></p>
+<ul>
+<li><strong>识别相似性</strong>：揭示不同序列间的共同特征或进化关系。</li>
+<li><strong>功能预测</strong>：通过比对未知序列与已知序列，推测基因或蛋白质的功能。</li>
+<li><strong>进化分析</strong>：研究物种间的进化关系。</li>
+</ul>
+<p><strong>1.2 序列比对的分类</strong></p>
+<ol>
+<li>
+<p><strong>全局比对（Global Alignment）</strong>：</p>
+<ul>
+<li>比对两条序列的全部内容。</li>
+<li>适合长度相近的序列。</li>
+<li>例子：Needleman-Wunsch 算法。</li>
+</ul>
+</li>
+<li>
+<p><strong>局部比对（Local Alignment）</strong>：</p>
+<ul>
+<li>比对序列中最相似的部分。</li>
+<li>适合长度差异较大的序列或部分相似的序列。</li>
+<li>例子：Smith-Waterman 算法。</li>
+</ul>
+</li>
+<li>
+<p><strong>多序列比对（Multiple Sequence Alignment, MSA）</strong>：</p>
+<ul>
+<li>同时比对三条或更多序列。</li>
+<li>常用于蛋白质家族分析和进化树构建。</li>
+</ul>
+</li>
+</ol>
+<h2><strong>2. 序列比对的核心原理</strong></h2>
+<p><strong>2.1 序列相似性的衡量</strong></p>
+<ol>
+<li>
+<p><strong>匹配（Match）</strong>：</p>
+<ul>
+<li>两个字符（碱基或氨基酸）相同。</li>
+</ul>
+</li>
+<li>
+<p><strong>错配（Mismatch）</strong>：</p>
+<ul>
+<li>两个字符不同。</li>
+</ul>
+</li>
+<li>
+<p><strong>空位（Gap）</strong>：</p>
+<ul>
+<li>插入或缺失（indel）造成的空位。</li>
+</ul>
+</li>
+</ol>
+<p><strong>2.2 打分系统（Scoring System）</strong><br>
+序列比对的核心是设计合理的打分系统来评估比对质量。</p>
+<ol>
+<li><strong>匹配得分</strong>：如 +1。</li>
+<li><strong>错配扣分</strong>：如 -1。</li>
+<li><strong>空位罚分</strong>：如 -2。</li>
+</ol>
+<p>打分示例（DNA 序列）：</p>
+<pre class="notranslate"><code class="notranslate">A-TCG
+AATCG
+匹配得分：3（A, T, C 匹配）
+错配得分：-1（A vs T）
+空位罚分：-2（插入 T）
+总分 = 3 - 1 - 2 = 0
+</code></pre>
+<p><strong>2.3 动态规划</strong><br>
+动态规划（Dynamic Programming, DP）是实现序列比对的核心算法。</p>
+<h4><strong>基本思想：</strong></h4>
+<ul>
+<li>将复杂问题分解为简单的子问题，逐步求解最优解。</li>
+<li>通过矩阵填表的方式找到比对得分最高的路径。</li>
+</ul>
+<h4><strong>步骤：</strong></h4>
+<ol>
+<li>构建矩阵：行和列分别代表两个序列。</li>
+<li>填写矩阵：按照匹配、错配、空位规则计算每个位置的得分。</li>
+<li>回溯路径：找到得分最高的路径，输出比对结果。</li>
+</ol>
+<p><strong>2.4 常用算法</strong></p>
+<ol>
+<li><strong>Needleman-Wunsch 算法（全局比对）</strong><br>
+找到两条序列的全局最佳比对。</li>
+</ol>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/89506b4ef1af46e2621f18611aa32d0c14bde07eebf8bf90afcd03df4d0916d5/68747470733a2f2f692e6962622e636f2f5372525750384a2f696d6167652e706e67"><img src="https://camo.githubusercontent.com/89506b4ef1af46e2621f18611aa32d0c14bde07eebf8bf90afcd03df4d0916d5/68747470733a2f2f692e6962622e636f2f5372525750384a2f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/SrRWP8J/image.png" style="max-width: 100%;"></a></p>
+<ol start="2">
+<li><strong>Smith-Waterman 算法（局部比对）</strong><br>
+找到最相似的局部区域。</li>
+</ol>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/f2df9d9993bddc78505f122d50a0e537bcff096862fd9919e8c1d08755404efc/68747470733a2f2f692e6962622e636f2f316e6e7354504c2f696d6167652e706e67"><img src="https://camo.githubusercontent.com/f2df9d9993bddc78505f122d50a0e537bcff096862fd9919e8c1d08755404efc/68747470733a2f2f692e6962622e636f2f316e6e7354504c2f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/1nnsTPL/image.png" style="max-width: 100%;"></a></p>
+<ol start="3">
+<li><strong>BLAST（快速局部比对）</strong>
+<ul>
+<li>通过查找短片段（种子）的匹配，快速比对大规模序列。</li>
+<li>应用广泛，是序列比对的实际标准工具。</li>
+</ul>
+</li>
+</ol>
+<h2><strong>3. 序列比对工具和流程</strong></h2>
+<p><strong>3.1 常用工具</strong></p>
+<ol>
+<li>
+<p><strong>BLAST</strong>：</p>
+<ul>
+<li>全称：Basic Local Alignment Search Tool。</li>
+<li>用途：在数据库中快速查找与目标序列相似的序列。</li>
+<li>输入：FASTA 格式的查询序列。</li>
+<li>输出：比对得分、E 值（显著性概率）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Clustal Omega</strong>：</p>
+<ul>
+<li>用于多序列比对，生成序列对齐结果和进化树。</li>
+</ul>
+</li>
+<li>
+<p><strong>MUSCLE</strong>：</p>
+<ul>
+<li>高效的多序列比对工具。</li>
+</ul>
+</li>
+<li>
+<p><strong>MAFFT</strong>：</p>
+<ul>
+<li>精确而快速的多序列比对工具。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2><strong>4. 序列比对的应用</strong></h2>
+<p><strong>基因功能预测</strong><br>
+比对未知基因序列与数据库中已知基因，推测其功能。</p>
+<p><strong>进化关系研究</strong><br>
+比对多个物种的基因序列，构建进化树，研究物种间的进化距离。</p>
+<p><strong>突变检测</strong><br>
+比对基因组序列，识别 SNP（单核苷酸多态性）和 indel（插入/缺失）。</p>
+<p><strong>蛋白质结构预测</strong><br>
+比对蛋白质序列，推测其结构和功能。</p>
+<h2>本文参考</h2>
+<p>《生物信息学》 樊笼江主编</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script>
+
+</html>
