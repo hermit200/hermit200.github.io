@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:title" content="贝叶斯分类器笔记">
+<meta property="og:description" content="
+
+本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hermit200.github.io/post/bei-ye-si-fen-lei-qi-bi-ji.html">
+<meta property="og:image" content="https://i.ibb.co/CHTKDc6/DALL-E-2025-01-03-16-38-34-A-lion-s-head-in-the-style-of-Rococo-or-Baroque-art-facing-to-the-right-w.webp">
+<title>贝叶斯分类器笔记</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">贝叶斯分类器笔记</h1>
+<div class="title-right">
+    <a href="https://hermit200.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hermit200/hermit200.github.io/issues/14" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>本文参考了周志华老师的《机器学习》（俗称“西瓜书”）。这里是 <strong>第七章“贝叶斯分类器”</strong> 的阅读笔记。本文专注于<strong>朴素贝叶斯分类器</strong>，并且记录了我的思考，希望对你有所帮助🎉</p>
+<hr>
+<h2><strong>1. 贝叶斯算法的基础概念</strong></h2>
+<p><strong>1.1 什么是贝叶斯定理</strong></p>
+<p>贝叶斯定理是一个描述 <strong>条件概率关系</strong> 的公式，它表示在已知某些事件发生的条件下，如何计算另一个事件的概率。公式如下：</p>
+<p>$$
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}
+$$</p>
+<p>其中：</p>
+<ul>
+<li>P(A|B)：在事件 B已经发生的情况下，事件 A 发生的概率（后验概率）。</li>
+<li>P(B|A)：在事件 A\已经发生的情况下，事件 B 发生的概率（似然）。</li>
+<li>P(A)：事件 A 的先验概率。</li>
+<li>P(B)：事件 B的先验概率。</li>
+</ul>
+<hr>
+<p><strong>1.2 贝叶斯思想的核心</strong></p>
+<p>贝叶斯思想的核心是：<strong>通过观察数据更新对未知事件的概率分布</strong>。它以初始的先验概率 P(A)为基础，通过观测 B的发生，利用P(B|A)更新 A 的概率，得到后验概率 P(A|B)。</p>
+<hr>
+<h2><strong>2. 朴素贝叶斯分类器</strong></h2>
+<p><strong>2.1 基本思想</strong></p>
+<p>朴素贝叶斯分类器是基于贝叶斯定理的简单分类算法，假设特征之间是 <strong>条件独立</strong> 的。</p>
+<p><strong>后验概率公式</strong>：</p>
+<p>$$
+P(C|X) \propto P(C) \cdot \prod_{i=1}^n P(X_i|C)
+$$</p>
+<p>其中：</p>
+<ul>
+<li>P(C|X)：样本 X 属于类别 C 的概率。</li>
+<li>P(C)：类别 C 的先验概率。</li>
+<li>P(X_i|C)：类别 C 下，第 i 个特征 X_i 的条件概率。</li>
+</ul>
+<p><strong>例子</strong></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b7cf8c20e1b885619f960d20e284c3cccb32cf9995738eeae5d9131702407f8d/68747470733a2f2f692e6962622e636f2f4b68734a6231662f696d6167652e706e67"><img src="https://camo.githubusercontent.com/b7cf8c20e1b885619f960d20e284c3cccb32cf9995738eeae5d9131702407f8d/68747470733a2f2f692e6962622e636f2f4b68734a6231662f696d6167652e706e67" alt="" data-canonical-src="https://i.ibb.co/KhsJb1f/image.png" style="max-width: 100%;"></a></p>
+<p><strong>2.2 常见模型</strong></p>
+<p><strong>1. 高斯朴素贝叶斯（Gaussian Naive Bayes）</strong><br>
+适用于 <strong>连续特征</strong> 的分类问题，假设每个特征服从高斯分布：</p>
+<p>$$
+P(X_i|C) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(X_i - \mu)^2}{2\sigma^2}}
+$$</p>
+<p>其中：</p>
+<ul>
+<li>mu：类别 C 下特征 X_i 的均值。</li>
+<li>sigma^2：类别 C 下特征 X_i 的方差。</li>
+</ul>
+<p><strong>2. 多项式朴素贝叶斯（Multinomial Naive Bayes）</strong><br>
+适用于 <strong>离散特征</strong>，如文本分类问题中词频统计，假设特征服从多项式分布。</p>
+<p><strong>3. 伯努利朴素贝叶斯（Bernoulli Naive Bayes）</strong><br>
+适用于 <strong>二元特征</strong>，特征值为 0 或 1，例如是否包含某个单词。</p>
+<hr>
+<h2><strong>3. 拉普拉斯平滑</strong></h2>
+<p><strong>3.1 为什么需要平滑</strong></p>
+<p>在朴素贝叶斯中，条件概率 P(X_i|C) 的计算基于样本统计。如果某些特征值在训练集中未出现，则会导致概率为 0。为了避免这种问题，引入了 <strong>拉普拉斯平滑</strong>。</p>
+<p><strong>3.2 平滑公式</strong></p>
+<p>对于特征 (X_i) 在类别 (C) 下的条件概率：</p>
+<p>$$
+P(X_i|C) = \frac{\text{count}(X_i, C) + \alpha}{\text{count}(C) + \alpha N}
+$$</p>
+<p>其中：</p>
+<ul>
+<li>alpha：平滑系数，通常取 1（称为拉普拉斯平滑）。</li>
+<li>N：特征的可能取值个数。</li>
+</ul>
+<hr>
+<h2><strong>4. 贝叶斯算法的应用</strong></h2>
+<h3><strong>4.1 文本分类</strong></h3>
+<ul>
+<li><strong>多项式朴素贝叶斯</strong> 常用于垃圾邮件分类。</li>
+<li>使用词袋模型将文本转化为特征向量（词频或 TF-IDF）。</li>
+<li>利用 P(C|X) 预测邮件是否属于垃圾邮件。</li>
+</ul>
+<h3><strong>4.2 医疗诊断</strong></h3>
+<ul>
+<li>基于症状预测疾病。</li>
+<li>构建贝叶斯网络，推断疾病的可能性。</li>
+</ul>
+<h3><strong>4.3 文档主题分析</strong></h3>
+<ul>
+<li>LDA 模型（Latent Dirichlet Allocation）基于贝叶斯思想，将文档建模为主题分布。</li>
+</ul>
+<hr>
+<h2><strong>5. Scikit-learn 实现朴素贝叶斯</strong></h2>
+<p>以下代码展示如何使用 Scikit-learn 实现高斯朴素贝叶斯、多项式朴素贝叶斯和伯努利朴素贝叶斯。</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">datasets</span> <span class="pl-k">import</span> <span class="pl-s1">load_iris</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">model_selection</span> <span class="pl-k">import</span> <span class="pl-s1">train_test_split</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">naive_bayes</span> <span class="pl-k">import</span> <span class="pl-v">GaussianNB</span>, <span class="pl-v">MultinomialNB</span>, <span class="pl-v">BernoulliNB</span>
+<span class="pl-k">from</span> <span class="pl-s1">sklearn</span>.<span class="pl-s1">metrics</span> <span class="pl-k">import</span> <span class="pl-s1">accuracy_score</span>
+
+<span class="pl-c"># 1. 加载数据集</span>
+<span class="pl-s1">data</span> <span class="pl-c1">=</span> <span class="pl-en">load_iris</span>()
+<span class="pl-c1">X</span>, <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-s1">data</span>.<span class="pl-c1">data</span>, <span class="pl-s1">data</span>.<span class="pl-c1">target</span>
+<span class="pl-v">X_train</span>, <span class="pl-v">X_test</span>, <span class="pl-s1">y_train</span>, <span class="pl-s1">y_test</span> <span class="pl-c1">=</span> <span class="pl-en">train_test_split</span>(<span class="pl-c1">X</span>, <span class="pl-s1">y</span>, <span class="pl-s1">test_size</span><span class="pl-c1">=</span><span class="pl-c1">0.3</span>, <span class="pl-s1">random_state</span><span class="pl-c1">=</span><span class="pl-c1">42</span>)
+
+<span class="pl-c"># 2. 高斯朴素贝叶斯</span>
+<span class="pl-s1">gnb</span> <span class="pl-c1">=</span> <span class="pl-en">GaussianNB</span>()
+<span class="pl-s1">gnb</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train</span>, <span class="pl-s1">y_train</span>)
+<span class="pl-s1">y_pred_gnb</span> <span class="pl-c1">=</span> <span class="pl-s1">gnb</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"高斯朴素贝叶斯准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred_gnb</span>))
+
+<span class="pl-c"># 3. 多项式朴素贝叶斯</span>
+<span class="pl-c"># (需要离散数据，例如文本特征)</span>
+<span class="pl-v">X_train_discrete</span> <span class="pl-c1">=</span> (<span class="pl-v">X_train</span> <span class="pl-c1">*</span> <span class="pl-c1">10</span>).<span class="pl-c1">astype</span>(<span class="pl-s1">int</span>)  <span class="pl-c"># 简单离散化特征</span>
+<span class="pl-v">X_test_discrete</span> <span class="pl-c1">=</span> (<span class="pl-v">X_test</span> <span class="pl-c1">*</span> <span class="pl-c1">10</span>).<span class="pl-c1">astype</span>(<span class="pl-s1">int</span>)
+<span class="pl-s1">mnb</span> <span class="pl-c1">=</span> <span class="pl-en">MultinomialNB</span>()
+<span class="pl-s1">mnb</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train_discrete</span>, <span class="pl-s1">y_train</span>)
+<span class="pl-s1">y_pred_mnb</span> <span class="pl-c1">=</span> <span class="pl-s1">mnb</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test_discrete</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"多项式朴素贝叶斯准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred_mnb</span>))
+
+<span class="pl-c"># 4. 伯努利朴素贝叶斯</span>
+<span class="pl-c"># (需要二元特征，模拟生成二值数据)</span>
+<span class="pl-v">X_train_binary</span> <span class="pl-c1">=</span> (<span class="pl-v">X_train</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">2</span>).<span class="pl-c1">astype</span>(<span class="pl-s1">int</span>)
+<span class="pl-v">X_test_binary</span> <span class="pl-c1">=</span> (<span class="pl-v">X_test</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">2</span>).<span class="pl-c1">astype</span>(<span class="pl-s1">int</span>)
+<span class="pl-s1">bnb</span> <span class="pl-c1">=</span> <span class="pl-en">BernoulliNB</span>()
+<span class="pl-s1">bnb</span>.<span class="pl-c1">fit</span>(<span class="pl-v">X_train_binary</span>, <span class="pl-s1">y_train</span>)
+<span class="pl-s1">y_pred_bnb</span> <span class="pl-c1">=</span> <span class="pl-s1">bnb</span>.<span class="pl-c1">predict</span>(<span class="pl-v">X_test_binary</span>)
+<span class="pl-en">print</span>(<span class="pl-s">"伯努利朴素贝叶斯准确率:"</span>, <span class="pl-en">accuracy_score</span>(<span class="pl-s1">y_test</span>, <span class="pl-s1">y_pred_bnb</span>))</pre></div>
+<hr>
+<h2><strong>6. 贝叶斯算法的优缺点</strong></h2>
+<p><strong>6.1 优点</strong></p>
+<ul>
+<li>简单高效，对小数据集效果较好。</li>
+<li>对噪声数据和缺失数据具有较强的鲁棒性。</li>
+<li>对分类问题具有很好的解释性。</li>
+</ul>
+<p><strong>6.2 缺点</strong></p>
+<ul>
+<li>特征独立性假设不完全成立。</li>
+<li>连续特征需要满足特定分布假设（如高斯分布）。</li>
+</ul>
+<hr>
+<h2><strong>7.头脑风暴</strong></h2>
+<p><strong>1. 贝叶斯在生物信息学中的应用</strong></p>
+<p><strong>生物信息学的特点</strong></p>
+<ul>
+<li>数据具有 <strong>不确定性</strong> 和 <strong>复杂性</strong>。</li>
+<li>通常需要从小样本中推断大规模关系（如基因间的关联）。</li>
+<li>领域知识（如基因功能注释）可以作为先验信息。</li>
+</ul>
+<p><strong>贝叶斯算法的优势</strong></p>
+<ol>
+<li>
+<p><strong>适应小样本数据</strong>：<br>
+生物实验中数据量有限时，贝叶斯方法依赖先验知识进行推断，比完全数据驱动的方法更可靠。</p>
+</li>
+<li>
+<p><strong>处理噪声数据</strong>：<br>
+生物数据（如测序数据）常包含噪声，贝叶斯方法通过概率建模，天然对噪声具有鲁棒性。</p>
+</li>
+<li>
+<p><strong>动态更新数据</strong>：<br>
+在基因组进化研究中，随着新测序数据的加入，贝叶斯算法可以在线更新推断结果。</p>
+</li>
+</ol>
+<p><strong>生信中的实际案例</strong><br>
+<strong>序列比对</strong>：  隐马尔可夫模型（HMM），一种基于贝叶斯思想的方法，广泛应用于序列比对和基因识别。</p>
+<p><strong>进化树构建</strong>：  贝叶斯推断用于重建物种间的进化关系，通过最大化后验概率获得最优进化树。</p>
+<hr>
+<p><strong>2. 贝叶斯算法的挑战与改进</strong></p>
+<p><strong>常见挑战</strong></p>
+<ol>
+<li>
+<p><strong>计算复杂性</strong>：<br>
+贝叶斯推断通常涉及高维积分，计算成本较高。</p>
+</li>
+<li>
+<p><strong>先验知识的选择</strong>：<br>
+不同的先验分布可能对结果有显著影响，选择合适的先验是个挑战。</p>
+</li>
+<li>
+<p><strong>大规模数据的处理</strong>：<br>
+面对海量数据时，传统贝叶斯方法可能效率较低，需要借助近似推断技术。</p>
+</li>
+</ol>
+<p><strong>改进方向</strong><br>
+结合深度学习：</p>
+<ul>
+<li>贝叶斯深度学习（Bayesian Deep Learning）引入贝叶斯思想，为神经网络的权重赋予概率分布，提升模型的解释性和鲁棒性。</li>
+<li>应用于单细胞转录组数据聚类分析。</li>
+</ul>
+<p>先验分布的自动化选择：</p>
+<ul>
+<li>使用数据驱动的方法，动态优化先验分布。</li>
+</ul>
+<hr>
+<h2>文章参考</h2>
+<ul>
+<li>《机器学习（西瓜书）》</li>
+<li>部分LaTeX 公式借助了AI的帮助</li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://hermit200.github.io">HuangJY's Notes</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if(""!=""){
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hermit200/hermit200.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+<script src='https://blog.meekdai.com/Gmeek/plugins/GmeekTOC.js'></script><script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</html>
